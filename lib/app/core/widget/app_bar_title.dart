@@ -12,7 +12,7 @@ class AppBarTitle extends StatelessWidget {
     return Text(
       text,
       style: pageTitleStyle,
-      textAlign: TextAlign.center,
+      textAlign: TextAlign.start,
     );
   }
 }

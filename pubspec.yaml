@@ -24,6 +24,11 @@ dependencies:
   pretty_dio_logger: ^1.1.1
   font_awesome_flutter: ^9.2.0
   fluttertoast: ^8.0.8
+  d_chart: ^2.2.11
+  flutter_screenutil: ^5.7.0
+  flutter_barcode_scanner: ^2.0.0
+  mobile_scanner: ^3.2.0
+  package_info_plus: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +38,7 @@ dev_dependencies:
   dart_code_metrics: any
   change_app_package_name: ^1.0.0
   flutter_launcher_icons: ^0.9.2
+
 
 flutter_icons:
   android: "ic_launcher"

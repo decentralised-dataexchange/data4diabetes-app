@@ -1,3 +1,4 @@
+import 'package:Data4Diabetes/app/Constants/Palette.dart';
 import 'package:flutter/material.dart';
 
 import '/app/core/values/app_colors.dart';
@@ -66,6 +67,7 @@ const labelStyle = TextStyle(
   fontSize: 18,
   fontWeight: FontWeight.w400,
   height: 1.8,
+  color: Color(0xFF323232),
 );
 
 final labelStylePrimaryTextColor = labelStyle.copyWith(
@@ -144,10 +146,12 @@ const cardSmallTagStyle = TextStyle(
     color: AppColors.textColorGreyDark);
 
 const pageTitleStyle = TextStyle(
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: FontWeight.w600,
     height: 1.15,
-    color: AppColors.appBarTextColor);
+   // color: AppColors.appBarTextColor
+  color: Palette.black,
+);
 
 final pageTitleBlackStyle =
     pageTitleStyle.copyWith(color: AppColors.textColorPrimary);

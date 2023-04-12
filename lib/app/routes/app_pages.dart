@@ -1,3 +1,7 @@
+import 'package:Data4Diabetes/app/modules/scan_and_check/bindings/scanAndCheck_binding.dart';
+import 'package:Data4Diabetes/app/modules/scan_and_check/views/scanAndCheck_view.dart';
+import 'package:Data4Diabetes/app/modules/settings/bindings/settings_binding.dart';
+import 'package:Data4Diabetes/app/modules/settings/views/settings_view.dart';
 import 'package:get/get.dart';
 
 import '/app/modules/home/bindings/home_binding.dart';
@@ -22,6 +26,16 @@ class AppPages {
       name: _Paths.HOME,
       page: () => HomeView(),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.SCANANDCHECK,
+      page: () => ScanAndCheckView(),
+      binding: ScanAndCheckBinding(),
+    ),
+    GetPage(
+      name: _Paths.SETTINGS,
+      page: () => SettingsView(),
+      binding: SettingsBinding(),
     ),
   ];
 }

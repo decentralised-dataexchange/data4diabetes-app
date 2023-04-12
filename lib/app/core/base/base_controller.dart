@@ -15,6 +15,7 @@ import '/app/network/exceptions/unauthorize_exception.dart';
 import '/flavors/build_config.dart';
 
 abstract class BaseController extends GetxController {
+
   final Logger logger = BuildConfig.instance.config.logger;
 
   AppLocalizations get appLocalization => AppLocalizations.of(Get.context!)!;

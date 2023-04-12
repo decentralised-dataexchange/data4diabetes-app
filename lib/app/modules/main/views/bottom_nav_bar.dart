@@ -34,6 +34,7 @@ class BottomNavBar extends StatelessWidget {
         items: navItems
             .map(
               (BottomNavItem navItem) => BottomNavigationBarItem(
+
                   icon: SvgPicture.asset(
                     "images/${navItem.iconSvgName}",
                     height: AppValues.iconDefaultSize,
@@ -49,14 +50,21 @@ class BottomNavBar extends StatelessWidget {
             .toList(),
         showSelectedLabels: true,
         showUnselectedLabels: true,
+
         type: BottomNavigationBarType.fixed,
         backgroundColor: AppColors.pageBackground,
         selectedItemColor: selectedItemColor,
         unselectedItemColor: unselectedItemColor,
         currentIndex: navController.selectedIndex,
         onTap: (index) {
-          navController.updateSelectedIndex(index);
-          onNewMenuSelected(navItems[index].menuCode);
+          if(index==1 || index == 2){
+            return;
+          }
+          else{
+            navController.updateSelectedIndex(index);
+            onNewMenuSelected(navItems[index].menuCode);
+          }
+
         },
       ),
     );
@@ -71,15 +79,15 @@ class BottomNavBar extends StatelessWidget {
       ),
       BottomNavItem(
           navTitle: appLocalization.bottomNavConnections,
-          iconSvgName: "ic_settings.svg",
+          iconSvgName: "ic_share.svg",
           menuCode: MenuCode.CONNECTIONS),
       BottomNavItem(
           navTitle: appLocalization.bottomNavInsights,
-          iconSvgName: "ic_settings.svg",
+          iconSvgName: "ic_insights.svg",
           menuCode: MenuCode.INSIGHTS),
       BottomNavItem(
           navTitle: appLocalization.bottomNavScanAndCheck,
-          iconSvgName: "ic_settings.svg",
+          iconSvgName: "ic_check_circle_outline.svg",
           menuCode: MenuCode.SCAN_AND_CHECK)
     ];
   }
