@@ -14,14 +14,14 @@ class SettingsView extends BaseView<SettingsController> {
   static const double containerRaduis = 20;
   static const double switchScaleSize = 0.9;
   static const double imagelogoHeight = 100;
-  var switchValue = true.obs;
+  var switchValue = false.obs;
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return CustomAppBar(
       appBarTitleText: 'Settings',
     );
   }
-  SettingsController _settingsController=SettingsController();
+  SettingsController _settingsController= SettingsController();
   @override
   Widget body(BuildContext context) {
     return Scaffold(
@@ -67,10 +67,10 @@ class SettingsView extends BaseView<SettingsController> {
   Widget _languageWidget() {
     return ListTile(
       dense: true,
-      visualDensity: const VisualDensity(horizontal: 0, vertical: -1),
+      visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
       title: const Text(
         'Language',
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        style: TextStyle(fontSize: 14,),
       ),
       trailing: GestureDetector(
         onTap: (){return;},
@@ -80,9 +80,9 @@ class SettingsView extends BaseView<SettingsController> {
             Text(
               'English',
               style: TextStyle(
-                  color: Palette.greyCancel,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500),
+                  color: Colors.black45,
+                  fontSize: 14,
+                  ),
             ),
             Padding(
               padding: EdgeInsets.only(left: 8.0),
@@ -100,10 +100,10 @@ class SettingsView extends BaseView<SettingsController> {
   Widget _securityWidget() {
     return ListTile(
       dense: true,
-      visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
+      visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
       title: const Text(
         'Security (Face ID)',
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        style: TextStyle(fontSize: 14,),
       ),
       trailing: Transform.scale(
         scale: switchScaleSize,
@@ -124,10 +124,10 @@ class SettingsView extends BaseView<SettingsController> {
 Widget  _myWalletWidget() {
   return  ListTile(
     dense: true,
-    visualDensity: const VisualDensity(horizontal: 0, vertical: -1),
+    visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
     title: const Text(
       'My Wallet',
-      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+      style: TextStyle(fontSize: 14, ),
     ),
     trailing: GestureDetector(
       onTap: (){
@@ -144,10 +144,10 @@ Widget  _myWalletWidget() {
  Widget _mySharedDataWidget() {
    return  ListTile(
      dense: true,
-     visualDensity: const VisualDensity(horizontal: 0, vertical: -1),
+     visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
      title: const Text(
        'My Shared Data',
-       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+       style: TextStyle(fontSize: 14,),
      ),
      trailing: GestureDetector(
        onTap: (){

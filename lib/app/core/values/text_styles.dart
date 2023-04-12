@@ -147,7 +147,7 @@ const cardSmallTagStyle = TextStyle(
 
 const pageTitleStyle = TextStyle(
     fontSize: 20,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w400,
     height: 1.15,
    // color: AppColors.appBarTextColor
   color: Palette.black,
