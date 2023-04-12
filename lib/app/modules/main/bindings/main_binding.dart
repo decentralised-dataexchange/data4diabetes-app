@@ -1,3 +1,4 @@
+import 'package:Data4Diabetes/app/modules/language/controllers/language_controller.dart';
 import 'package:Data4Diabetes/app/modules/scan_and_check/controllers/scanAndCheck_controller.dart';
 import 'package:Data4Diabetes/app/modules/settings/controllers/settings_controller.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,10 @@ class MainBinding extends Bindings {
     );
     Get.lazyPut<SettingsController>(
           () => SettingsController(),
+      fenix: true,
+    );
+    Get.lazyPut<LanguageController>(
+          () => LanguageController(),
       fenix: true,
     );
   }

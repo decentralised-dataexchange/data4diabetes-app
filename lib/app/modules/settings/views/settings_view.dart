@@ -1,4 +1,5 @@
 import 'package:Data4Diabetes/app/Constants/Palette.dart';
+import 'package:Data4Diabetes/app/modules/language/views/language_view.dart';
 import 'package:Data4Diabetes/app/modules/settings/controllers/settings_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,8 @@ class SettingsView extends BaseView<SettingsController> {
       appBarTitleText: 'Settings',
     );
   }
-  SettingsController _settingsController= SettingsController();
+
+  SettingsController _settingsController = SettingsController();
   @override
   Widget body(BuildContext context) {
     return Scaffold(
@@ -29,7 +31,6 @@ class SettingsView extends BaseView<SettingsController> {
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
-
           children: [
             Padding(
               padding:
@@ -49,18 +50,15 @@ class SettingsView extends BaseView<SettingsController> {
                     _myWalletWidget(),
                     const Divider(),
                     _mySharedDataWidget(),
-
                   ],
                 ),
               ),
             ),
             _lungsButton(),
-
-
           ],
         ),
       ),
-      bottomNavigationBar: _igrantLogo() ,
+      bottomNavigationBar: _igrantLogo(),
     );
   }
 
@@ -70,19 +68,23 @@ class SettingsView extends BaseView<SettingsController> {
       visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
       title: const Text(
         'Language',
-        style: TextStyle(fontSize: 14,),
+        style: TextStyle(
+          fontSize: 14,
+        ),
       ),
       trailing: GestureDetector(
-        onTap: (){return;},
+        onTap: () {
+          Get.to(LanguageView());
+        },
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: const [
             Text(
               'English',
               style: TextStyle(
-                  color: Colors.black45,
-                  fontSize: 14,
-                  ),
+                color: Colors.black45,
+                fontSize: 14,
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(left: 8.0),
@@ -103,13 +105,14 @@ class SettingsView extends BaseView<SettingsController> {
       visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
       title: const Text(
         'Security (Face ID)',
-        style: TextStyle(fontSize: 14,),
+        style: TextStyle(
+          fontSize: 14,
+        ),
       ),
       trailing: Transform.scale(
         scale: switchScaleSize,
         child: Obx(() {
           return CupertinoSwitch(
-
             value: switchValue.value,
             activeColor: CupertinoColors.activeGreen,
             onChanged: (bool? value) {
@@ -121,78 +124,82 @@ class SettingsView extends BaseView<SettingsController> {
     );
   }
 
-Widget  _myWalletWidget() {
-  return  ListTile(
-    dense: true,
-    visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
-    title: const Text(
-      'My Wallet',
-      style: TextStyle(fontSize: 14, ),
-    ),
-    trailing: GestureDetector(
-      onTap: (){
-        return;
-      },
-      child:const Icon(
-        Icons.arrow_forward_ios,
-        size: 15.0,
+  Widget _myWalletWidget() {
+    return ListTile(
+      dense: true,
+      visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
+      title: const Text(
+        'My Wallet',
+        style: TextStyle(
+          fontSize: 14,
+        ),
       ),
-    ),
-  );
-}
+      trailing: GestureDetector(
+        onTap: () {
+          return;
+        },
+        child: const Icon(
+          Icons.arrow_forward_ios,
+          size: 15.0,
+        ),
+      ),
+    );
+  }
 
- Widget _mySharedDataWidget() {
-   return  ListTile(
-     dense: true,
-     visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
-     title: const Text(
-       'My Shared Data',
-       style: TextStyle(fontSize: 14,),
-     ),
-     trailing: GestureDetector(
-       onTap: (){
-         return;
-       },
-       child:const Icon(
-         Icons.arrow_forward_ios,
-         size: 15.0,
-       ),
-     ),
-   );
- }
+  Widget _mySharedDataWidget() {
+    return ListTile(
+      dense: true,
+      visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
+      title: const Text(
+        'My Shared Data',
+        style: TextStyle(
+          fontSize: 14,
+        ),
+      ),
+      trailing: GestureDetector(
+        onTap: () {
+          return;
+        },
+        child: const Icon(
+          Icons.arrow_forward_ios,
+          size: 15.0,
+        ),
+      ),
+    );
+  }
 
- Widget _lungsButton() {
+  Widget _lungsButton() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 100, 20, 0),
       child: Align(
-        alignment: Alignment.bottomRight,
+          alignment: Alignment.bottomRight,
           child: GestureDetector(
-            onTap: (){return;},
-              child: Image.asset('images/lungs.png',scale: 8,))),
+              onTap: () {
+                return;
+              },
+              child: Image.asset(
+                'images/lungs.png',
+                scale: 8,
+              ))),
     );
- }
+  }
 
- Widget _igrantLogo() {
+  Widget _igrantLogo() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Image.asset(
+          'images/igrant_icon.png',
+          height: imagelogoHeight,
+        ),
+        Text("v" + " 1.0.1"
+            //+_settingsController.ver
 
-
-    return  Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.asset(
-            'images/igrant_icon.png',
-            height: imagelogoHeight,
-          ),
-          Text( "v"+" 1.0.1"
-              //+_settingsController.ver
-
-          ),
-          const  SizedBox(height: 10,),
-        ],
-      );
-
-
-
- }
-
-
+            ),
+        const SizedBox(
+          height: 10,
+        ),
+      ],
+    );
+  }
 }

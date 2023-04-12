@@ -1,3 +1,5 @@
+import 'package:Data4Diabetes/app/modules/language/bindings/language_binding.dart';
+import 'package:Data4Diabetes/app/modules/language/views/language_view.dart';
 import 'package:Data4Diabetes/app/modules/scan_and_check/bindings/scanAndCheck_binding.dart';
 import 'package:Data4Diabetes/app/modules/scan_and_check/views/scanAndCheck_view.dart';
 import 'package:Data4Diabetes/app/modules/settings/bindings/settings_binding.dart';
@@ -36,6 +38,11 @@ class AppPages {
       name: _Paths.SETTINGS,
       page: () => SettingsView(),
       binding: SettingsBinding(),
+    ),
+    GetPage(
+      name: _Paths.LANGUAGE,
+      page: () => LanguageView(),
+      binding: LanguageBinding(),
     ),
   ];
 }

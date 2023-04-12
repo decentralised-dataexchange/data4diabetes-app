@@ -1,0 +1,97 @@
+import 'package:Data4Diabetes/app/Constants/Palette.dart';
+import 'package:Data4Diabetes/app/modules/language/controllers/language_controller.dart';
+import 'package:Data4Diabetes/app/modules/settings/controllers/settings_controller.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '/app/core/base/base_view.dart';
+import '/app/core/widget/custom_app_bar.dart';
+import 'package:flutter/services.dart';
+
+import 'package:mobile_scanner/mobile_scanner.dart';
+
+class LanguageView extends BaseView<LanguageController> {
+  static const double containerHeight = 400;
+  static const double containerRaduis = 20;
+  static const double switchScaleSize = 0.9;
+  static const double imagelogoHeight = 100;
+
+  @override
+  PreferredSizeWidget? appBar(BuildContext context) {
+    return CustomAppBar(
+      appBarTitleText: 'Language',
+    );
+  }
+
+  @override
+  Widget body(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Palette.backgroundColor,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Palette.white,
+                    border: Border.all(color: Palette.white),
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(containerRaduis))),
+                child: Column(
+                  children: [
+                    _englishWidget(),
+                    const Divider(),
+                    _swedishWidget(),
+
+
+                  ],
+                ),
+              ),
+            ),
+
+
+
+          ],
+        ),
+      ),
+
+    );
+  }
+
+ Widget _englishWidget() {
+      return const ListTile(
+      dense: true,
+      visualDensity: VisualDensity(horizontal: 0, vertical: -3),
+      title: Text(
+        'English',
+        style: TextStyle(fontSize: 14,),
+      ),
+      trailing: Visibility(
+        visible: true,
+          child: Icon(Icons.check_circle_outline))
+    );
+ }
+
+  Widget _swedishWidget() {
+    return const ListTile(
+        dense: true,
+        visualDensity: VisualDensity(horizontal: 0, vertical: -3),
+        title: Text(
+          'Swedish',
+          style: TextStyle(fontSize: 14,),
+        ),
+        trailing: Visibility(
+          visible: false,
+            child: Icon(Icons.check_circle_outline))
+    );
+  }
+
+
+
+
+
+}

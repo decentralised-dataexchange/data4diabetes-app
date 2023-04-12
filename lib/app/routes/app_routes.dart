@@ -8,6 +8,7 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const SCANANDCHECK=_Paths.SCANANDCHECK;
   static const SETTINGS=_Paths.SETTINGS;
+  static const LANGUAGE=_Paths.LANGUAGE;
 }
 
 abstract class _Paths {
@@ -15,5 +16,6 @@ abstract class _Paths {
   static const HOME = '/home';
   static const SCANANDCHECK = '/scanAndCheck';
   static const SETTINGS = '/settings';
+  static const LANGUAGE = '/language';
 
 }
