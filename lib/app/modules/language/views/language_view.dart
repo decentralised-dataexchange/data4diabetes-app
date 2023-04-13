@@ -25,12 +25,11 @@ class LanguageView extends BaseView<LanguageController> {
 
   @override
   Widget body(BuildContext context) {
-    return Scaffold(
+    return  Obx(() => Scaffold(
       backgroundColor: Palette.backgroundColor,
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
-
           children: [
             Padding(
               padding:
@@ -43,55 +42,50 @@ class LanguageView extends BaseView<LanguageController> {
                         BorderRadius.all(Radius.circular(containerRaduis))),
                 child: Column(
                   children: [
-                    _englishWidget(),
+                    _englishWidget(controller, context),
                     const Divider(),
-                    _swedishWidget(),
-
-
+                    _swedishWidget(controller,context),
                   ],
                 ),
               ),
             ),
-
-
-
           ],
         ),
       ),
-
-    );
+    ));
   }
 
- Widget _englishWidget() {
-      return const ListTile(
-      dense: true,
-      visualDensity: VisualDensity(horizontal: 0, vertical: -3),
-      title: Text(
-        'English',
-        style: TextStyle(fontSize: 14,),
-      ),
-      trailing: Visibility(
-        visible: true,
-          child: Icon(Icons.check_circle_outline))
-    );
- }
-
-  Widget _swedishWidget() {
-    return const ListTile(
+  Widget _englishWidget(LanguageController controller, BuildContext context) {
+    return ListTile(
         dense: true,
         visualDensity: VisualDensity(horizontal: 0, vertical: -3),
-        title: Text(
-          'Swedish',
-          style: TextStyle(fontSize: 14,),
+        title: const Text(
+          'English',
+          style: TextStyle(
+            fontSize: 14,
+          ),
         ),
-        trailing: Visibility(
-          visible: false,
-            child: Icon(Icons.check_circle_outline))
-    );
+        onTap: () {
+          controller.updateLanguage(context, 'English');
+        },
+        trailing:
+            Visibility(visible: controller.languageCode.value == 'en', child: Icon(Icons.check_circle_outline)));
   }
 
-
-
-
-
+  Widget _swedishWidget(LanguageController controller, BuildContext context) {
+    return ListTile(
+        dense: true,
+        visualDensity: VisualDensity(horizontal: 0, vertical: -3),
+        title: const Text(
+          'Swedish',
+          style: TextStyle(
+            fontSize: 14,
+          ),
+        ),
+        onTap: () {
+          controller.updateLanguage(context, 'Swedish');
+        },
+        trailing: Visibility(
+            visible: controller.languageCode.value == 'sv', child: Icon(Icons.check_circle_outline)));
+  }
 }

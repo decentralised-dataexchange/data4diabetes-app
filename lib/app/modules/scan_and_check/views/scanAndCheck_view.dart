@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:Data4Diabetes/app/modules/scan_and_check/controllers/scanAndCheck_controller.dart';
 import 'package:flutter/material.dart';
 import '/app/core/base/base_view.dart';

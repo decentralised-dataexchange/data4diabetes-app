@@ -67,7 +67,7 @@ class HomeView extends BaseView<HomeController> {
                       Icons.qr_code_scanner_sharp,
                       color: Colors.white,
                     )),
-                text: 'Share Data',
+                text: controller.appLocalization.shareData,
                 // onPressed: () => scanQRcode(),
                 onPressed: () {
                   return;

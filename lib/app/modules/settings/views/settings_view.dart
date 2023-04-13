@@ -16,6 +16,7 @@ class SettingsView extends BaseView<SettingsController> {
   static const double switchScaleSize = 0.9;
   static const double imagelogoHeight = 100;
   var switchValue = false.obs;
+
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return CustomAppBar(
@@ -24,9 +25,10 @@ class SettingsView extends BaseView<SettingsController> {
   }
 
   SettingsController _settingsController = SettingsController();
+
   @override
   Widget body(BuildContext context) {
-    return Scaffold(
+    return  Obx(() =>Scaffold(
       backgroundColor: Palette.backgroundColor,
       body: SingleChildScrollView(
         child: Column(
@@ -43,7 +45,7 @@ class SettingsView extends BaseView<SettingsController> {
                         BorderRadius.all(Radius.circular(containerRaduis))),
                 child: Column(
                   children: [
-                    _languageWidget(),
+                    _languageWidget(controller),
                     const Divider(),
                     _securityWidget(),
                     const Divider(),
@@ -59,10 +61,10 @@ class SettingsView extends BaseView<SettingsController> {
         ),
       ),
       bottomNavigationBar: _igrantLogo(),
-    );
+    ));
   }
 
-  Widget _languageWidget() {
+  Widget _languageWidget(SettingsController controller) {
     return ListTile(
       dense: true,
       visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
@@ -72,29 +74,27 @@ class SettingsView extends BaseView<SettingsController> {
           fontSize: 14,
         ),
       ),
-      trailing: GestureDetector(
-        onTap: () {
-          Get.to(LanguageView());
-        },
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: const [
-            Text(
-              'English',
-              style: TextStyle(
-                color: Colors.black45,
-                fontSize: 14,
-              ),
+      onTap: (){
+        Get.to(LanguageView());
+      },
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            (controller.languageCode.value) == 'en' ? 'English' : 'Swedish',
+            style: const TextStyle(
+              color: Colors.black45,
+              fontSize: 14,
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 8.0),
-              child: Icon(
-                Icons.arrow_forward_ios,
-                size: 15.0,
-              ),
-            )
-          ],
-        ),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 8.0),
+            child: Icon(
+              Icons.arrow_forward_ios,
+              size: 15.0,
+            ),
+          )
+        ],
       ),
     );
   }
