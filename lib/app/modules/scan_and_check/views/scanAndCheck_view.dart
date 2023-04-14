@@ -20,6 +20,7 @@ class ScanAndCheckView extends BaseView<ScanAndCheckController> {
       ),
       centerTitle: true,
       elevation: 0,
+      automaticallyImplyLeading: false,
       backgroundColor: Colors.transparent,
     );
   }
