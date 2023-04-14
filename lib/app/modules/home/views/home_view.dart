@@ -67,7 +67,7 @@ class HomeView extends BaseView<HomeController> {
                       Icons.qr_code_scanner_sharp,
                       color: Colors.white,
                     )),
-                text: controller.appLocalization.shareData,
+                text: controller.appLocalization.generalShareData,
                 // onPressed: () => scanQRcode(),
                 onPressed: () {
                   return;
@@ -100,12 +100,12 @@ class HomeView extends BaseView<HomeController> {
         child: Stack(
           children: [
             DChartPie(
-              data: const [
-                {'domain': 'Medication', 'measure': 28},
-                {'domain': 'Activities', 'measure': 27},
-                {'domain': 'Food', 'measure': 20},
-                {'domain': 'Environment', 'measure': 15},
-                {'domain': 'Biological', 'measure': 15},
+              data: [
+                {'domain': 'Medication','label':controller.appLocalization.homeMedication, 'measure': 28},
+                {'domain': 'Activities','label':controller.appLocalization.homeActivities, 'measure': 27},
+                {'domain':'Food','label':controller.appLocalization.homeFood, 'measure': 20},
+                {'domain': 'Environment','label':controller.appLocalization.homeEnvironment, 'measure': 15},
+                {'domain': 'Biological','label':controller.appLocalization.homeBiological, 'measure': 15},
               ],
               fillColor: (pieData, index) {
                 switch (pieData['domain']) {
@@ -123,7 +123,7 @@ class HomeView extends BaseView<HomeController> {
               },
               donutWidth: donutWidth,
               pieLabel: (pieData, index) {
-                return "${pieData['domain']}";
+                return "${pieData['label']}";
               },
               labelPosition: PieLabelPosition.outside,
               labelLinelength: labelLinelength,
@@ -155,37 +155,6 @@ class HomeView extends BaseView<HomeController> {
     ));
   }
 
-  Widget _internalIconDonet() {
-    return DChartPie(
-      data: const [
-        {'domain': 'Medication', 'measure': 28},
-        {'domain': 'Activities', 'measure': 27},
-        {'domain': 'Food', 'measure': 20},
-        {'domain': 'Environment', 'measure': 15},
-        {'domain': 'Biological', 'measure': 15},
-      ],
-      fillColor: (pieData, index) {
-        switch (pieData['domain']) {
-          case 'Activities':
-            return Colors.orange;
-          case 'Medication':
-            return Colors.green;
-          case 'Food':
-            return Colors.blue[900];
-          case 'Environment':
-            return Colors.blue[200];
-          default:
-            return Colors.purple;
-        }
-      },
-      donutWidth: donutWidth,
-      pieLabel: (pieData, index) {
-        return icons[index!];
-      },
-      labelPosition: PieLabelPosition.inside,
-    );
-  }
-
   Widget _appBarListTile() {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
@@ -211,7 +180,7 @@ class HomeView extends BaseView<HomeController> {
             fontSize: 25,
             fontWeight: FontWeight.bold),
       ),
-      subtitle: const Text('Your vertual pancreas'),
+      subtitle: Text(controller.appLocalization.homeYourVirtualPancreas),
       trailing: IconButton(
         icon: const Icon(
           Icons.settings_outlined,

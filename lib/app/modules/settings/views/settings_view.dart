@@ -47,7 +47,7 @@ class SettingsView extends BaseView<SettingsController> {
                   children: [
                     _languageWidget(controller),
                     const Divider(),
-                    _securityWidget(),
+                    _securityWidget(controller),
                     const Divider(),
                     _myWalletWidget(),
                     const Divider(),
@@ -68,9 +68,9 @@ class SettingsView extends BaseView<SettingsController> {
     return ListTile(
       dense: true,
       visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
-      title: const Text(
-        'Language',
-        style: TextStyle(
+      title: Text(
+        controller.appLocalization.settingsLanguage,
+        style: const TextStyle(
           fontSize: 14,
         ),
       ),
@@ -81,7 +81,7 @@ class SettingsView extends BaseView<SettingsController> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            (controller.languageCode.value) == 'en' ? 'English' : 'Swedish',
+            (controller.languageCode.value) == 'en' ? controller.appLocalization.settingsEnglish : controller.appLocalization.settingsSwedish,
             style: const TextStyle(
               color: Colors.black45,
               fontSize: 14,
@@ -99,13 +99,13 @@ class SettingsView extends BaseView<SettingsController> {
     );
   }
 
-  Widget _securityWidget() {
+  Widget _securityWidget(SettingsController controller) {
     return ListTile(
       dense: true,
       visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
-      title: const Text(
-        'Security (Face ID)',
-        style: TextStyle(
+      title: Text(
+        controller.appLocalization.settingsSecurity,
+        style: const TextStyle(
           fontSize: 14,
         ),
       ),
@@ -128,9 +128,9 @@ class SettingsView extends BaseView<SettingsController> {
     return ListTile(
       dense: true,
       visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
-      title: const Text(
-        'My Wallet',
-        style: TextStyle(
+      title: Text(
+        controller.appLocalization.settingsMyWallet,
+        style: const TextStyle(
           fontSize: 14,
         ),
       ),
@@ -150,9 +150,9 @@ class SettingsView extends BaseView<SettingsController> {
     return ListTile(
       dense: true,
       visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
-      title: const Text(
-        'My Shared Data',
-        style: TextStyle(
+      title: Text(
+        controller.appLocalization.settingsMySharedData,
+        style: const TextStyle(
           fontSize: 14,
         ),
       ),

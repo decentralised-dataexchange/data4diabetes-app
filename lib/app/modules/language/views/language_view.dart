@@ -19,7 +19,7 @@ class LanguageView extends BaseView<LanguageController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return CustomAppBar(
-      appBarTitleText: 'Language',
+      appBarTitleText: controller.appLocalization.settingsLanguage,
     );
   }
 
@@ -59,9 +59,9 @@ class LanguageView extends BaseView<LanguageController> {
     return ListTile(
         dense: true,
         visualDensity: VisualDensity(horizontal: 0, vertical: -3),
-        title: const Text(
-          'English',
-          style: TextStyle(
+        title: Text(
+          controller.appLocalization.settingsEnglish,
+          style: const TextStyle(
             fontSize: 14,
           ),
         ),
@@ -76,9 +76,9 @@ class LanguageView extends BaseView<LanguageController> {
     return ListTile(
         dense: true,
         visualDensity: VisualDensity(horizontal: 0, vertical: -3),
-        title: const Text(
-          'Swedish',
-          style: TextStyle(
+        title: Text(
+          controller.appLocalization.settingsSwedish,
+          style: const TextStyle(
             fontSize: 14,
           ),
         ),

@@ -14,9 +14,9 @@ class ScanAndCheckView extends BaseView<ScanAndCheckController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return AppBar(
-      title: const Text(
-        'Food: Scan and Check',
-        style: TextStyle(color: Colors.black),
+      title:  Text(
+        controller.appLocalization.scanAndCheckFoodScanAndCheck,
+        style: const TextStyle(color: Colors.black),
       ),
       centerTitle: true,
       elevation: 0,
@@ -82,12 +82,12 @@ class ScanAndCheckView extends BaseView<ScanAndCheckController> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
-            Text('Carbohydrates:'),
-            SizedBox(
+          children:  [
+            Text(controller.appLocalization.scanAndCheckCarbohydrates),
+            const SizedBox(
               width: 13,
             ),
-            Text(
+            const Text(
               '80',
               style: TextStyle(color: Colors.green),
             )
@@ -104,12 +104,12 @@ class ScanAndCheckView extends BaseView<ScanAndCheckController> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
-            Text('Glycemic index:'),
-            SizedBox(
+          children: [
+            Text(controller.appLocalization.scanAndCheckGlycemicIndex),
+            const SizedBox(
               width: 10,
             ),
-            Text(
+            const Text(
               '94',
               style: TextStyle(color: Colors.red),
             )
@@ -126,18 +126,18 @@ class ScanAndCheckView extends BaseView<ScanAndCheckController> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             Text(
-              'Recommended insulin units:',
-              style: TextStyle(
+              controller.appLocalization.scanAndCheckRecommendedInsulin,
+              style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w500,
                   fontSize: 16),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
-            Text(
+            const Text(
               '8',
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.w600,fontSize: 16),
@@ -170,7 +170,7 @@ class ScanAndCheckView extends BaseView<ScanAndCheckController> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Text('Confirm'),
+                Text(controller.appLocalization.scanAndCheckConfirm),
               ],
             ),
           ),
@@ -192,7 +192,7 @@ class ScanAndCheckView extends BaseView<ScanAndCheckController> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Text('Reject and change'),
+                Text(controller.appLocalization.scanAndCheckRejectAndChange),
               ],
             ),
           ),
