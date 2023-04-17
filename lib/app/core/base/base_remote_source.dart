@@ -37,4 +37,19 @@ abstract class BaseRemoteSource {
       throw handleError("$error");
     }
   }
+
+  Future<Response<T>> postWithJson<T>(String path,
+      {data,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+        bool isAuthNeeded = false}) async {
+    final Map<String, String> headers = <String, String>{};
+    headers['Content-Type'] = 'application/json';
+    // if (isAuthNeeded) {
+      // var accessToken = await TokenRepository().getAccessToken();
+      // headers['Authorization'] = 'Bearer $accessToken';
+    // }
+
+    return dioClient.post(path, data: data, options: Options(headers: headers));
+  }
 }
