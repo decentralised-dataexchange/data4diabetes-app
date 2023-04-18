@@ -21,6 +21,11 @@ class HomeView extends BaseView<HomeController> {
   static const double circleContainerHeight = 50;
   static const double containerRadius = 25.0;
   static const double mmolFontSize = 40;
+  static const int medicationMeasure =28 ;
+  static const int activitiesMeasure =27 ;
+  static const int foodMeasure =20 ;
+  static const int environmentMeasure =15 ;
+  static const int biologicalMeasure =15 ;
   final List<String> icons = ["🧘‍", "🍴", "🫶", "⚕️", "🧬"];
   String barcodeScanRes = "";
   @override
@@ -101,11 +106,11 @@ class HomeView extends BaseView<HomeController> {
           children: [
             DChartPie(
               data: [
-                {'domain': 'Medication','label':controller.appLocalization.homeMedication, 'measure': 28},
-                {'domain': 'Activities','label':controller.appLocalization.homeActivities, 'measure': 27},
-                {'domain':'Food','label':controller.appLocalization.homeFood, 'measure': 20},
-                {'domain': 'Environment','label':controller.appLocalization.homeEnvironment, 'measure': 15},
-                {'domain': 'Biological','label':controller.appLocalization.homeBiological, 'measure': 15},
+                {'domain': 'Medication','label':controller.appLocalization.homeMedication, 'measure':medicationMeasure },
+                {'domain': 'Activities','label':controller.appLocalization.homeActivities, 'measure': activitiesMeasure},
+                {'domain':'Food','label':controller.appLocalization.homeFood, 'measure': foodMeasure},
+                {'domain': 'Environment','label':controller.appLocalization.homeEnvironment, 'measure': environmentMeasure},
+                {'domain': 'Biological','label':controller.appLocalization.homeBiological, 'measure': biologicalMeasure},
               ],
               fillColor: (pieData, index) {
                 switch (pieData['domain']) {

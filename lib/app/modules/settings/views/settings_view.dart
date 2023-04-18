@@ -1,9 +1,12 @@
 import 'package:Data4Diabetes/app/Constants/Palette.dart';
 import 'package:Data4Diabetes/app/modules/language/views/language_view.dart';
+import 'package:Data4Diabetes/app/modules/launcher/views/launcher_view.dart';
+import 'package:Data4Diabetes/app/modules/login/views/login_view.dart';
 import 'package:Data4Diabetes/app/modules/settings/controllers/settings_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../data/local/preference/preference_manager_impl.dart';
 import '/app/core/base/base_view.dart';
 import '/app/core/widget/custom_app_bar.dart';
 import 'package:flutter/services.dart';
@@ -52,6 +55,7 @@ class SettingsView extends BaseView<SettingsController> {
                     _myWalletWidget(),
                     const Divider(),
                     _mySharedDataWidget(),
+
                   ],
                 ),
               ),
@@ -202,4 +206,6 @@ class SettingsView extends BaseView<SettingsController> {
       ],
     );
   }
+
+
 }

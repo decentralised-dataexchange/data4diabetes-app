@@ -11,6 +11,7 @@ import '/app/modules/main/views/bottom_nav_bar.dart';
 class MainView extends BaseView<MainController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
+
     return null;
   }
 

@@ -4,7 +4,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 import '/app/core/base/base_controller.dart';
 
 class SettingsController extends BaseController {
-  String ver = "";
+
+  final ver = Rx<String>("");
   String build = "";
 
   RxString languageCode = 'en'.obs;
@@ -18,7 +19,8 @@ class SettingsController extends BaseController {
 
   packageInfo() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    ver = packageInfo?.version ?? "";
+    ver.value = packageInfo?.version ?? "";
+    print(ver.value);
     build = packageInfo?.buildNumber ?? "";
   }
 

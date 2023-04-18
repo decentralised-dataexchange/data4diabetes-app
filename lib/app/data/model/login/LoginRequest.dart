@@ -1,15 +1,15 @@
 class LoginRequest {
-  String? phonenumber;
+  String? mobile_number;
 
-  LoginRequest({this.phonenumber});
+  LoginRequest({this.mobile_number});
 
   LoginRequest.fromJson(Map<String, dynamic> json) {
-    phonenumber = json['phonenumber'];
+    mobile_number = json['mobile_number'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['phonenumber'] = this.phonenumber;
+    data['mobile_number'] = this.mobile_number;
 
     return data;
   }

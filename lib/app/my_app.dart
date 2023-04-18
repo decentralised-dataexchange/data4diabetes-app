@@ -18,8 +18,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final EnvConfig _envConfig = BuildConfig.instance.config;
 
+
   @override
   Widget build(BuildContext context) {
+
     return GetMaterialApp(
       title: _envConfig.appName,
       initialRoute: AppPages.INITIAL,

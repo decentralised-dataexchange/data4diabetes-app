@@ -21,5 +21,21 @@
   "scanAndCheckRecommendedInsulin":"Recommended insulin units:",
   "scanAndCheckGlycemicIndex":"Glycemic index:",
   "scanAndCheckCarbohydrates":"Carbohydrates:",
-  "scanAndCheckFoodScanAndCheck":"Food: Scan and Check"
+  "scanAndCheckFoodScanAndCheck":"Food: Scan and Check",
+  "loginEnterMobileNumber":"Enter Mobile Number",
+  "login":"Login",
+  "loginNotYetUser":"Not yet a user?",
+  "loginRegisterNow":"Register Now",
+
+  "otpEnterOtp":"Enter the OTP sent to",
+  "otpNotReceive":"Didn't receive the OTP?",
+  "otpResend":"RESEND",
+  "otpConfirm":"Confirm",
+  "otpCancel":"Cancel",
+
+  "register":"Register",
+  "registerCancel":"Cancel",
+  "registerFirstName":"First name",
+  "registerLastName":"Last name",
+  "registerMobileNumber":"Mobile number"
 }

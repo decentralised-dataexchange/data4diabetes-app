@@ -8,7 +8,7 @@ import '/flavors/environment.dart';
 void main() {
   EnvConfig devConfig = EnvConfig(
     appName: "Flutter GetX Template Dev",
-    baseUrl: "https://api.github.com",
+    baseUrl: "https://data4diabetes-staging-api.igrant.io/",
     shouldCollectCrashLog: true,
   );
 
