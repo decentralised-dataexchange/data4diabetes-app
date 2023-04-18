@@ -4,10 +4,6 @@ import 'package:get/get.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import '../../../core/values/app_colors.dart';
 import '../../../core/values/text_styles.dart';
-import '../../../widgets/app_button.dart';
-import '../../../widgets/circular_progress_indicator.dart';
-import '../../../widgets/logo.dart';
-import '../../main/views/main_view.dart';
 import '/app/core/base/base_view.dart';
 
 class OtpView extends BaseView<OtpController> {
@@ -66,18 +62,15 @@ class OtpView extends BaseView<OtpController> {
               width: 5,
             ),
             Obx(() {
-              return _otpController.registerController.sharePhoneNumber.value !=
-                      ""
+              return _otpController.loginController.isControl.value
                   ? Text(
-                      _otpController.registerController.sharePhoneNumber.value,
+                      _otpController.loginController.sharePhoneNumber.value,
                       style: boldTitleStyle,
                     )
-                  : _otpController.loginController.sharePhoneNumber.value != ""
-                      ? Text(
-                          _otpController.loginController.sharePhoneNumber.value,
-                          style: boldTitleStyle,
-                        )
-                      : const Text("");
+                  : Text(
+                      _otpController.registerController.sharePhoneNumber.value,
+                      style: boldTitleStyle,
+                    );
             }),
           ],
         ),
@@ -104,7 +97,7 @@ class OtpView extends BaseView<OtpController> {
           ),
           TextButton(
             onPressed: () {
-              return;
+              _otpController.resendOTP();
             },
             child: Text(
               appLocalization.otpResend,

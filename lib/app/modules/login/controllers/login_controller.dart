@@ -13,6 +13,7 @@ class LoginController extends BaseController {
   final UserRepositoryImpl _impl = UserRepositoryImpl();
   final TextEditingController phoneNumberController = TextEditingController();
   var sharePhoneNumber = "".obs;
+  var isControl=true.obs;
   String? isdCode;
 
   loginUser() async {
@@ -23,11 +24,11 @@ class LoginController extends BaseController {
     LoginRequest request =
         LoginRequest(mobile_number: isdCode! + phoneNumberController.text);
     try {
-
       LoginResponse response = await _impl.login(request);
       if (response.msg == "OTP send") {
         hideLoading();
         phoneNumberController.clear();
+        isControl.value=true;
         Get.to(OtpView());
         phoneNumberController.clear();
       }

@@ -1,4 +1,4 @@
-import 'package:Data4Diabetes/app/data/local/preference/preference_manager.dart';
+
 import 'package:Data4Diabetes/app/data/local/preference/preference_manager_impl.dart';
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpRequest.dart';
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpResponse.dart';
@@ -7,6 +7,10 @@ import 'package:Data4Diabetes/app/modules/login/controllers/login_controller.dar
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../data/model/login/LoginRequest.dart';
+import '../../../data/model/login/LoginResponse.dart';
+import '../../../data/model/register/RegisterRequest.dart';
+import '../../../data/model/register/RegisterResponse.dart';
 import '../../../data/repository/user_repository_impl.dart';
 import '../../main/views/main_view.dart';
 import '/app/core/base/base_controller.dart';
@@ -27,7 +31,6 @@ class OtpController extends BaseController {
     try {
       VerifyOtpResponse response = await _impl.verifyOTP(request);
       if (response.token != null) {
-
         _preferenceManagerImpl.setString('token', response.token!);
         hideLoading();
         verifyOtpController.clear();
@@ -37,6 +40,54 @@ class OtpController extends BaseController {
       }
     } catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  void resendOTP() async {
+    showLoading();
+    loginController.isControl.value
+        ? resendLoginOTP()
+        : resendRegisterOTP();
+  }
+
+  void resendLoginOTP() async {
+
+    debugPrint(
+        "shared Login Resend number:" + loginController.sharePhoneNumber.value);
+    LoginRequest request =
+        LoginRequest(mobile_number: loginController.sharePhoneNumber.value);
+    try {
+      LoginResponse response = await _impl.login(request);
+      if (response.msg == "OTP send") {
+        hideLoading();
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  void resendRegisterOTP() async {
+    debugPrint("shared Register Resend number:" +
+        registerController.sharePhoneNumber.value);
+    debugPrint(
+        "shared Register firstname:" + registerController.shareFirstName.value);
+    debugPrint(
+        "shared Register lastname:" + registerController.shareLastName.value);
+    RegisterRequest request = RegisterRequest(
+        firstname: registerController.shareFirstName.value,
+        lastname: registerController.shareLastName.value,
+        mobile_number: registerController.sharePhoneNumber.value);
+    try {
+      RegisterResponse response = await _impl.register(request);
+
+      if (response.msg == "OTP sent") {
+        hideLoading();
+      } else {
+        Get.snackbar('', response.msg!);
+      }
+    } catch (e) {
+      print('error message');
+      print(e);
     }
   }
 }
