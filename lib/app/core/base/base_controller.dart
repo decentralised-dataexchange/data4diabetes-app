@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
@@ -120,4 +121,13 @@ abstract class BaseController extends GetxController {
     _pageSateController.close();
     super.onClose();
   }
+
+  void showToast(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1
+    );
+  }
+
 }

@@ -45,8 +45,8 @@ Exception _parseDioErrorResponse(DioError dioError) {
     if (statusCode == -1 || statusCode == HttpStatus.ok) {
       statusCode = dioError.response?.data["statusCode"];
     }
-    status = dioError.response?.data["status"];
-    serverMessage = dioError.response?.data["message"];
+    status = "Error";
+    serverMessage = dioError.response?.data["msg"];
   } catch (e, s) {
     logger.i("$e");
     logger.i(s.toString());

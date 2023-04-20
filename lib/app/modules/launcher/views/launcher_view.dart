@@ -8,11 +8,7 @@ import '/app/core/base/base_view.dart';
 class LauncherView extends BaseView<LauncherController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.white,
-      elevation: 0,
-      automaticallyImplyLeading: false,
-    );
+    return null;
   }
 
   final LauncherController _launcherController = Get.find();

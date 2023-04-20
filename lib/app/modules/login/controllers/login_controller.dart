@@ -1,6 +1,8 @@
 import 'package:Data4Diabetes/app/data/model/login/LoginRequest.dart';
 import 'package:Data4Diabetes/app/modules/Otp/views/otp_view.dart';
+import 'package:Data4Diabetes/app/network/exceptions/api_exception.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
@@ -33,7 +35,8 @@ class LoginController extends BaseController {
         phoneNumberController.clear();
       }
     } catch (e) {
-      debugPrint(e.toString());
+      showToast((e as ApiException).message);
+      hideLoading();
     }
   }
 }
