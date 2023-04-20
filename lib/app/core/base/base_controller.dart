@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'dart:ui';
 
+import 'package:Data4Diabetes/app/core/values/app_colors.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -16,7 +19,6 @@ import '/app/network/exceptions/unauthorize_exception.dart';
 import '/flavors/build_config.dart';
 
 abstract class BaseController extends GetxController {
-
   final Logger logger = BuildConfig.instance.config.logger;
 
   AppLocalizations get appLocalization => AppLocalizations.of(Get.context!)!;
@@ -124,10 +126,15 @@ abstract class BaseController extends GetxController {
 
   void showToast(String message) {
     Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        timeInSecForIosWeb: 1
-    );
+        msg: message, toastLength: Toast.LENGTH_SHORT, timeInSecForIosWeb: 1);
   }
 
+  void GetSnackToast({required String message, Color? color}) {
+    Get.snackbar('', message,
+       ///green color code #428959
+        ///red color code #C73E1D
+        snackPosition: SnackPosition.BOTTOM,
+        colorText: AppColors.colorWhite,
+        backgroundColor:color ?? const Color(0XFFC73E1D));
+  }
 }

@@ -15,7 +15,7 @@ class LoginController extends BaseController {
   final UserRepositoryImpl _impl = UserRepositoryImpl();
   final TextEditingController phoneNumberController = TextEditingController();
   var sharePhoneNumber = "".obs;
-  var isControl=true.obs;
+  var isControl = true.obs;
   String? isdCode;
 
   loginUser() async {
@@ -30,12 +30,17 @@ class LoginController extends BaseController {
       if (response.msg == "OTP send") {
         hideLoading();
         phoneNumberController.clear();
-        isControl.value=true;
+        isControl.value = true;
         Get.to(OtpView());
         phoneNumberController.clear();
       }
     } catch (e) {
-      showToast((e as ApiException).message);
+      // showToast((e as ApiException).message);
+      GetSnackToast(message: (e as ApiException).message);
+
+      hideLoading();
+    }
+    finally{
       hideLoading();
     }
   }

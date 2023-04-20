@@ -1,17 +1,11 @@
 import 'package:Data4Diabetes/app/Constants/Palette.dart';
 import 'package:Data4Diabetes/app/modules/language/views/language_view.dart';
-import 'package:Data4Diabetes/app/modules/launcher/views/launcher_view.dart';
-import 'package:Data4Diabetes/app/modules/login/views/login_view.dart';
 import 'package:Data4Diabetes/app/modules/settings/controllers/settings_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../data/local/preference/preference_manager_impl.dart';
 import '/app/core/base/base_view.dart';
 import '/app/core/widget/custom_app_bar.dart';
-import 'package:flutter/services.dart';
-
-import 'package:mobile_scanner/mobile_scanner.dart';
 
 class SettingsView extends BaseView<SettingsController> {
   static const double containerHeight = 400;
@@ -31,41 +25,40 @@ class SettingsView extends BaseView<SettingsController> {
 
   @override
   Widget body(BuildContext context) {
-    return  Obx(() =>Scaffold(
-      backgroundColor: Palette.backgroundColor,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Palette.white,
-                    border: Border.all(color: Palette.white),
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(containerRaduis))),
-                child: Column(
-                  children: [
-                    _languageWidget(controller),
-                    const Divider(),
-                    _securityWidget(controller),
-                    const Divider(),
-                    _myWalletWidget(),
-                    const Divider(),
-                    _mySharedDataWidget(),
-
-                  ],
+    return Obx(() => Scaffold(
+          backgroundColor: Palette.backgroundColor,
+          body: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Palette.white,
+                        border: Border.all(color: Palette.white),
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(containerRaduis))),
+                    child: Column(
+                      children: [
+                        _languageWidget(controller),
+                        const Divider(),
+                        _securityWidget(controller),
+                        const Divider(),
+                        _myWalletWidget(),
+                        const Divider(),
+                        _mySharedDataWidget(),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+                _lungsButton(),
+              ],
             ),
-            _lungsButton(),
-          ],
-        ),
-      ),
-      bottomNavigationBar: _igrantLogo(),
-    ));
+          ),
+          bottomNavigationBar: _igrantLogo(),
+        ));
   }
 
   Widget _languageWidget(SettingsController controller) {
@@ -78,14 +71,16 @@ class SettingsView extends BaseView<SettingsController> {
           fontSize: 14,
         ),
       ),
-      onTap: (){
+      onTap: () {
         Get.to(LanguageView());
       },
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            (controller.languageCode.value) == 'en' ? controller.appLocalization.settingsEnglish : controller.appLocalization.settingsSwedish,
+            (controller.languageCode.value) == 'en'
+                ? controller.appLocalization.settingsEnglish
+                : controller.appLocalization.settingsSwedish,
             style: const TextStyle(
               color: Colors.black45,
               fontSize: 14,
@@ -138,15 +133,13 @@ class SettingsView extends BaseView<SettingsController> {
           fontSize: 14,
         ),
       ),
-      trailing: GestureDetector(
-        onTap: () {
-          return;
-        },
-        child: const Icon(
-          Icons.arrow_forward_ios,
-          size: 15.0,
-        ),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        size: 15.0,
       ),
+      onTap: () {
+        _settingsController.platform.invokeMethod('Wallet');
+      },
     );
   }
 
@@ -160,15 +153,13 @@ class SettingsView extends BaseView<SettingsController> {
           fontSize: 14,
         ),
       ),
-      trailing: GestureDetector(
-        onTap: () {
-          return;
-        },
-        child: const Icon(
-          Icons.arrow_forward_ios,
-          size: 15.0,
-        ),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        size: 15.0,
       ),
+      onTap: () {
+        _settingsController.platform.invokeMethod('Wallet');
+      },
     );
   }
 
@@ -206,6 +197,4 @@ class SettingsView extends BaseView<SettingsController> {
       ],
     );
   }
-
-
 }

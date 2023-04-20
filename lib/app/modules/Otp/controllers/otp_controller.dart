@@ -4,6 +4,7 @@ import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpRequest.dart';
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpResponse.dart';
 import 'package:Data4Diabetes/app/modules/Register/controllers/register_controller.dart';
 import 'package:Data4Diabetes/app/modules/login/controllers/login_controller.dart';
+import 'package:Data4Diabetes/app/network/exceptions/api_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -35,11 +36,13 @@ class OtpController extends BaseController {
         hideLoading();
         verifyOtpController.clear();
         Get.offAll(MainView());
-      } else if (response.msg == "Invalid OTP") {
-        hideLoading();
       }
     } catch (e) {
-      debugPrint(e.toString());
+      GetSnackToast(message: (e as ApiException).message);
+
+      hideLoading();
+    }finally{
+      hideLoading();
     }
   }
 

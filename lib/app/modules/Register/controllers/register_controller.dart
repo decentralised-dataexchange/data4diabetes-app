@@ -2,6 +2,7 @@ import 'package:Data4Diabetes/app/data/model/register/RegisterRequest.dart';
 import 'package:Data4Diabetes/app/data/model/register/RegisterResponse.dart';
 import 'package:Data4Diabetes/app/data/repository/user_repository_impl.dart';
 import 'package:Data4Diabetes/app/modules/Otp/views/otp_view.dart';
+import 'package:Data4Diabetes/app/network/exceptions/api_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -38,12 +39,14 @@ class RegisterController extends BaseController {
         firstNameController.clear();
         lastNameController.clear();
         mobileNumberController.clear();
-      } else {
-        Get.snackbar('', response.msg!);
       }
     } catch (e) {
-      print('error message');
-      print(e);
+      GetSnackToast(message: (e as ApiException).message);
+
+      hideLoading();
+    }
+    finally{
+      hideLoading();
     }
   }
 }
