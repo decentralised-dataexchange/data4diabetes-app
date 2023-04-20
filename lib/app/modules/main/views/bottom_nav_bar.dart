@@ -34,7 +34,6 @@ class BottomNavBar extends StatelessWidget {
         items: navItems
             .map(
               (BottomNavItem navItem) => BottomNavigationBarItem(
-
                   icon: SvgPicture.asset(
                     "images/${navItem.iconSvgName}",
                     height: AppValues.iconDefaultSize,
@@ -50,23 +49,22 @@ class BottomNavBar extends StatelessWidget {
             .toList(),
         showSelectedLabels: true,
         showUnselectedLabels: true,
-
         type: BottomNavigationBarType.fixed,
         backgroundColor: AppColors.pageBackground,
         selectedItemColor: selectedItemColor,
         unselectedItemColor: unselectedItemColor,
         currentIndex: navController.selectedIndex,
         onTap: (index) {
-          if(index==1 || index == 2){
+          if (index == 1) {
             navController.platform.invokeMethod('Connections');
 
             return;
-          }
-          else{
+          } else if (index == 2) {
+            return;
+          } else {
             navController.updateSelectedIndex(index);
             onNewMenuSelected(navItems[index].menuCode);
           }
-
         },
       ),
     );

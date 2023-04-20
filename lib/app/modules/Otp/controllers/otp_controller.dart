@@ -1,4 +1,3 @@
-
 import 'package:Data4Diabetes/app/data/local/preference/preference_manager_impl.dart';
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpRequest.dart';
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpResponse.dart';
@@ -41,20 +40,17 @@ class OtpController extends BaseController {
       GetSnackToast(message: (e as ApiException).message);
 
       hideLoading();
-    }finally{
+    } finally {
       hideLoading();
     }
   }
 
   void resendOTP() async {
     showLoading();
-    loginController.isControl.value
-        ? resendLoginOTP()
-        : resendRegisterOTP();
+    loginController.isControl.value ? resendLoginOTP() : resendRegisterOTP();
   }
 
   void resendLoginOTP() async {
-
     debugPrint(
         "shared Login Resend number:" + loginController.sharePhoneNumber.value);
     LoginRequest request =
@@ -65,7 +61,11 @@ class OtpController extends BaseController {
         hideLoading();
       }
     } catch (e) {
-      debugPrint(e.toString());
+      GetSnackToast(message: (e as ApiException).message);
+
+      hideLoading();
+    } finally {
+      hideLoading();
     }
   }
 
@@ -85,12 +85,13 @@ class OtpController extends BaseController {
 
       if (response.msg == "OTP sent") {
         hideLoading();
-      } else {
-        Get.snackbar('', response.msg!);
       }
     } catch (e) {
-      print('error message');
-      print(e);
+      GetSnackToast(message: (e as ApiException).message);
+
+      hideLoading();
+    } finally {
+      hideLoading();
     }
   }
 }

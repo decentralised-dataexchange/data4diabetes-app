@@ -49,6 +49,8 @@ class SettingsView extends BaseView<SettingsController> {
                         _myWalletWidget(),
                         const Divider(),
                         _mySharedDataWidget(),
+                        const Divider(),
+                        _notifications(),
                       ],
                     ),
                   ),
@@ -158,7 +160,8 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-        _settingsController.platform.invokeMethod('Wallet');
+       // _settingsController.platform.invokeMethod('Wallet');
+        return;
       },
     );
   }
@@ -197,4 +200,24 @@ class SettingsView extends BaseView<SettingsController> {
       ],
     );
   }
+
+ Widget _notifications() {
+     return ListTile(
+      dense: true,
+      visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
+      title: Text(
+        controller.appLocalization.settingsNotification,
+        style: const TextStyle(
+          fontSize: 14,
+        ),
+      ),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        size: 15.0,
+      ),
+      onTap: () {
+        _settingsController.platform.invokeMethod('Notifications');
+      },
+    );
+ }
 }
