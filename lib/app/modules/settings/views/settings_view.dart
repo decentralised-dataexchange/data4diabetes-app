@@ -183,6 +183,8 @@ class SettingsView extends BaseView<SettingsController> {
   }
 
   Widget _igrantLogo() {
+   _settingsController.packageInfo();
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -190,8 +192,8 @@ class SettingsView extends BaseView<SettingsController> {
           'images/igrant_icon.png',
           height: imagelogoHeight,
         ),
-        Text("v" + " 1.0.1"
-            //+_settingsController.ver
+        Text("v" +
+            _settingsController.ver.value
 
             ),
         const SizedBox(
