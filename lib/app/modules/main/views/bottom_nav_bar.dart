@@ -58,6 +58,8 @@ class BottomNavBar extends StatelessWidget {
         currentIndex: navController.selectedIndex,
         onTap: (index) {
           if(index==1 || index == 2){
+            navController.platform.invokeMethod('Wallet');
+
             return;
           }
           else{
