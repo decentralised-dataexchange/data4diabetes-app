@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-
 import '/app/core/values/app_colors.dart';
 import '/app/core/values/app_values.dart';
 import '/app/modules/main/controllers/bottom_nav_controller.dart';
 import '/app/modules/main/model/menu_code.dart';
 import '/app/modules/main/model/menu_item.dart';
+import 'dart:io' show Platform;
 
 // ignore: must_be_immutable
 class BottomNavBar extends StatelessWidget {
@@ -30,6 +31,7 @@ class BottomNavBar extends StatelessWidget {
 
     return Obx(
       () => BottomNavigationBar(
+
         key: bottomNavKey,
         items: navItems
             .map(
@@ -44,6 +46,7 @@ class BottomNavBar extends StatelessWidget {
                             : unselectedItemColor,
                   ),
                   label: navItem.navTitle,
+
                   tooltip: ""),
             )
             .toList(),
@@ -56,9 +59,14 @@ class BottomNavBar extends StatelessWidget {
         currentIndex: navController.selectedIndex,
         onTap: (index) {
           if (index == 1) {
-            navController.platform.invokeMethod('Connections');
-
-            return;
+            if (Platform.isAndroid) {
+              navController.platform.invokeMethod('Connections');
+            } else if (Platform.isIOS) {
+              Fluttertoast.showToast(
+                  msg: 'will coming soon',
+                  toastLength: Toast.LENGTH_SHORT,
+                  timeInSecForIosWeb: 1);
+            }
           } else if (index == 2) {
             return;
           } else {

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '/app/core/base/base_view.dart';
 import '/app/core/widget/custom_app_bar.dart';
+import 'dart:io' show Platform;
 
 class SettingsView extends BaseView<SettingsController> {
   static const double containerHeight = 400;
@@ -31,38 +32,55 @@ class SettingsView extends BaseView<SettingsController> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0, vertical: 10.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Palette.white,
-                        border: Border.all(color: Palette.white),
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(containerRaduis))),
-                    child: Column(
-                      children: [
-                        _languageWidget(controller),
-                        const Divider(),
-                        _securityWidget(controller),
-                        const Divider(),
-                        _myWalletWidget(),
-                        const Divider(),
-                        _mySharedDataWidget(),
-                        const Divider(),
-                        _notifications(),
-                        const Divider(),
-                        _preferenceWidget(),
-                      ],
-                    ),
-                  ),
-                ),
-                _lungsButton(),
+                _settingsSection1(),
+                _settingsSection2(),
               ],
             ),
           ),
           bottomNavigationBar: _igrantLogo(),
         ));
+  }
+
+  Widget _settingsSection1() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Palette.white,
+            border: Border.all(color: Palette.white),
+            borderRadius: BorderRadius.all(Radius.circular(containerRaduis))),
+        child: Column(
+          children: [
+            _myWalletWidget(),
+            const Divider(),
+            _mySharedDataWidget(),
+            const Divider(),
+            _preferenceWidget(),
+            const Divider(),
+            _notifications(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _settingsSection2() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Palette.white,
+            border: Border.all(color: Palette.white),
+            borderRadius: BorderRadius.all(Radius.circular(containerRaduis))),
+        child: Column(
+          children: [
+            _languageWidget(controller),
+            const Divider(),
+            _securityWidget(controller),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _languageWidget(SettingsController controller) {
@@ -142,7 +160,11 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-        _settingsController.platform.invokeMethod('Wallet');
+        if (Platform.isAndroid) {
+          _settingsController.platform.invokeMethod('Wallet');
+        } else if (Platform.isIOS) {
+          showToast('will coming soon');
+        }
       },
     );
   }
@@ -162,7 +184,6 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-       // _settingsController.platform.invokeMethod('Wallet');
         return;
       },
     );
@@ -183,30 +204,17 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-        _settingsController.platform.invokeMethod('Preferences');
-        return;
+        if (Platform.isAndroid) {
+          _settingsController.platform.invokeMethod('Preferences');
+        } else if (Platform.isIOS) {
+          showToast('will coming soon');
+        }
       },
     );
   }
 
-  Widget _lungsButton() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 100, 20, 0),
-      child: Align(
-          alignment: Alignment.bottomRight,
-          child: GestureDetector(
-              onTap: () {
-                return;
-              },
-              child: Image.asset(
-                'images/lungs.png',
-                scale: 8,
-              ))),
-    );
-  }
-
   Widget _igrantLogo() {
-   _settingsController.packageInfo();
+    _settingsController.packageInfo();
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -215,10 +223,7 @@ class SettingsView extends BaseView<SettingsController> {
           'images/igrant_icon.png',
           height: imagelogoHeight,
         ),
-        Text("v" +
-            _settingsController.ver.value
-
-            ),
+        Text("v " + _settingsController.ver.value),
         const SizedBox(
           height: 10,
         ),
@@ -226,8 +231,8 @@ class SettingsView extends BaseView<SettingsController> {
     );
   }
 
- Widget _notifications() {
-     return ListTile(
+  Widget _notifications() {
+    return ListTile(
       dense: true,
       visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
       title: Text(
@@ -241,8 +246,12 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-        _settingsController.platform.invokeMethod('Notifications');
+        if (Platform.isAndroid) {
+          _settingsController.platform.invokeMethod('Notifications');
+        } else if (Platform.isIOS) {
+          showToast('will coming soon');
+        }
       },
     );
- }
+  }
 }
