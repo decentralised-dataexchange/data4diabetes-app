@@ -1,4 +1,5 @@
 import 'package:Data4Diabetes/app/Constants/Palette.dart';
+import 'package:Data4Diabetes/app/core/values/app_colors.dart';
 import 'package:Data4Diabetes/app/modules/settings/views/settings_view.dart';
 import 'package:Data4Diabetes/app/widgets/app_button.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class HomeView extends BaseView<HomeController> {
   static const int biologicalMeasure =15 ;
   final List<String> icons = ["🧘‍", "🍴", "🫶", "⚕️", "🧬"];
   String barcodeScanRes = "";
+  static const double heightValue = 0.1;
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return AppBar(
@@ -57,27 +59,26 @@ class HomeView extends BaseView<HomeController> {
     return Scaffold(
       backgroundColor: Palette.white,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
           _donetChartWidget(),
-          Center(
-            child: SizedBox(
-              width: containerWidth,
-              child: AppButton(
-                radius: containerRadius,
-                lefticon: Container(
-                    margin: const EdgeInsets.only(right: 5),
-                    child: const Icon(
-                      Icons.qr_code_scanner_sharp,
-                      color: Colors.white,
-                    )),
-                text: controller.appLocalization.generalShareData,
-                // onPressed: () => scanQRcode(),
-                onPressed: () {
-                  return;
-                },
-              ),
+          SizedBox(height: MediaQuery.of(context).size.height * heightValue,),
+          SizedBox(
+            width: containerWidth,
+            child: AppButton(
+              radius: containerRadius,
+              lefticon: Container(
+                  margin: const EdgeInsets.only(right: 5),
+                  child: const Icon(
+                    Icons.qr_code_scanner_sharp,
+                    color: Colors.white,
+                  )),
+              text: controller.appLocalization.generalShareData,
+
+              onPressed: () {
+                return;
+              },
             ),
           ),
         ],
@@ -85,17 +86,7 @@ class HomeView extends BaseView<HomeController> {
     );
   }
 
-  scanQRcode() async {
-    barcodeScanRes = "";
-    try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          "#ff6666", "Cancel", false, ScanMode.DEFAULT);
-    } on PlatformException {
-      barcodeScanRes = 'Failed to get platfom version.';
-    }
 
-    barcodeScanRes = barcodeScanRes;
-  }
 
   Widget _donetChartWidget() {
     return Padding(
@@ -132,6 +123,7 @@ class HomeView extends BaseView<HomeController> {
               },
               labelPosition: PieLabelPosition.outside,
               labelLinelength: labelLinelength,
+              labelLineColor: AppColors.lightGreyColor,
               labelPadding: 5,
               labelFontSize: labelFontSize,
             ),
