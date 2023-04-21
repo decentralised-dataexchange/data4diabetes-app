@@ -51,6 +51,8 @@ class SettingsView extends BaseView<SettingsController> {
                         _mySharedDataWidget(),
                         const Divider(),
                         _notifications(),
+                        const Divider(),
+                        _preferenceWidget(),
                       ],
                     ),
                   ),
@@ -161,6 +163,27 @@ class SettingsView extends BaseView<SettingsController> {
       ),
       onTap: () {
        // _settingsController.platform.invokeMethod('Wallet');
+        return;
+      },
+    );
+  }
+
+  Widget _preferenceWidget() {
+    return ListTile(
+      dense: true,
+      visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
+      title: Text(
+        controller.appLocalization.settingsPrivacyDashboard,
+        style: const TextStyle(
+          fontSize: 14,
+        ),
+      ),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        size: 15.0,
+      ),
+      onTap: () {
+        _settingsController.platform.invokeMethod('Preferences');
         return;
       },
     );
