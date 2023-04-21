@@ -8,7 +8,6 @@ import '/app/core/base/base_view.dart';
 import '/app/modules/home/controllers/home_controller.dart';
 import 'package:d_chart/d_chart.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class HomeView extends BaseView<HomeController> {
   static const double toolbarHeight = 80;
