@@ -52,7 +52,7 @@ class HomeView extends BaseView<HomeController> {
       ),
     );
   }
-
+final HomeController _homeController=HomeController();
   @override
   Widget body(BuildContext context) {
     return Scaffold(
@@ -76,7 +76,7 @@ class HomeView extends BaseView<HomeController> {
               text: controller.appLocalization.generalShareData,
 
               onPressed: () {
-                return;
+                _homeController.platform.invokeMethod('SharedData');
               },
             ),
           ),

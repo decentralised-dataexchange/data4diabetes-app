@@ -27,7 +27,7 @@ class LoginController extends BaseController {
         LoginRequest(mobile_number: isdCode! + phoneNumberController.text);
     try {
       LoginResponse response = await _impl.login(request);
-      if (response.msg == "OTP send") {
+      if (response.msg == "OTP sent") {
         hideLoading();
         phoneNumberController.clear();
         isControl.value = true;

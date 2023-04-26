@@ -22,7 +22,7 @@ class SettingsView extends BaseView<SettingsController> {
     );
   }
 
-  SettingsController _settingsController = SettingsController();
+  final SettingsController _settingsController = SettingsController();
 
   @override
   Widget body(BuildContext context) {
@@ -184,7 +184,11 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-        return;
+        if (Platform.isAndroid) {
+          _settingsController.platform.invokeMethod('MySharedData');
+        } else if (Platform.isIOS) {
+          showToast('will coming soon');
+        }
       },
     );
   }

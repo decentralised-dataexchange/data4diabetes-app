@@ -52,6 +52,12 @@ class MainActivity : FlutterActivity() {
                 "Notifications"->{
                     DataWallet.showNotifications(this)
                 }
+                "MySharedData"->{
+                    DataWallet.showMySharedData(this)
+                }
+                "SharedData"->{
+                    DataWallet.openShareData(this)
+                }
                 "Preferences"->{
                     IgrantSdk().withApiKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2MzhkZTMzMDJmNWQxNzAwMDE0NDMxZjMiLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcwMTM0NzQ2N30.2q7ENyEIXPRpQ1aF70jcF4XiQJs7YqOHwIogWXt1x5g")
                         .withUserId("638de3302f5d1700014431f3")

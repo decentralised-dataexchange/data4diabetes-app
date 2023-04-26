@@ -21,7 +21,7 @@ class OtpController extends BaseController {
   final TextEditingController verifyOtpController = TextEditingController();
   final UserRepositoryImpl _impl = UserRepositoryImpl();
   final PreferenceManagerImpl _preferenceManagerImpl = PreferenceManagerImpl();
-
+  final int statusCode = 200;
   void verifyOTP() async {
     showLoading();
 
@@ -30,8 +30,8 @@ class OtpController extends BaseController {
     );
     try {
       VerifyOtpResponse response = await _impl.verifyOTP(request);
-      if (response.token != null) {
-        _preferenceManagerImpl.setString('token', response.token!);
+      if (response.status==statusCode) {
+        _preferenceManagerImpl.setString('token', response.data!.token!);
         hideLoading();
         verifyOtpController.clear();
         Get.offAll(MainView());
