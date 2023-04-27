@@ -163,7 +163,7 @@ class SettingsView extends BaseView<SettingsController> {
         if (Platform.isAndroid) {
           _settingsController.platform.invokeMethod('Wallet');
         } else if (Platform.isIOS) {
-          showToast('will coming soon');
+          showToast('Coming soon');
         }
       },
     );
@@ -187,7 +187,7 @@ class SettingsView extends BaseView<SettingsController> {
         if (Platform.isAndroid) {
           _settingsController.platform.invokeMethod('MySharedData');
         } else if (Platform.isIOS) {
-          showToast('will coming soon');
+          showToast('Coming soon');
         }
       },
     );
@@ -211,7 +211,7 @@ class SettingsView extends BaseView<SettingsController> {
         if (Platform.isAndroid) {
           _settingsController.platform.invokeMethod('Preferences');
         } else if (Platform.isIOS) {
-          showToast('will coming soon');
+          showToast('Coming soon');
         }
       },
     );
@@ -253,7 +253,7 @@ class SettingsView extends BaseView<SettingsController> {
         if (Platform.isAndroid) {
           _settingsController.platform.invokeMethod('Notifications');
         } else if (Platform.isIOS) {
-          showToast('will coming soon');
+          showToast('Coming soon');
         }
       },
     );

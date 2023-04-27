@@ -32,10 +32,12 @@ class BottomNavBar extends StatelessWidget {
     return Obx(
       () => BottomNavigationBar(
 
+
         key: bottomNavKey,
         items: navItems
             .map(
-              (BottomNavItem navItem) => BottomNavigationBarItem(
+              (BottomNavItem navItem) =>
+                  BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     "images/${navItem.iconSvgName}",
                     height: AppValues.iconDefaultSize,
@@ -63,12 +65,15 @@ class BottomNavBar extends StatelessWidget {
               navController.platform.invokeMethod('Connections');
             } else if (Platform.isIOS) {
               Fluttertoast.showToast(
-                  msg: 'will coming soon',
+                  msg: 'coming soon',
                   toastLength: Toast.LENGTH_SHORT,
                   timeInSecForIosWeb: 1);
             }
           } else if (index == 2) {
-            return;
+            Fluttertoast.showToast(
+                msg: 'coming soon',
+                toastLength: Toast.LENGTH_SHORT,
+                timeInSecForIosWeb: 1);
           } else {
             navController.updateSelectedIndex(index);
             onNewMenuSelected(navItems[index].menuCode);

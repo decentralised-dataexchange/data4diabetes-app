@@ -14,8 +14,8 @@ class HomeView extends BaseView<HomeController> {
   static const int aspectRatioFrom = 16;
   static const int aspectRatioTo = 10;
   static const int donutWidth = 40;
-  static const double labelLinelength = 16;
-  static const int labelFontSize = 12;
+  static const double labelLinelength = 10;
+  static const int labelFontSize = 11;
   static const double containerWidth = 200;
   static const double circleContainerWidth = 50;
   static const double circleContainerHeight = 50;
@@ -89,7 +89,7 @@ final HomeController _homeController=HomeController();
 
   Widget _donetChartWidget() {
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(0),
       child: AspectRatio(
         aspectRatio: aspectRatioFrom / aspectRatioTo,
         child: Stack(
@@ -98,8 +98,8 @@ final HomeController _homeController=HomeController();
               data: [
                 {'domain': 'Medication','label':controller.appLocalization.homeMedication, 'measure':medicationMeasure },
                 {'domain': 'Activities','label':controller.appLocalization.homeActivities, 'measure': activitiesMeasure},
-                {'domain':'Food','label':controller.appLocalization.homeFood, 'measure': foodMeasure},
-                {'domain': 'Environment','label':controller.appLocalization.homeEnvironment, 'measure': environmentMeasure},
+                {'domain':'Environment','label':controller.appLocalization.homeEnvironment, 'measure': foodMeasure},
+                {'domain': 'Food','label':controller.appLocalization.homeFood, 'measure': environmentMeasure},
                 {'domain': 'Biological','label':controller.appLocalization.homeBiological, 'measure': biologicalMeasure},
               ],
               fillColor: (pieData, index) {
@@ -125,6 +125,7 @@ final HomeController _homeController=HomeController();
               labelLineColor: AppColors.lightGreyColor,
               labelPadding: 5,
               labelFontSize: labelFontSize,
+
             ),
             // _internalIconDonet(),
             _sugarLevel(),
