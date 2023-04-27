@@ -30,8 +30,8 @@ class OtpController extends BaseController {
     );
     try {
       VerifyOtpResponse response = await _impl.verifyOTP(request);
-      if (response.status==statusCode) {
-        _preferenceManagerImpl.setString('token', response.data!.token!);
+      if (response.token!=null) {
+        _preferenceManagerImpl.setString('token', response.token);
         hideLoading();
         verifyOtpController.clear();
         Get.offAll(MainView());
