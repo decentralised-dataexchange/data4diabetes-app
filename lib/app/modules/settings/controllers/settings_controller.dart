@@ -7,7 +7,7 @@ import '/app/core/base/base_controller.dart';
 class SettingsController extends BaseController {
   var platform = const MethodChannel('io.igrant.data4diabetes.channel');
   final ver = Rx<String>("");
-  String build = "";
+  final build =Rx<String>("");
 
   RxString languageCode = 'en'.obs;
 
@@ -22,7 +22,8 @@ class SettingsController extends BaseController {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     ver.value = packageInfo?.version ?? "";
     print(ver.value);
-    build = packageInfo?.buildNumber ?? "";
+    build.value = packageInfo?.buildNumber ?? "";
+    print(build.value);
   }
 
   void refreshLanguage() {
