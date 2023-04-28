@@ -13,10 +13,10 @@ import '../../settings/controllers/settings_controller.dart';
 class LauncherBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<LauncherController>(
-          () => LauncherController(),
-      fenix: true,
-    );
+    // Get.lazyPut<LauncherController>(
+    //       () => LauncherController(),
+    //   fenix: true,
+    // );
     Get.lazyPut<LoginController>(
           () => LoginController(),
       fenix: true,

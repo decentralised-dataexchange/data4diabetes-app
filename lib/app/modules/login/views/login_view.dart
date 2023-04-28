@@ -95,16 +95,16 @@ class LoginView extends BaseView<LoginController> {
         filled: true,
         errorStyle: TextStyle(height: 0, color: Colors.red),
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.zero,
+            borderRadius:BorderRadius.all(Radius.circular(8.0)),
             borderSide: BorderSide(color: Color(0xFF707070), width: .5)),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.zero,
+            borderRadius:BorderRadius.all(Radius.circular(8.0)),
             borderSide: BorderSide(color: Color(0xFF707070), width: .5)),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.zero,
+            borderRadius:BorderRadius.all(Radius.circular(8.0)),
             borderSide: BorderSide(color: Color(0xFF707070), width: .5)),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.zero,
+          borderRadius:BorderRadius.all(Radius.circular(8.0)),
           borderSide: BorderSide(color: Colors.red, width: .5),
         ),
       ),

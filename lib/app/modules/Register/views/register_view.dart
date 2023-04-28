@@ -131,16 +131,16 @@ class RegisterView extends BaseView<RegisterController> {
           errorStyle: const TextStyle(height: 0, color: Colors.red),
           hintStyle: settingsItemStyle,
           border: const OutlineInputBorder(
-              borderRadius: BorderRadius.zero,
+              borderRadius:BorderRadius.all(Radius.circular(8.0)),
               borderSide: BorderSide(color: Color(0xFF707070), width: .5)),
           enabledBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.zero,
+              borderRadius:BorderRadius.all(Radius.circular(8.0)),
               borderSide: BorderSide(color: Color(0xFF707070), width: .5)),
           focusedBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.zero,
+              borderRadius:BorderRadius.all(Radius.circular(8.0)),
               borderSide: BorderSide(color: Color(0xFF707070), width: .5)),
           errorBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.zero,
+            borderRadius:BorderRadius.all(Radius.circular(8.0)),
             borderSide: BorderSide(color: Colors.red, width: .5),
           ),
         ),
@@ -168,16 +168,16 @@ class RegisterView extends BaseView<RegisterController> {
           errorStyle: const TextStyle(height: 0, color: Colors.red),
           hintStyle: settingsItemStyle,
           border: const OutlineInputBorder(
-              borderRadius: BorderRadius.zero,
+              borderRadius:BorderRadius.all(Radius.circular(8.0)),
               borderSide: BorderSide(color: Color(0xFF707070), width: .5)),
           enabledBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.zero,
+              borderRadius:BorderRadius.all(Radius.circular(8.0)),
               borderSide: BorderSide(color: Color(0xFF707070), width: .5)),
           focusedBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.zero,
+              borderRadius:BorderRadius.all(Radius.circular(8.0)),
               borderSide: BorderSide(color: Color(0xFF707070), width: .5)),
           errorBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.zero,
+            borderRadius:BorderRadius.all(Radius.circular(8.0)),
             borderSide: BorderSide(color: Colors.red, width: .5),
           ),
         ),
@@ -231,16 +231,16 @@ class RegisterView extends BaseView<RegisterController> {
         filled: true,
         errorStyle: TextStyle(height: 0, color: Colors.red),
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.zero,
+            borderRadius:BorderRadius.all(Radius.circular(8.0)),
             borderSide: BorderSide(color: Color(0xFF707070), width: .5)),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.zero,
+            borderRadius:BorderRadius.all(Radius.circular(8.0)),
             borderSide: BorderSide(color: Color(0xFF707070), width: .5)),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.zero,
+            borderRadius:BorderRadius.all(Radius.circular(8.0)),
             borderSide: BorderSide(color: Color(0xFF707070), width: .5)),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.zero,
+          borderRadius:BorderRadius.all(Radius.circular(8.0)),
           borderSide: BorderSide(color: Colors.red, width: .5),
         ),
       ),
