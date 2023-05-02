@@ -1,3 +1,4 @@
+import 'package:Data4Diabetes/app/modules/Dexcom/controllers/dexcom_controller.dart';
 import 'package:Data4Diabetes/app/modules/launcher/controller/launcher_controller.dart';
 import 'package:get/get.dart';
 import '../../Otp/controllers/otp_controller.dart';
@@ -49,6 +50,10 @@ class LauncherBinding extends Bindings {
     );
     Get.lazyPut<LanguageController>(
           () => LanguageController(),
+      fenix: true,
+    );
+    Get.lazyPut<DexcomController>(
+          () => DexcomController(),
       fenix: true,
     );
   }

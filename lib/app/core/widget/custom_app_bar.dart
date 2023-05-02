@@ -7,6 +7,7 @@ import '/app/core/widget/app_bar_title.dart';
 //Default appbar customized with the design of our app
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final String appBarTitleText;
+  final Color? backgroundColor;
   final List<Widget>? actions;
   final bool isBackButtonEnabled;
 
@@ -14,6 +15,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
     Key? key,
     required this.appBarTitleText,
     this.actions,
+    this.backgroundColor,
     this.isBackButtonEnabled = true,
   }) : super(key: key);
 
@@ -24,7 +26,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
      // backgroundColor: AppColors.appBarColor,
-      backgroundColor: Palette.backgroundColor,
+      backgroundColor:backgroundColor?? Palette.backgroundColor,
       //centerTitle: true,
       elevation: 0,
       automaticallyImplyLeading: isBackButtonEnabled,

@@ -1,3 +1,5 @@
+import 'package:Data4Diabetes/app/modules/Dexcom/bindings/dexcom_bindings.dart';
+import 'package:Data4Diabetes/app/modules/Dexcom/views/dexcom_view.dart';
 import 'package:Data4Diabetes/app/modules/Otp/bindings/otp_binding.dart';
 import 'package:Data4Diabetes/app/modules/Otp/views/otp_view.dart';
 import 'package:Data4Diabetes/app/modules/Register/bindings/register_binding.dart';
@@ -69,6 +71,11 @@ class AppPages {
       name: _Paths.LANGUAGE,
       page: () => LanguageView(),
       binding: LanguageBinding(),
+    ),
+    GetPage(
+      name: _Paths.DEXCOM,
+      page: () => DexcomView(),
+      binding: DexcomBinding(),
     ),
   ];
 }

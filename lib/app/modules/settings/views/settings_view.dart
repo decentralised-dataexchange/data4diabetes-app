@@ -1,9 +1,11 @@
 import 'package:Data4Diabetes/app/Constants/Palette.dart';
+import 'package:Data4Diabetes/app/modules/Dexcom/views/dexcom_view.dart';
 import 'package:Data4Diabetes/app/modules/language/views/language_view.dart';
 import 'package:Data4Diabetes/app/modules/settings/controllers/settings_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import '/app/core/base/base_view.dart';
 import '/app/core/widget/custom_app_bar.dart';
 import 'dart:io' show Platform;
@@ -77,6 +79,7 @@ class SettingsView extends BaseView<SettingsController> {
             _languageWidget(controller),
             const Divider(),
             _securityWidget(controller),
+            _dexcomDashboard(),
           ],
         ),
       ),
@@ -258,4 +261,27 @@ class SettingsView extends BaseView<SettingsController> {
       },
     );
   }
+
+ Widget _dexcomDashboard() {
+    return ListTile(
+      dense: true,
+      visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
+      title: Text(
+        controller.appLocalization.settingsDexcom,
+        style: const TextStyle(
+          fontSize: 14,
+        ),
+      ),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        size: 15.0,
+      ),
+      onTap: () {
+        print('clicked');
+       // const DexcomDashboard();
+        Get.to(DexcomView());
+      },
+    );
+  }
 }
+
