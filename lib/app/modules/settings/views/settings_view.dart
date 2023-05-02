@@ -227,7 +227,7 @@ class SettingsView extends BaseView<SettingsController> {
           'images/igrant_icon.png',
           height: imagelogoHeight,
         ),
-        Text("v " + _settingsController.ver.value),
+        Text("v " + _settingsController.ver.value+" - "+_settingsController.build.value),
         const SizedBox(
           height: 10,
         ),
