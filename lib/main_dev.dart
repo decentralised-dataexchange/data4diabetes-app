@@ -9,6 +9,7 @@ void main() {
   EnvConfig devConfig = EnvConfig(
     appName: "Flutter GetX Template Dev",
     baseUrl: "https://data4diabetes-staging-api.igrant.io/",
+    dexComBaseUrl: "https://sandbox-api.dexcom.com",
     shouldCollectCrashLog: true,
   );
 

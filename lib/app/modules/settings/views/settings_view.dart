@@ -277,8 +277,6 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-        print('clicked');
-       // const DexcomDashboard();
         Get.to(DexcomView());
       },
     );

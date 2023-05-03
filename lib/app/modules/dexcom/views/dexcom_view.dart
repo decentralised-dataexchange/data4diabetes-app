@@ -9,19 +9,14 @@ class DexcomView extends BaseView<DexcomController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return CustomAppBar(
-
       appBarTitleText: '',
-      backgroundColor:Colors.white,
+      backgroundColor: Colors.white,
     );
   }
-  final DexcomController _dexcomController=Get.find();
+
+  final DexcomController _dexcomController = Get.find();
   @override
   Widget body(BuildContext context) {
-    return Scaffold(
-
-      body: SafeArea(child: WebViewWidget(controller: _dexcomController.controller)),
-    );
+    return WebViewWidget(controller: _dexcomController.controller);
   }
 }
-
-
