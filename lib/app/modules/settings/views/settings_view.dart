@@ -312,18 +312,11 @@ class SettingsView extends BaseView<SettingsController> {
    ),
 
    onTap: () {
-     _logout();
+     _settingsController.logout();
    },
  );}
 
-  void _logout() async{
-    // SharedPreferences _prefs = await SharedPreferences.getInstance();
-    // _prefs.clear();
-    // Get.offAll(const LauncherView());
 
-    return  ;
-
-  }
 
 
 }
