@@ -1,9 +1,14 @@
 import 'package:Data4Diabetes/app/Constants/Palette.dart';
 import 'package:Data4Diabetes/app/modules/language/views/language_view.dart';
+import 'package:Data4Diabetes/app/modules/launcher/views/launcher_view.dart';
+import 'package:Data4Diabetes/app/modules/login/views/login_view.dart';
+import 'package:Data4Diabetes/app/modules/privacyPolicy/views/privacyPolicy_view.dart';
 import 'package:Data4Diabetes/app/modules/settings/controllers/settings_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import '/app/core/base/base_view.dart';
 import '/app/core/widget/custom_app_bar.dart';
 import 'dart:io' show Platform;
@@ -22,7 +27,7 @@ class SettingsView extends BaseView<SettingsController> {
     );
   }
 
-  final SettingsController _settingsController = SettingsController();
+  final SettingsController _settingsController = Get.find();
 
   @override
   Widget body(BuildContext context) {
@@ -53,6 +58,8 @@ class SettingsView extends BaseView<SettingsController> {
           children: [
             _myWalletWidget(),
             const Divider(),
+            _myConnectionsWidget(),
+            const Divider(),
             _mySharedDataWidget(),
             const Divider(),
             _preferenceWidget(),
@@ -77,6 +84,8 @@ class SettingsView extends BaseView<SettingsController> {
             _languageWidget(controller),
             const Divider(),
             _securityWidget(controller),
+            const Divider(),
+            _logoutWidget(),
           ],
         ),
       ),
@@ -144,7 +153,6 @@ class SettingsView extends BaseView<SettingsController> {
       ),
     );
   }
-
   Widget _myWalletWidget() {
     return ListTile(
       dense: true,
@@ -162,6 +170,29 @@ class SettingsView extends BaseView<SettingsController> {
       onTap: () {
         if (Platform.isAndroid) {
           _settingsController.platform.invokeMethod('Wallet');
+        } else if (Platform.isIOS) {
+          showToast('Coming soon');
+        }
+      },
+    );
+  }
+  Widget _myConnectionsWidget() {
+    return ListTile(
+      dense: true,
+      visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
+      title: Text(
+        controller.appLocalization.settingsConnections,
+        style: const TextStyle(
+          fontSize: 14,
+        ),
+      ),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        size: 15.0,
+      ),
+      onTap: () {
+        if (Platform.isAndroid) {
+          _settingsController.platform.invokeMethod('Connections');
         } else if (Platform.isIOS) {
           showToast('Coming soon');
         }
@@ -226,7 +257,17 @@ class SettingsView extends BaseView<SettingsController> {
         Image.asset(
           'images/igrant_icon.png',
           height: imagelogoHeight,
+
+
         ),
+        InkWell(
+          onTap: (){
+           Get.to(PrivacyPolicyView());
+          },
+            child: const Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Text('Privacy Policy',style:TextStyle(fontSize: 14)),
+            )),
         Text("v " + _settingsController.ver.value+" - "+_settingsController.build.value),
         const SizedBox(
           height: 10,
@@ -258,4 +299,31 @@ class SettingsView extends BaseView<SettingsController> {
       },
     );
   }
+
+ Widget _logoutWidget() {  return ListTile(
+   dense: true,
+   visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
+   title: Text(
+     controller.appLocalization.settingsLogout,
+     style: const TextStyle(
+       fontSize: 14,
+       color: Palette.red,
+     ),
+   ),
+
+   onTap: () {
+     _logout();
+   },
+ );}
+
+  void _logout() async{
+    // SharedPreferences _prefs = await SharedPreferences.getInstance();
+    // _prefs.clear();
+    // Get.offAll(const LauncherView());
+
+    return  ;
+
+  }
+
+
 }

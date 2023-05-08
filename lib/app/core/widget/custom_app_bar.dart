@@ -9,12 +9,15 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final String appBarTitleText;
   final List<Widget>? actions;
   final bool isBackButtonEnabled;
+  final Color? backgroundColor;
 
   CustomAppBar({
     Key? key,
     required this.appBarTitleText,
     this.actions,
     this.isBackButtonEnabled = true,
+    this.backgroundColor,
+
   }) : super(key: key);
 
   @override
@@ -24,7 +27,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
      // backgroundColor: AppColors.appBarColor,
-      backgroundColor: Palette.backgroundColor,
+      backgroundColor:backgroundColor?? Palette.backgroundColor,
       //centerTitle: true,
       elevation: 0,
       automaticallyImplyLeading: isBackButtonEnabled,

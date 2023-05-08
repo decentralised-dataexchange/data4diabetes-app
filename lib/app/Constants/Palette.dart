@@ -7,6 +7,7 @@ class Palette {
   static const backgroundColor = Color(0xFFf2f2f6);
   static const black = Colors.black;
   static const white = Colors.white;
+  static const red = Color(0XFFff4040);
   static const searchHintColor = Color(0xFFB9B9B9);
   static const greyCancel = Color(0xFF767676);
   static const textColor = Color(0xFF413F41);
