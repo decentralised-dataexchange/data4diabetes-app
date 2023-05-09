@@ -15,8 +15,8 @@ class ScanAndCheckView extends BaseView<ScanAndCheckController> {
   PreferredSizeWidget? appBar(BuildContext context) {
     return AppBar(
       title:  Text(
-        controller.appLocalization.scanAndCheckFoodScanAndCheck,
-        style: const TextStyle(color: Colors.black),
+        controller.appLocalization.scanAndCheckMedicineScanAndAdd,
+        style: const TextStyle(color: Colors.black,letterSpacing: 1.0),
       ),
       centerTitle: true,
       elevation: 0,
@@ -32,9 +32,7 @@ class ScanAndCheckView extends BaseView<ScanAndCheckController> {
         child: Column(
           children: [
             _mobileScanner(context),
-            _carboHydrateValue(),
-            _glycemicIndexValue(),
-            _insulinUnitValue(),
+            _contentMedicineText(context),
             _confirmRejectWidget(),
           ],
         ),
@@ -75,86 +73,36 @@ class ScanAndCheckView extends BaseView<ScanAndCheckController> {
       ),
     );
   }
-
-  Widget _carboHydrateValue() {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children:  [
-            Text(controller.appLocalization.scanAndCheckCarbohydrates),
-            const SizedBox(
-              width: 13,
-            ),
-            const Text(
-              '80',
-              style: TextStyle(color: Colors.green),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _glycemicIndexValue() {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(controller.appLocalization.scanAndCheckGlycemicIndex),
-            const SizedBox(
-              width: 10,
-            ),
-            const Text(
-              '94',
-              style: TextStyle(color: Colors.red),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _insulinUnitValue() {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              controller.appLocalization.scanAndCheckRecommendedInsulin,
-              style: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            const Text(
-              '8',
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.w600,fontSize: 16),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _confirmRejectWidget() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          ///reject button
+          InkWell(
+            onTap: (){
+              return;
+            },
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                    height: sizedBoxheight,
+                    width: sizedBoxwidth,
+                    child: Image.asset(
+                      'images/reject.png',
+                      fit: BoxFit.cover,
+                      color: Colors.red,
+                    )),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(controller.appLocalization.scanAndCheckReject),
+              ],
+            ),
+          ),
+         /// confirm button
           InkWell(
             onTap: (){return;},
             child: Column(
@@ -175,30 +123,16 @@ class ScanAndCheckView extends BaseView<ScanAndCheckController> {
               ],
             ),
           ),
-          InkWell(
-            onTap: (){
-              return;
-            },
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                    height: sizedBoxheight,
-                    width: sizedBoxwidth,
-                    child: Image.asset(
-                      'images/reject.png',
-                      fit: BoxFit.cover,
-                      color: Colors.red,
-                    )),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(controller.appLocalization.scanAndCheckRejectAndChange),
-              ],
-            ),
-          ),
+
         ],
       ),
     );
   }
+
+ Widget _contentMedicineText(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical:20.0),
+      child: Text(controller.appLocalization.scanAndCheckContentText,textAlign: TextAlign.center,style: const TextStyle(fontSize: 15.0),),
+    );
+ }
 }
