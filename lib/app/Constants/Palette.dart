@@ -14,4 +14,5 @@ class Palette {
   static const textColorLight = Color(0xFF676767);
   static const hyperLinkBlue = Color(0xFF1AA3FF);
   static const textGreen = Color(0xFF14662a);
+  static const lightGrey = Color(0xFFF5F5F0);
 }

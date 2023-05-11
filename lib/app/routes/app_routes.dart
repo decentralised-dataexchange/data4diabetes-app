@@ -13,10 +13,11 @@ abstract class Routes {
   static const SETTINGS = _Paths.SETTINGS;
   static const LANGUAGE = _Paths.LANGUAGE;
   static const PRIVACYPOLICY = _Paths.PRIVACYPOLICY;
+  static const INSIGHTS = _Paths.INSIGHTS;
 }
 
 abstract class _Paths {
- static const LAUNCHER = '/launcher';
+  static const LAUNCHER = '/launcher';
   static const LOGIN = '/login';
   static const OTP = '/otp';
   static const REGISTER = '/register';
@@ -25,5 +26,6 @@ abstract class _Paths {
   static const SCANANDCHECK = '/scanAndCheck';
   static const SETTINGS = '/settings';
   static const LANGUAGE = '/language';
- static const PRIVACYPOLICY = '/privacyPolicy';
+  static const PRIVACYPOLICY = '/privacyPolicy';
+  static const INSIGHTS = '/insights';
 }
