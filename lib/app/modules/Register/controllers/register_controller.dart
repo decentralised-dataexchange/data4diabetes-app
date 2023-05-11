@@ -29,6 +29,7 @@ class RegisterController extends BaseController {
   String? isdCode;
   @override
   void onInit() {
+
     pageController = PageController(initialPage: selectedPage.value);
     super.onInit();
   }

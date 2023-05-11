@@ -34,6 +34,9 @@ class RegisterView extends BaseView<RegisterController> {
   Widget body(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+        _registerController.firstNameController.clear();
+        //_registerController.lastNameController..clear();
+        _registerController.mobileNumberController.clear();
         _registerController.selectedIndex.value = 0;
         _registerController.selectedPage.value = 0;
         Get.back();
@@ -91,7 +94,7 @@ class RegisterView extends BaseView<RegisterController> {
         controller: _registerController.firstNameController,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Please enter firstname';
+            return appLocalization.registerFirstNameValidationText;
           }
 
           return null;
@@ -155,9 +158,9 @@ class RegisterView extends BaseView<RegisterController> {
           String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
           RegExp regExp = RegExp(pattern);
           if (value == null || value.isEmpty) {
-            return 'Please enter mobile number';
+            return appLocalization.registerPhoneNumberValidationText;
           } else if (!regExp.hasMatch(value)) {
-            return 'Please enter valid mobile number';
+            return appLocalization.registerValidPhoneNumberValidationText;
           }
 
           return null;
@@ -249,6 +252,7 @@ class RegisterView extends BaseView<RegisterController> {
           fontWeight: FontWeight.w500,
           height: 1.15,
         ),
+        textAlign: TextAlign.center,
       ),
     );
   }
@@ -258,16 +262,15 @@ class RegisterView extends BaseView<RegisterController> {
       textAlign: TextAlign.justify,
       text: TextSpan(
         children: [
-          const TextSpan(
-            text:
-                'You may be sharing sensitive info with this site or app. See the ',
-            style: TextStyle(
+           TextSpan(
+            text: appLocalization.registerTrustContent+' ',
+            style: const TextStyle(
               fontSize: 16,
               color: Colors.black,
             ),
           ),
           TextSpan(
-            text: 'data agreement details ',
+            text: appLocalization.registerDataAgreementDetails+' ',
             style: const TextStyle(
               color: Colors.blue,
               decoration: TextDecoration.underline,
@@ -278,15 +281,15 @@ class RegisterView extends BaseView<RegisterController> {
                 print('data agreement clicked');
               },
           ),
-          const TextSpan(
-            text: 'and ',
-            style: TextStyle(
+         TextSpan(
+            text: appLocalization.registerAnd+' ',
+            style: const TextStyle(
               fontSize: 16,
               color: Colors.black,
             ),
           ),
           TextSpan(
-            text: 'Terms of Service.',
+            text: appLocalization.registerTermsOfService,
             style: const TextStyle(
               color: Colors.blue,
               decoration: TextDecoration.underline,
@@ -643,7 +646,7 @@ class RegisterView extends BaseView<RegisterController> {
           text: TextSpan(
             children: [
               TextSpan(
-                text: 'Skip ',
+                text: appLocalization.registerSkip,
                 style: const TextStyle(
                   color: Colors.blue,
                   decoration: TextDecoration.underline,
