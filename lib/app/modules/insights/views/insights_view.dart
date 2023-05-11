@@ -507,12 +507,6 @@ class InsightsView extends BaseView<InsightsController> {
               _tileAverageValue(),
               _tileCGM(),
               _tileCGMValue(),
-
-
-
-
-
-
             ],
           ),
         ),
@@ -521,64 +515,71 @@ class InsightsView extends BaseView<InsightsController> {
   }
 
   _tileGMI() {
-    return  GridTile(
-        child:
-        Container(color: Colors.white, child: const Padding(
-          padding: EdgeInsets.only(left: 5.0),
-          child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text('GMI 7.3%')),
-        )));
+    return GridTile(
+        child: Container(
+            color: Colors.white,
+            child: const Padding(
+              padding: EdgeInsets.only(left: 5.0),
+              child: Align(
+                  alignment: Alignment.centerLeft, child: Text('GMI 7.3%')),
+            )));
   }
 
   _tileGMIValue() {
-    return  GridTile(
-        child:
-        Container(color: Colors.white, child: const Padding(
-          padding: EdgeInsets.only(left: 5.0),
-          child: Align(
-              alignment: Alignment.centerLeft,child: Text('7.3%')),
-        )));
+    return GridTile(
+        child: Container(
+            color: Colors.white,
+            child: const Padding(
+              padding: EdgeInsets.only(left: 5.0),
+              child:
+                  Align(alignment: Alignment.centerLeft, child: Text('7.3%')),
+            )));
   }
 
   _tileAverage() {
-    return  GridTile(
-        child:
-        Container(color: Colors.white, child: const Padding(
-          padding: EdgeInsets.only(left: 5.0),
-          child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text('Average Value 9.3')),
-        )));
+    return GridTile(
+        child: Container(
+            color: Colors.white,
+            child: const Padding(
+              padding: EdgeInsets.only(left: 5.0),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Average Value 9.3')),
+            )));
   }
 
   _tileAverageValue() {
     return GridTile(
-        child:
-        Container(color: Colors.white, child: const Padding(
-          padding: EdgeInsets.only(left: 5.0),
-          child: Align(
-              alignment: Alignment.centerLeft,child: Text('9.3')),
-        )));
+        child: Container(
+            color: Colors.white,
+            child: const Padding(
+              padding: EdgeInsets.only(left: 5.0),
+              child: Align(alignment: Alignment.centerLeft, child: Text('9.3')),
+            )));
   }
 
   _tileCGM() {
-    return    GridTile(
-  child:
-  Container(color: Colors.white, child: const Padding(
-    padding: EdgeInsets.only(left: 5.0),
-    child: Align(
-        alignment: Alignment.centerLeft,child: Text('% Active time with CGM')),
-  )));}
+    return GridTile(
+        child: Container(
+            color: Colors.white,
+            child: const Padding(
+              padding: EdgeInsets.only(left: 5.0),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('% Active time with CGM')),
+            )));
+  }
 
   _tileCGMValue() {
     return GridTile(
-        child:
-        Container(color: Colors.white, child: const Padding(
-          padding: EdgeInsets.only(left: 5.0),
-          child: Align(
-              alignment: Alignment.centerLeft,child: Text('90.8% (27.2 days)')),
-        )));
+        child: Container(
+            color: Colors.white,
+            child: const Padding(
+              padding: EdgeInsets.only(left: 5.0),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('90.8% (27.2 days)')),
+            )));
   }
 }
 
