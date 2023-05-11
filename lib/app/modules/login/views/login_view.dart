@@ -81,9 +81,9 @@ class LoginView extends BaseView<LoginController> {
         String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
         RegExp regExp = RegExp(pattern);
         if (value == null || value.isEmpty) {
-          return 'Please enter mobile number';
+          return appLocalization.loginPhoneNumberValidationText;
         } else if (!regExp.hasMatch(value)) {
-          return 'Please enter valid mobile number';
+          return appLocalization.loginValidPhoneNumberValidationText;
         }
 
         return null;
