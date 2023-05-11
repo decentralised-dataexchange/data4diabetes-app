@@ -34,6 +34,6 @@ class SettingsController extends BaseController {
   Future<void> logout() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     _prefs.clear();
-   // Get.offAll(const LauncherView());
+   Get.offAll(const LauncherView());
   }
 }
