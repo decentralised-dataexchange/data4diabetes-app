@@ -36,7 +36,7 @@ class MainView extends BaseView<MainController> {
     switch (menuCode) {
       case MenuCode.HOME:
         return homeView;
-      case MenuCode.CONNECTIONS:
+      case MenuCode.MYWALLET:
         return homeView;
       case MenuCode.INSIGHTS:
         return homeView;

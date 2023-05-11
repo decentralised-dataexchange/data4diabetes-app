@@ -2,6 +2,7 @@ import 'package:Data4Diabetes/app/data/remote/user_remote_data_source.dart';
 import 'package:Data4Diabetes/app/modules/Otp/controllers/otp_controller.dart';
 import 'package:Data4Diabetes/app/modules/Register/controllers/register_controller.dart';
 import 'package:Data4Diabetes/app/modules/login/controllers/login_controller.dart';
+import 'package:Data4Diabetes/app/modules/privacyPolicy/controllers/privacyPolicy_controller.dart';
 import 'package:get/get.dart';
 
 import '../../../bindings/initial_binding.dart';
@@ -47,6 +48,10 @@ class LoginBinding extends Bindings {
     );
     Get.lazyPut<LanguageController>(
           () => LanguageController(),
+      fenix: true,
+    );
+    Get.lazyPut<PrivacyPolicyController>(
+          () => PrivacyPolicyController(),
       fenix: true,
     );
   }

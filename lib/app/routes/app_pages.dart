@@ -8,6 +8,8 @@ import 'package:Data4Diabetes/app/modules/launcher/bindings/launcher_binding.dar
 import 'package:Data4Diabetes/app/modules/launcher/views/launcher_view.dart';
 import 'package:Data4Diabetes/app/modules/login/bindings/login_binding.dart';
 import 'package:Data4Diabetes/app/modules/login/views/login_view.dart';
+import 'package:Data4Diabetes/app/modules/privacyPolicy/bindings/privacyPolicy_binding.dart';
+import 'package:Data4Diabetes/app/modules/privacyPolicy/views/privacyPolicy_view.dart';
 import 'package:Data4Diabetes/app/modules/scan_and_check/bindings/scanAndCheck_binding.dart';
 import 'package:Data4Diabetes/app/modules/scan_and_check/views/scanAndCheck_view.dart';
 import 'package:Data4Diabetes/app/modules/settings/bindings/settings_binding.dart';
@@ -69,6 +71,11 @@ class AppPages {
       name: _Paths.LANGUAGE,
       page: () => LanguageView(),
       binding: LanguageBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRIVACYPOLICY,
+      page: () => PrivacyPolicyView(),
+      binding: PrivacyPolicyBinding(),
     ),
   ];
 }

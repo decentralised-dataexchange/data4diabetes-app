@@ -62,7 +62,7 @@ class BottomNavBar extends StatelessWidget {
         onTap: (index) {
           if (index == 1) {
             if (Platform.isAndroid) {
-              navController.platform.invokeMethod('Connections');
+              navController.platform.invokeMethod('Wallet');
             } else if (Platform.isIOS) {
               Fluttertoast.showToast(
                   msg: 'coming soon',
@@ -89,11 +89,12 @@ class BottomNavBar extends StatelessWidget {
         navTitle: appLocalization.bottomNavHome,
         iconSvgName: "ic_home.svg",
         menuCode: MenuCode.HOME,
+
       ),
       BottomNavItem(
-          navTitle: appLocalization.bottomNavConnections,
-          iconSvgName: "ic_share.svg",
-          menuCode: MenuCode.CONNECTIONS),
+          navTitle: appLocalization.bottomNavMyWallet,
+          iconSvgName: "ic_mywallet.svg",
+          menuCode: MenuCode.MYWALLET),
       BottomNavItem(
           navTitle: appLocalization.bottomNavInsights,
           iconSvgName: "ic_insights.svg",
