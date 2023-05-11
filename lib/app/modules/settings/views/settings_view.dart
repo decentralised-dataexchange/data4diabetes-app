@@ -239,11 +239,11 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-        if (Platform.isAndroid) {
+        // if (Platform.isAndroid) {
           _settingsController.platform.invokeMethod('Preferences');
-        } else if (Platform.isIOS) {
-          showToast('Coming soon');
-        }
+        // } else if (Platform.isIOS) {
+        //   showToast('Coming soon');
+        // }
       },
     );
   }
