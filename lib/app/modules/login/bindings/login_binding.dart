@@ -1,6 +1,7 @@
 import 'package:Data4Diabetes/app/data/remote/user_remote_data_source.dart';
 import 'package:Data4Diabetes/app/modules/Otp/controllers/otp_controller.dart';
 import 'package:Data4Diabetes/app/modules/Register/controllers/register_controller.dart';
+import 'package:Data4Diabetes/app/modules/insights/controllers/insights_controller.dart';
 import 'package:Data4Diabetes/app/modules/login/controllers/login_controller.dart';
 import 'package:Data4Diabetes/app/modules/privacyPolicy/controllers/privacyPolicy_controller.dart';
 import 'package:get/get.dart';
@@ -15,43 +16,45 @@ import '../../settings/controllers/settings_controller.dart';
 class LoginBinding extends Bindings {
   @override
   void dependencies() {
-
     Get.lazyPut<LoginController>(
       () => LoginController(),
       fenix: true,
     );
     Get.lazyPut<OtpController>(
-          () => OtpController(),
+      () => OtpController(),
       fenix: true,
-
     );
     Get.lazyPut<RegisterController>(
-          () => RegisterController(),
+      () => RegisterController(),
       fenix: true,
-
     );
     Get.lazyPut<MainController>(
-          () => MainController(),
+      () => MainController(),
       fenix: true,
     );
     Get.lazyPut<HomeController>(
-          () => HomeController(),
+      () => HomeController(),
       fenix: true,
     );
     Get.lazyPut<ScanAndCheckController>(
-          () => ScanAndCheckController(),
+      () => ScanAndCheckController(),
       fenix: true,
     );
     Get.lazyPut<SettingsController>(
-          () => SettingsController(),
+      () => SettingsController(),
       fenix: true,
     );
     Get.lazyPut<LanguageController>(
-          () => LanguageController(),
+      () => LanguageController(),
       fenix: true,
     );
     Get.lazyPut<PrivacyPolicyController>(
-          () => PrivacyPolicyController(),
+      () => PrivacyPolicyController(),
+      fenix: true,
+    );
+
+    Get.lazyPut<InsightsController>(
+      () => InsightsController(),
       fenix: true,
     );
   }

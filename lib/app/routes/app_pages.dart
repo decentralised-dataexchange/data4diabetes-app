@@ -2,6 +2,8 @@ import 'package:Data4Diabetes/app/modules/Otp/bindings/otp_binding.dart';
 import 'package:Data4Diabetes/app/modules/Otp/views/otp_view.dart';
 import 'package:Data4Diabetes/app/modules/Register/bindings/register_binding.dart';
 import 'package:Data4Diabetes/app/modules/Register/views/register_view.dart';
+import 'package:Data4Diabetes/app/modules/insights/bindings/insights_binding.dart';
+import 'package:Data4Diabetes/app/modules/insights/views/insights_view.dart';
 import 'package:Data4Diabetes/app/modules/language/bindings/language_binding.dart';
 import 'package:Data4Diabetes/app/modules/language/views/language_view.dart';
 import 'package:Data4Diabetes/app/modules/launcher/bindings/launcher_binding.dart';
@@ -29,9 +31,11 @@ class AppPages {
   static const INITIAL = Routes.LAUNCHER;
 
   static final routes = [
-    GetPage(name:_Paths.LAUNCHER ,
+    GetPage(
+      name: _Paths.LAUNCHER,
       page: () => LauncherView(),
-      binding: LauncherBinding(),),
+      binding: LauncherBinding(),
+    ),
     GetPage(
       name: _Paths.LOGIN,
       page: () => LoginView(),
@@ -76,6 +80,11 @@ class AppPages {
       name: _Paths.PRIVACYPOLICY,
       page: () => PrivacyPolicyView(),
       binding: PrivacyPolicyBinding(),
+    ),
+    GetPage(
+      name: _Paths.INSIGHTS,
+      page: () => InsightsView(),
+      binding: InsightsBinding(),
     ),
   ];
 }

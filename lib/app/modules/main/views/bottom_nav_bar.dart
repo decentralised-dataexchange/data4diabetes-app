@@ -69,12 +69,14 @@ class BottomNavBar extends StatelessWidget {
                   toastLength: Toast.LENGTH_SHORT,
                   timeInSecForIosWeb: 1);
             }
-          } else if (index == 2) {
-            Fluttertoast.showToast(
-                msg: 'coming soon',
-                toastLength: Toast.LENGTH_SHORT,
-                timeInSecForIosWeb: 1);
-          } else {
+          }
+          // else if (index == 2) {
+          //   Fluttertoast.showToast(
+          //       msg: 'coming soon',
+          //       toastLength: Toast.LENGTH_SHORT,
+          //       timeInSecForIosWeb: 1);
+          // }
+          else {
             navController.updateSelectedIndex(index);
             onNewMenuSelected(navItems[index].menuCode);
           }

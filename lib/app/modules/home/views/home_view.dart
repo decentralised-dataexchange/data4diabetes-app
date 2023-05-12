@@ -1,5 +1,6 @@
 import 'package:Data4Diabetes/app/Constants/Palette.dart';
 import 'package:Data4Diabetes/app/core/values/app_colors.dart';
+import 'package:Data4Diabetes/app/core/widget/app_bar_with_logo.dart';
 import 'package:Data4Diabetes/app/modules/settings/views/settings_view.dart';
 import 'package:Data4Diabetes/app/widgets/app_button.dart';
 import 'package:flutter/material.dart';
@@ -10,15 +11,12 @@ import 'package:d_chart/d_chart.dart';
 import 'package:flutter/services.dart';
 
 class HomeView extends BaseView<HomeController> {
-  static const double toolbarHeight = 80;
   static const int aspectRatioFrom = 16;
   static const int aspectRatioTo = 10;
   static const int donutWidth = 40;
   static const double labelLinelength = 10;
   static const int labelFontSize = 11;
   static const double containerWidth = 200;
-  static const double circleContainerWidth = 50;
-  static const double circleContainerHeight = 50;
   static const double containerRadius = 25.0;
   static const double mmolFontSize = 40;
   static const int medicationMeasure =28 ;
@@ -31,26 +29,7 @@ class HomeView extends BaseView<HomeController> {
   static const double heightValue = 0.1;
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return AppBar(
-      toolbarHeight: toolbarHeight,
-      elevation: 0,
-      automaticallyImplyLeading: false,
-      backgroundColor: Palette.white,
-      title: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _appBarListTile(),
-          const SizedBox(
-            height: 8.0,
-          ),
-          const Divider(
-            height: 2.0,
-            thickness: 1,
-          ),
-        ],
-      ),
-    );
+   return AppBarWithLogo(title: controller.appLocalization.homeYourVirtualPancreas,);
   }
 final HomeController _homeController=HomeController();
   @override
@@ -127,7 +106,6 @@ final HomeController _homeController=HomeController();
               labelFontSize: labelFontSize,
 
             ),
-            // _internalIconDonet(),
             _sugarLevel(),
           ],
         ),
@@ -152,42 +130,5 @@ final HomeController _homeController=HomeController();
     ));
   }
 
-  Widget _appBarListTile() {
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-      visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-      leading: Container(
-        height: circleContainerHeight,
-        width: circleContainerWidth,
 
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-        ),
-
-        //backgroundImage: AssetImage('images/blood_drop.png'),
-        child: Image.asset(
-          'images/blood_drop.png',
-          fit: BoxFit.cover,
-        ),
-      ),
-      title: const Text(
-        'Data4Diabetes',
-        style: TextStyle(
-            color: Color.fromARGB(255, 30, 189, 174),
-            fontSize: 25,
-            fontWeight: FontWeight.bold),
-      ),
-      subtitle: Text(controller.appLocalization.homeYourVirtualPancreas),
-      trailing: IconButton(
-        icon: const Icon(
-          Icons.settings_outlined,
-          color: Colors.blueGrey,
-          size: 30,
-        ),
-        onPressed: () {
-          Get.to(SettingsView());
-        },
-      ),
-    );
-  }
 }
