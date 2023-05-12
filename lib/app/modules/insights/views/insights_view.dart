@@ -382,9 +382,9 @@ class InsightsView extends BaseView<InsightsController> {
           Container(
             height: percentageColorContainerSize,
             width: percentageColorContainerSize,
-            color: Colors.green,
+            color:const Color(0XFF74B49A),
           ),
-          const Text('15%'),
+          const Text('3%'),
         ],
       ),
     );
@@ -399,9 +399,9 @@ class InsightsView extends BaseView<InsightsController> {
           Container(
             height: percentageColorContainerSize,
             width: percentageColorContainerSize,
-            color: Colors.orangeAccent,
+            color: const Color(0XFFFAB093),
           ),
-          const Text('27%'),
+          const Text('6%'),
         ],
       ),
     );
@@ -416,9 +416,9 @@ class InsightsView extends BaseView<InsightsController> {
           Container(
             height: percentageColorContainerSize,
             width: percentageColorContainerSize,
-            color: Colors.pink,
+            color:  const Color(0XFFF67280),
           ),
-          const Text('38%'),
+          const Text('22%'),
         ],
       ),
     );
@@ -433,9 +433,9 @@ class InsightsView extends BaseView<InsightsController> {
           Container(
             height: percentageColorContainerSize,
             width: percentageColorContainerSize,
-            color: Colors.redAccent,
+            color: const Color(0XFFC06C84),
           ),
-          const Text('6%'),
+          const Text('38%'),
         ],
       ),
     );
@@ -450,9 +450,9 @@ class InsightsView extends BaseView<InsightsController> {
           Container(
             height: percentageColorContainerSize,
             width: percentageColorContainerSize,
-            color: Colors.blue,
+            color: const Color(0XFF4B87B9),
           ),
-          const Text('1%'),
+          const Text('8%'),
         ],
       ),
     );
@@ -470,7 +470,7 @@ class InsightsView extends BaseView<InsightsController> {
         child: Column(
           children: [
             const Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.fromLTRB(8.0,8.0,8.0,0),
               child: Text(
                 'Summary',
                 style: descriptionTextStyle,
@@ -485,7 +485,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   _gridViewSummaryWidget() {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.fromLTRB(12.0,5.0,12.0,12.0),
       child: Container(
         decoration: const BoxDecoration(
           //  color: Colors.white,
