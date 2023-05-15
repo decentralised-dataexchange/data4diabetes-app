@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '/app/core/base/base_controller.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-class PrivacyPolicyController extends BaseController {
+class TermsOfServiceController extends BaseController {
   int maxProgressValue = 100;
   late final WebViewController controller;
 
@@ -48,6 +48,7 @@ class PrivacyPolicyController extends BaseController {
         ),
       )
       ..loadRequest(Uri.parse(
-          'https://igrant.io/privacy.html#privacy_policy'));
+          'https://igrant.io/terms.html'));
+
   }
 }

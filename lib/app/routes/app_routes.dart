@@ -14,6 +14,7 @@ abstract class Routes {
   static const LANGUAGE = _Paths.LANGUAGE;
   static const PRIVACYPOLICY = _Paths.PRIVACYPOLICY;
   static const INSIGHTS = _Paths.INSIGHTS;
+  static const TERMSOFSERVICE = _Paths.TERMSOFSERVICE;
 }
 
 abstract class _Paths {
@@ -28,4 +29,5 @@ abstract class _Paths {
   static const LANGUAGE = '/language';
   static const PRIVACYPOLICY = '/privacyPolicy';
   static const INSIGHTS = '/insights';
+  static const TERMSOFSERVICE = '/termsOfService';
 }

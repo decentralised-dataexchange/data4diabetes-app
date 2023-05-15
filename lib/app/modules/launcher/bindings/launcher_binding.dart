@@ -1,6 +1,7 @@
 import 'package:Data4Diabetes/app/modules/insights/controllers/insights_controller.dart';
 import 'package:Data4Diabetes/app/modules/launcher/controller/launcher_controller.dart';
 import 'package:Data4Diabetes/app/modules/privacyPolicy/controllers/privacyPolicy_controller.dart';
+import 'package:Data4Diabetes/app/modules/termsOfService/controllers/termsOfService_controller.dart';
 import 'package:get/get.dart';
 import '../../Otp/controllers/otp_controller.dart';
 import '../../Register/controllers/register_controller.dart';
@@ -57,6 +58,10 @@ class LauncherBinding extends Bindings {
 
     Get.lazyPut<InsightsController>(
       () => InsightsController(),
+      fenix: true,
+    );
+    Get.lazyPut<TermsOfServiceController>(
+          () => TermsOfServiceController(),
       fenix: true,
     );
   }
