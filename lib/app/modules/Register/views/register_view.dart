@@ -278,7 +278,7 @@ class RegisterView extends BaseView<RegisterController> {
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                print('data agreement clicked');
+                _registerController.showDataAgreement();
               },
           ),
          TextSpan(

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "798588239750",
+    "project_id": "data4diabetes",
+    "storage_bucket": "data4diabetes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798588239750:android:47e46767d542f247d43607",
+        "android_client_info": {
+          "package_name": "io.igrant.data4diabetes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798588239750-jnf79v75q7nifdqgqc96lqf8fq3v9sbg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.igrant.data4diabetes",
+            "certificate_hash": "af2241a29a1a64e5fdd6f5e80d687357d2a1e341"
+          }
+        },
+        {
+          "client_id": "798588239750-c86qmrfucuvukh7jth4s23fc4u4r0jji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCp8K2OT8ZqtZPoHsSp0Avs9iEol7MXdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798588239750-c86qmrfucuvukh7jth4s23fc4u4r0jji.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
