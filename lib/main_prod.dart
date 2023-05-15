@@ -9,7 +9,7 @@ import '/flavors/environment.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+ await Firebase.initializeApp();
   //FirebaseCrashlytics.instance.crash();
   EnvConfig prodConfig = EnvConfig(
     appName: "Flutter GetX Template Prod",

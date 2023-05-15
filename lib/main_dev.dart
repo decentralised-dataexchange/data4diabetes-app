@@ -8,7 +8,9 @@ import '/flavors/environment.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+
+  );
   //FirebaseCrashlytics.instance.crash();
 
   EnvConfig devConfig = EnvConfig(
