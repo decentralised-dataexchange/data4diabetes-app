@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import '../../../core/values/app_colors.dart';
 import '../../../core/values/text_styles.dart';
+import '../../privacyPolicy/controllers/privacyPolicy_controller.dart';
+import '../../privacyPolicy/views/privacyPolicy_view.dart';
 import '/app/core/base/base_view.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 
@@ -29,7 +31,7 @@ class RegisterView extends BaseView<RegisterController> {
   final double buttonSizedHeight = 0.02;
   final _registerFormKey = GlobalKey<FormState>();
   final RegisterController _registerController = Get.find();
-
+  final PrivacyPolicyController _privacyPolicyController=Get.find();
   @override
   Widget body(BuildContext context) {
     return WillPopScope(
@@ -297,7 +299,7 @@ class RegisterView extends BaseView<RegisterController> {
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                print('terms of service clicked');
+              _registerController.termsOfServices();
               },
           ),
         ],

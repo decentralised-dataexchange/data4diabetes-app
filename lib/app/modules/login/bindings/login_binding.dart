@@ -12,6 +12,7 @@ import '../../language/controllers/language_controller.dart';
 import '../../main/controllers/main_controller.dart';
 import '../../scan_and_check/controllers/scanAndCheck_controller.dart';
 import '../../settings/controllers/settings_controller.dart';
+import '../../termsOfService/controllers/termsOfService_controller.dart';
 
 class LoginBinding extends Bindings {
   @override
@@ -55,6 +56,10 @@ class LoginBinding extends Bindings {
 
     Get.lazyPut<InsightsController>(
       () => InsightsController(),
+      fenix: true,
+    );
+    Get.lazyPut<TermsOfServiceController>(
+          () => TermsOfServiceController(),
       fenix: true,
     );
   }

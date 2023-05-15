@@ -4,11 +4,14 @@ import 'package:Data4Diabetes/app/data/model/register/RegisterRequest.dart';
 import 'package:Data4Diabetes/app/data/model/register/RegisterResponse.dart';
 import 'package:Data4Diabetes/app/data/repository/user_repository_impl.dart';
 import 'package:Data4Diabetes/app/modules/Otp/views/otp_view.dart';
+import 'package:Data4Diabetes/app/modules/privacyPolicy/controllers/privacyPolicy_controller.dart';
+import 'package:Data4Diabetes/app/modules/termsOfService/views/termsOfService_view.dart';
 import 'package:Data4Diabetes/app/network/exceptions/api_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import '../../login/controllers/login_controller.dart';
 import '/app/core/base/base_controller.dart';
 
@@ -113,5 +116,8 @@ class RegisterController extends BaseController {
     } else if (Platform.isIOS) {
       showToast('Coming soon');
     }
+  }
+ void  termsOfServices(){
+    Get.to(TermsOfServiceView());
   }
 }

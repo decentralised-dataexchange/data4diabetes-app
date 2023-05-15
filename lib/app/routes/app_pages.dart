@@ -16,6 +16,8 @@ import 'package:Data4Diabetes/app/modules/scan_and_check/bindings/scanAndCheck_b
 import 'package:Data4Diabetes/app/modules/scan_and_check/views/scanAndCheck_view.dart';
 import 'package:Data4Diabetes/app/modules/settings/bindings/settings_binding.dart';
 import 'package:Data4Diabetes/app/modules/settings/views/settings_view.dart';
+import 'package:Data4Diabetes/app/modules/termsOfService/bindings/termsOfService_binding.dart';
+import 'package:Data4Diabetes/app/modules/termsOfService/views/termsOfService_view.dart';
 import 'package:get/get.dart';
 
 import '../data/local/preference/preference_manager_impl.dart';
@@ -85,6 +87,11 @@ class AppPages {
       name: _Paths.INSIGHTS,
       page: () => InsightsView(),
       binding: InsightsBinding(),
+    ),
+    GetPage(
+      name: _Paths.TERMSOFSERVICE,
+      page: () => TermsOfServiceView(),
+      binding: TermsOfServiceBinding(),
     ),
   ];
 }
