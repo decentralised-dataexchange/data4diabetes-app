@@ -93,6 +93,9 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -104,6 +107,14 @@ android {
         prod {
             dimension "default"
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 }
 
@@ -121,6 +132,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:28.0.1')
     implementation 'com.google.firebase:firebase-dynamic-links-ktx'
     implementation 'com.github.L3-iGrant:mobileSDK-android:1.12.11'
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    implementation 'net.java.dev.jna:jna:5.6.0'
 
 }
