@@ -34,6 +34,9 @@ dependencies:
   page_view_dot_indicator: ^2.1.0
   dropdown_button2: ^2.1.0
   syncfusion_flutter_charts: ^21.2.4
+  firebase_core: ^1.24.0
+  firebase_core_platform_interface: 4.5.1
+  firebase_crashlytics: ^2.9.0
 
 dev_dependencies:
   flutter_test:
