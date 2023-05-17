@@ -20,6 +20,8 @@
   "settingsPrivacyDashboard":"Min Integritets Dashboard",
   "settingsNotification":"Meddelanden",
   "settingsLogout":"Logga ut",
+  "settingsSettings":"Inställningar",
+  "settingsPrivacyPolicy":"Integritetspolicy",
   "scanAndCheckRejectAndChange":"Avböj och ändra",
   "scanAndCheckReject":"Avböj",
   "scanAndCheckConfirm":"Bekräfta",

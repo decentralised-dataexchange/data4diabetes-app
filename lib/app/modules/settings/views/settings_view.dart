@@ -23,7 +23,7 @@ class SettingsView extends BaseView<SettingsController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return CustomAppBar(
-      appBarTitleText: 'Settings',
+      appBarTitleText: appLocalization.settingsSettings,
     );
   }
 
@@ -264,9 +264,9 @@ class SettingsView extends BaseView<SettingsController> {
           onTap: (){
            Get.to(PrivacyPolicyView());
           },
-            child: const Padding(
-              padding: EdgeInsets.only(bottom: 8.0),
-              child: Text('Privacy Policy',style:TextStyle(fontSize: 14)),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(appLocalization.settingsPrivacyPolicy,style:const TextStyle(fontSize: 14)),
             )),
         Text("v " + _settingsController.ver.value+" - "+_settingsController.build.value),
         const SizedBox(
