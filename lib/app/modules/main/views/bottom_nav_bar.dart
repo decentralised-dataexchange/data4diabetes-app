@@ -61,14 +61,14 @@ class BottomNavBar extends StatelessWidget {
         currentIndex: navController.selectedIndex,
         onTap: (index) {
           if (index == 1) {
-            if (Platform.isAndroid) {
+            // if (Platform.isAndroid) {
               navController.platform.invokeMethod('Wallet');
-            } else if (Platform.isIOS) {
-              Fluttertoast.showToast(
-                  msg: 'coming soon',
-                  toastLength: Toast.LENGTH_SHORT,
-                  timeInSecForIosWeb: 1);
-            }
+            // } else if (Platform.isIOS) {
+            //   Fluttertoast.showToast(
+            //       msg: 'coming soon',
+            //       toastLength: Toast.LENGTH_SHORT,
+            //       timeInSecForIosWeb: 1);
+            // }
           }
           // else if (index == 2) {
           //   Fluttertoast.showToast(
