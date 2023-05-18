@@ -14,11 +14,19 @@ class InsightsController extends BaseController {
   var totalGlucose = 0;
   var val1=3.31;
   var val2=0.02392;
+  var percentage=100;
   var gMIpercentage=0.0.obs;
+  var averageBloodGlucose=0.0.obs;
+  var averageValue=0.0.obs;
+  var convertMolToMgVal= 0.0555;
+  var targetRangeFrom=3.9;
+  var targetRangeTo=10.0;
+  var tIRPercentage=0.0.obs;
   var platform = const MethodChannel('io.igrant.data4diabetes.channel');
   List<String> todaysGlucoseLevel = [];
   List<String> last7DaysGlucoseLevel = [];
   List<String> last30DaysGlucoseLevel = [];
+  List<String> glucoseLevelWithInRange = [];
   @override
   void onInit() {
     //estimatedGlucoseValues();
@@ -29,8 +37,9 @@ class InsightsController extends BaseController {
     todaysGlucoseLevel.clear();
     last7DaysGlucoseLevel.clear();
     last30DaysGlucoseLevel.clear();
-    var response = await platform.invokeMethod('QueryCredentials');
-    // var parsedData = jsonDecode(response);
+    var response = await platform.invokeMethod('QueryCredentials',{
+      "CredDefId":"CXcE5anqfGrnQEguoh8QXw:3:CL:376:default"
+    });
     List<GlucoseData> evgsDataList = (jsonDecode(response) as List<dynamic>)
         .map((item) => GlucoseData.fromJson(item))
         .toList();
@@ -79,17 +88,43 @@ class InsightsController extends BaseController {
     }
   }
 
-  gMI(List<String> glucoseLevel) {
+  void gMI(List<String> glucoseLevel) {
     totalGlucose=0;
     if (glucoseLevel.isNotEmpty) {
       for (var e in glucoseLevel) {
         totalGlucose = int.parse(e) + totalGlucose;
       }
     }
-    var averageBloodGlucose = totalGlucose / todaysGlucoseLevel.length;
-     gMIpercentage.value =( val1 + (val2* averageBloodGlucose));
+    averageBloodGlucose.value = totalGlucose / todaysGlucoseLevel.length;
+    averageValue.value=averageBloodGlucose.value/percentage;
+    gMIpercentage.value =( val1 + (val2* averageBloodGlucose.value));
      print('gmi value: $gMIpercentage');
   }
 
+tIRCalculator(String selectedValue){
+  switch (selectedValue) {
+    case 'TODAY':
+      tIR(todaysGlucoseLevel);
+      break;
+    case 'LAST 7 DAYS':
+      tIR(last7DaysGlucoseLevel);
+      break;
+    case 'LAST 30 DAYS':
+      tIR(last30DaysGlucoseLevel);
+      break;
+  }
 
+}
+
+  void tIR(List<String> glucoseLevel) {
+    glucoseLevelWithInRange.clear();
+    for(var e in glucoseLevel){
+      var res= double.parse(e) * convertMolToMgVal;
+      if(res>=targetRangeFrom && res<=targetRangeTo){
+        glucoseLevelWithInRange.add(res.toString());
+      }
+    }
+     tIRPercentage.value=(glucoseLevelWithInRange.length/glucoseLevel.length)/percentage;
+    print('tIRPercentage:$tIRPercentage');
+  }
 }

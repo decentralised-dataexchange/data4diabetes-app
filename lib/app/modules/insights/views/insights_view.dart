@@ -73,6 +73,7 @@ class InsightsView extends BaseView<InsightsController> {
               _insightsController.selectedValue.value = value as String;
               _insightsController
                   .gMICalculator(_insightsController.selectedValue.value);
+              _insightsController.tIRCalculator(_insightsController.selectedValue.value);
             },
             buttonStyleData: buttonStyle(context),
             iconStyleData: iconStyle(),
@@ -132,65 +133,6 @@ class InsightsView extends BaseView<InsightsController> {
       padding: EdgeInsets.only(left: 14, right: 14),
     );
   }
-  //
-  // Widget _gloucoseTimeInRange() {
-  //   return SizedBox(
-  //     width: toolbarHeight,
-  //
-  //     child: SfCartesianChart(
-  //
-  //       plotAreaBorderWidth: 0,
-  //
-  //       primaryXAxis: CategoryAxis(
-  //         //Hide the gridlines of x-axis
-  //         majorGridLines: const MajorGridLines(width: 0),
-  //
-  //         //Hide the axis line of x-axis
-  //         axisLine: const AxisLine(width: 0),
-  //       ),
-  //
-  //       primaryYAxis: CategoryAxis(
-  //         //Hide the gridlines of y-axis
-  //           majorGridLines: const MajorGridLines(width: 0),
-  //
-  //           //Hide the axis line of y-axis
-  //         axisLine: const AxisLine(width: 0)
-  //       ),
-  //
-  //       series: [
-  //         StackedColumnSeries(
-  //           dataLabelSettings: const DataLabelSettings(isVisible: true,labelAlignment: ChartDataLabelAlignment.middle,textStyle: TextStyle(color: Colors.white)),
-  //
-  //             dataSource: chartData,
-  //             xValueMapper: (ChartData ch, _) => ch.x,
-  //             yValueMapper: (ChartData ch, _) => ch.y1),
-  //         StackedColumnSeries(
-  //             dataLabelSettings:const DataLabelSettings(isVisible: true,labelAlignment: ChartDataLabelAlignment.middle,textStyle: TextStyle(color: Colors.white)),
-  //             dataSource: chartData,
-  //             xValueMapper: (ChartData ch, _) => ch.x,
-  //             yValueMapper: (ChartData ch, _) => ch.y2),
-  //         StackedColumnSeries(
-  //             dataLabelSettings:const DataLabelSettings(isVisible: true,labelAlignment: ChartDataLabelAlignment.middle,textStyle: TextStyle(color: Colors.white)),
-  //             dataSource: chartData,
-  //             xValueMapper: (ChartData ch, _) => ch.x,
-  //             yValueMapper: (ChartData ch, _) => ch.y3),
-  //         StackedColumnSeries(
-  //             dataLabelSettings: const DataLabelSettings(isVisible: true,labelAlignment: ChartDataLabelAlignment.middle,textStyle: TextStyle(color: Colors.white)),
-  //             dataSource: chartData,
-  //             xValueMapper: (ChartData ch, _) => ch.x,
-  //             yValueMapper: (ChartData ch, _) => ch.y4),
-  //         StackedColumnSeries(
-  //             dataLabelSettings: const DataLabelSettings(isVisible: true,labelAlignment: ChartDataLabelAlignment.middle,textStyle: TextStyle(color: Colors.white)),
-  //             dataSource: chartData,
-  //             xValueMapper: (ChartData ch, _) => ch.x,
-  //             yValueMapper: (ChartData ch, _) => ch.y5),
-  //
-  //
-  //
-  //       ],
-  //     ),
-  //   );
-  // }
 
   Widget _gloucoseTimeInRange(BuildContext context) {
     return Padding(
@@ -286,7 +228,7 @@ class InsightsView extends BaseView<InsightsController> {
           height: 25,
         ),
         Text(
-          'Target range 3.9 10 mmol/l',
+          'Target range 3.9-10 mmol/l',
           style: TextStyle(fontSize: 15),
         ),
         SizedBox(
@@ -525,8 +467,11 @@ class InsightsView extends BaseView<InsightsController> {
             padding: const EdgeInsets.only(left: 5.0),
             child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
-                    'GMI ${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
+                child: _insightsController.gMIpercentage.value.toString() ==
+                        'NaN'
+                    ? const Text('GMI 0.0%')
+                    : Text(
+                        'GMI ${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
           ),
         ),
       ),
@@ -534,38 +479,63 @@ class InsightsView extends BaseView<InsightsController> {
   }
 
   _tileGMIValue() {
-    return GridTile(
+    return Obx(
+      () => GridTile(
         child: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 5.0),
-              child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                      '${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
-            )));
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: _insightsController.gMIpercentage.value.toString() ==
+                        'NaN'
+                    ? const Text('0.0%')
+                    : Text(
+                        '${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
+          ),
+        ),
+      ),
+    );
   }
 
   _tileAverage() {
-    return GridTile(
+    return Obx(
+      () => GridTile(
         child: Container(
-            color: Colors.white,
-            child: const Padding(
-              padding: EdgeInsets.only(left: 5.0),
-              child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text('Average Value 9.3')),
-            )));
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: _insightsController.averageValue.value.toString() ==
+                        'NaN'
+                    ? const Text('Average Value 0.0')
+                    : Text(
+                        'Average Value ${_insightsController.averageValue.value.toStringAsFixed(1)}')),
+          ),
+        ),
+      ),
+    );
   }
 
   _tileAverageValue() {
-    return GridTile(
+    return Obx(
+      () => GridTile(
         child: Container(
-            color: Colors.white,
-            child: const Padding(
-              padding: EdgeInsets.only(left: 5.0),
-              child: Align(alignment: Alignment.centerLeft, child: Text('9.3')),
-            )));
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child:
+                    _insightsController.averageValue.value.toString() == 'NaN'
+                        ? const Text('0.0')
+                        : Text(_insightsController.averageValue.value
+                            .toStringAsFixed(1))),
+          ),
+        ),
+      ),
+    );
   }
 
   _tileCGM() {

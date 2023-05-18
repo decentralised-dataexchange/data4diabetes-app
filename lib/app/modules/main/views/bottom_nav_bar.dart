@@ -56,7 +56,7 @@ class BottomNavBar extends StatelessWidget {
         selectedItemColor: selectedItemColor,
         unselectedItemColor: unselectedItemColor,
         currentIndex: navController.selectedIndex,
-        onTap: (index) {
+        onTap: (index) async {
           if (index == 1) {
             if (Platform.isAndroid) {
               navController.platform.invokeMethod('Wallet');
@@ -64,11 +64,12 @@ class BottomNavBar extends StatelessWidget {
               Fluttertoast.showToast(
                   msg: 'coming soon',
                   toastLength: Toast.LENGTH_SHORT,
-                  timeInSecForIosWeb: 1);
+                  timeInSecForIosWeb: 1 );
             }
           }
           if (index == 2) {
-            _insightsController.estimatedGlucoseValues();
+            await _insightsController.estimatedGlucoseValues();
+            _insightsController.gMICalculator(_insightsController.selectedValue.value='TODAY');
             navController.updateSelectedIndex(index);
             onNewMenuSelected(navItems[index].menuCode);
           } else {
