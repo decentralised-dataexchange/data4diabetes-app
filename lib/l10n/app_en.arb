@@ -20,6 +20,8 @@
   "settingsPrivacyDashboard":"My Privacy Dashboard",
   "settingsNotification":"Notifications",
   "settingsLogout":"Logout",
+  "settingsSettings":"Settings",
+  "settingsPrivacyPolicy":"Privacy Policy",
   "scanAndCheckRejectAndChange":"Reject and change",
   "scanAndCheckReject":"Reject",
   "scanAndCheckConfirm":"Confirm",
