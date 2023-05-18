@@ -71,6 +71,8 @@ class InsightsView extends BaseView<InsightsController> {
             value: _insightsController.selectedValue.value,
             onChanged: (value) {
               _insightsController.selectedValue.value = value as String;
+              _insightsController
+                  .gMICalculator(_insightsController.selectedValue.value);
             },
             buttonStyleData: buttonStyle(context),
             iconStyleData: iconStyle(),
@@ -382,7 +384,7 @@ class InsightsView extends BaseView<InsightsController> {
           Container(
             height: percentageColorContainerSize,
             width: percentageColorContainerSize,
-            color:const Color(0XFF74B49A),
+            color: const Color(0XFF74B49A),
           ),
           const Text('3%'),
         ],
@@ -416,7 +418,7 @@ class InsightsView extends BaseView<InsightsController> {
           Container(
             height: percentageColorContainerSize,
             width: percentageColorContainerSize,
-            color:  const Color(0XFFF67280),
+            color: const Color(0XFFF67280),
           ),
           const Text('22%'),
         ],
@@ -470,7 +472,7 @@ class InsightsView extends BaseView<InsightsController> {
         child: Column(
           children: [
             const Padding(
-              padding: EdgeInsets.fromLTRB(8.0,8.0,8.0,0),
+              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
               child: Text(
                 'Summary',
                 style: descriptionTextStyle,
@@ -485,7 +487,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   _gridViewSummaryWidget() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12.0,5.0,12.0,12.0),
+      padding: const EdgeInsets.fromLTRB(12.0, 5.0, 12.0, 12.0),
       child: Container(
         decoration: const BoxDecoration(
           //  color: Colors.white,
@@ -515,24 +517,32 @@ class InsightsView extends BaseView<InsightsController> {
   }
 
   _tileGMI() {
-    return GridTile(
+    return Obx(
+      () => GridTile(
         child: Container(
-            color: Colors.white,
-            child: const Padding(
-              padding: EdgeInsets.only(left: 5.0),
-              child: Align(
-                  alignment: Alignment.centerLeft, child: Text('GMI 7.3%')),
-            )));
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                    'GMI ${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
+          ),
+        ),
+      ),
+    );
   }
 
   _tileGMIValue() {
     return GridTile(
         child: Container(
             color: Colors.white,
-            child: const Padding(
-              padding: EdgeInsets.only(left: 5.0),
-              child:
-                  Align(alignment: Alignment.centerLeft, child: Text('7.3%')),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                      '${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
             )));
   }
 
