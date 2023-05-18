@@ -1,3 +1,4 @@
+import 'package:Data4Diabetes/app/modules/insights/controllers/insights_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,7 +21,7 @@ class BottomNavBar extends StatelessWidget {
   final navController = BottomNavController();
 
   final Key bottomNavKey = GlobalKey();
-
+  final InsightsController _insightsController = Get.find();
   @override
   Widget build(BuildContext context) {
     appLocalization = AppLocalizations.of(context)!;
@@ -31,13 +32,10 @@ class BottomNavBar extends StatelessWidget {
 
     return Obx(
       () => BottomNavigationBar(
-
-
         key: bottomNavKey,
         items: navItems
             .map(
-              (BottomNavItem navItem) =>
-                  BottomNavigationBarItem(
+              (BottomNavItem navItem) => BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     "images/${navItem.iconSvgName}",
                     height: AppValues.iconDefaultSize,
@@ -48,7 +46,6 @@ class BottomNavBar extends StatelessWidget {
                             : unselectedItemColor,
                   ),
                   label: navItem.navTitle,
-
                   tooltip: ""),
             )
             .toList(),
@@ -70,13 +67,11 @@ class BottomNavBar extends StatelessWidget {
                   timeInSecForIosWeb: 1);
             }
           }
-          // else if (index == 2) {
-          //   Fluttertoast.showToast(
-          //       msg: 'coming soon',
-          //       toastLength: Toast.LENGTH_SHORT,
-          //       timeInSecForIosWeb: 1);
-          // }
-          else {
+          if (index == 2) {
+            _insightsController.estimatedGlucoseValues();
+            navController.updateSelectedIndex(index);
+            onNewMenuSelected(navItems[index].menuCode);
+          } else {
             navController.updateSelectedIndex(index);
             onNewMenuSelected(navItems[index].menuCode);
           }
@@ -91,7 +86,6 @@ class BottomNavBar extends StatelessWidget {
         navTitle: appLocalization.bottomNavHome,
         iconSvgName: "ic_home.svg",
         menuCode: MenuCode.HOME,
-
       ),
       BottomNavItem(
           navTitle: appLocalization.bottomNavMyWallet,

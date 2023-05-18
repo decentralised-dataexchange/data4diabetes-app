@@ -78,7 +78,7 @@ class MainActivity : FlutterActivity() {
 
                 }
                 "QueryCredentials" -> {
-                    val credDefId: String? = call.argument("CredDefId")
+                    val credDefId: String? = call.argument("CXcE5anqfGrnQEguoh8QXw:3:CL:376:default")
                     val schemaId: String? = call.argument("SchemaId")
 
                     val data = DataWallet.queryCredentials(credDefId, schemaId)
