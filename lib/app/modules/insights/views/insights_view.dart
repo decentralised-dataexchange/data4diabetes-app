@@ -18,7 +18,7 @@ class InsightsView extends BaseView<InsightsController> {
   static const double buttonStyleRadius = 10;
   static const double dropdownStyleRadius = 14;
   static const double percentageContainerHeight = 250;
-  static const double percentageValueWidth = 40;
+  static const double percentageValueWidth = 48;
   static const double percentageColorContainerSize = 10;
 
   @override
@@ -48,24 +48,24 @@ class InsightsView extends BaseView<InsightsController> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16.0),
       child: Obx(
-            () => DropdownButtonHideUnderline(
+        () => DropdownButtonHideUnderline(
           child: DropdownButton2(
             isExpanded: true,
             items: _insightsController.items
                 .map<DropdownMenuItem<String>>(
                   (String item) => DropdownMenuItem<String>(
-                value: item,
-                child: Text(
-                  item,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    value: item,
+                    child: Text(
+                      item,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            )
+                )
                 .toList(),
             value: _insightsController.selectedValue.value,
             onChanged: (value) {
@@ -169,7 +169,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   Widget _percentageSection(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 0, 4, 16),
+      padding: const EdgeInsets.fromLTRB(6, 0, 4, 16),
       child: Container(
         height: percentageContainerHeight,
         padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
@@ -256,7 +256,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   Widget _stackedColumnRange() {
     return Obx(
-          () => SizedBox(
+      () => SizedBox(
         width: stackedChartWidth,
         child: SfCartesianChart(
           margin: EdgeInsets.zero,
@@ -269,7 +269,7 @@ class InsightsView extends BaseView<InsightsController> {
             axisLine: const AxisLine(width: 0),
           ),
           primaryYAxis: CategoryAxis(
-            //Hide the gridlines of y-axis
+              //Hide the gridlines of y-axis
               majorGridLines: const MajorGridLines(width: 0),
 
               //Hide the axis line of y-axis
@@ -303,7 +303,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   _percentageValue1() {
     return Obx(
-          () => SizedBox(
+      () => SizedBox(
         width: percentageValueWidth,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -322,7 +322,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   _percentageValue2() {
     return Obx(
-          () => SizedBox(
+      () => SizedBox(
         width: percentageValueWidth,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -341,7 +341,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   _percentageValue3() {
     return Obx(
-          () => SizedBox(
+      () => SizedBox(
         width: percentageValueWidth,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -360,7 +360,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   _percentageValue4() {
     return Obx(
-          () => SizedBox(
+      () => SizedBox(
         width: percentageValueWidth,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -379,7 +379,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   _percentageValue5() {
     return Obx(
-          () => SizedBox(
+      () => SizedBox(
         width: percentageValueWidth,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -454,7 +454,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   _tileGMI() {
     return Obx(
-          () => GridTile(
+      () => GridTile(
         child: Container(
           color: Colors.white,
           child: Padding(
@@ -462,10 +462,10 @@ class InsightsView extends BaseView<InsightsController> {
             child: Align(
                 alignment: Alignment.centerLeft,
                 child: _insightsController.gMIpercentage.value.toString() ==
-                    'NaN'
+                        'NaN'
                     ? const Text('GMI 0.0%')
                     : Text(
-                    'GMI ${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
+                        'GMI ${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
           ),
         ),
       ),
@@ -474,7 +474,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   _tileGMIValue() {
     return Obx(
-          () => GridTile(
+      () => GridTile(
         child: Container(
           color: Colors.white,
           child: Padding(
@@ -482,10 +482,10 @@ class InsightsView extends BaseView<InsightsController> {
             child: Align(
                 alignment: Alignment.centerLeft,
                 child: _insightsController.gMIpercentage.value.toString() ==
-                    'NaN'
+                        'NaN'
                     ? const Text('0.0%')
                     : Text(
-                    '${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
+                        '${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
           ),
         ),
       ),
@@ -494,7 +494,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   _tileAverage() {
     return Obx(
-          () => GridTile(
+      () => GridTile(
         child: Container(
           color: Colors.white,
           child: Padding(
@@ -502,10 +502,10 @@ class InsightsView extends BaseView<InsightsController> {
             child: Align(
                 alignment: Alignment.centerLeft,
                 child: _insightsController.averageValue.value.toString() ==
-                    'NaN'
+                        'NaN'
                     ? const Text('Average Value 0.0')
                     : Text(
-                    'Average Value ${_insightsController.averageValue.value.toStringAsFixed(1)}')),
+                        'Average Value ${_insightsController.averageValue.value.toStringAsFixed(1)}')),
           ),
         ),
       ),
@@ -514,7 +514,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   _tileAverageValue() {
     return Obx(
-          () => GridTile(
+      () => GridTile(
         child: Container(
           color: Colors.white,
           child: Padding(
@@ -522,10 +522,10 @@ class InsightsView extends BaseView<InsightsController> {
             child: Align(
                 alignment: Alignment.centerLeft,
                 child:
-                _insightsController.averageValue.value.toString() == 'NaN'
-                    ? const Text('0.0')
-                    : Text(_insightsController.averageValue.value
-                    .toStringAsFixed(1))),
+                    _insightsController.averageValue.value.toString() == 'NaN'
+                        ? const Text('0.0')
+                        : Text(_insightsController.averageValue.value
+                            .toStringAsFixed(1))),
           ),
         ),
       ),
