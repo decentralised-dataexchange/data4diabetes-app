@@ -19,14 +19,14 @@ class RegisterView extends BaseView<RegisterController> {
       elevation: 0,
       automaticallyImplyLeading: true,
       leading: InkWell(
-        onTap: (){
-          _registerController.firstNameController.clear();
-          //_registerController.lastNameController..clear();
-          _registerController.mobileNumberController.clear();
-          _registerController.selectedIndex.value = 0;
-          _registerController.selectedPage.value = 0;
-          Get.back();
-        },
+          onTap: () {
+            _registerController.firstNameController.clear();
+            //_registerController.lastNameController..clear();
+            _registerController.mobileNumberController.clear();
+            _registerController.selectedIndex.value = 0;
+            _registerController.selectedPage.value = 0;
+            Get.back();
+          },
           child: Icon(Icons.arrow_back_ios)),
     );
   }
@@ -40,8 +40,9 @@ class RegisterView extends BaseView<RegisterController> {
   final double buttonSizedWidth = 0.20;
   final double buttonSizedHeight = 0.02;
   final _registerFormKey = GlobalKey<FormState>();
+  final bool autoValidate = false;
   final RegisterController _registerController = Get.find();
-  final PrivacyPolicyController _privacyPolicyController=Get.find();
+  final PrivacyPolicyController _privacyPolicyController = Get.find();
   @override
   Widget body(BuildContext context) {
     return WillPopScope(
@@ -103,6 +104,7 @@ class RegisterView extends BaseView<RegisterController> {
       padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 3.0),
       child: TextFormField(
         autofocus: false,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: _registerController.firstNameController,
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -157,7 +159,7 @@ class RegisterView extends BaseView<RegisterController> {
         keyboardAction: TextInputAction.go,
         autoFocus: false,
         formatInput: false,
-        autoValidateMode: AutovalidateMode.disabled,
+        autoValidateMode: AutovalidateMode.onUserInteraction,
         onInputChanged: (val) {
           _registerController.isdCode = val.dialCode;
         },
@@ -274,15 +276,15 @@ class RegisterView extends BaseView<RegisterController> {
       textAlign: TextAlign.justify,
       text: TextSpan(
         children: [
-           TextSpan(
-            text: appLocalization.registerTrustContent+' ',
+          TextSpan(
+            text: appLocalization.registerTrustContent + ' ',
             style: const TextStyle(
               fontSize: 15,
               color: Colors.black,
             ),
           ),
           TextSpan(
-            text: appLocalization.registerDataAgreementDetails+' ',
+            text: appLocalization.registerDataAgreementDetails + ' ',
             style: const TextStyle(
               color: Colors.blue,
               decoration: TextDecoration.underline,
@@ -293,8 +295,8 @@ class RegisterView extends BaseView<RegisterController> {
                 _registerController.showDataAgreement();
               },
           ),
-         TextSpan(
-            text: appLocalization.registerAnd+' ',
+          TextSpan(
+            text: appLocalization.registerAnd + ' ',
             style: const TextStyle(
               fontSize: 15,
               color: Colors.black,
@@ -309,7 +311,7 @@ class RegisterView extends BaseView<RegisterController> {
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-              _registerController.termsOfServices();
+                _registerController.termsOfServices();
               },
           ),
         ],
