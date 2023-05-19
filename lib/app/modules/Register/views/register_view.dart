@@ -17,7 +17,17 @@ class RegisterView extends BaseView<RegisterController> {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: true,
+      leading: InkWell(
+        onTap: (){
+          _registerController.firstNameController.clear();
+          //_registerController.lastNameController..clear();
+          _registerController.mobileNumberController.clear();
+          _registerController.selectedIndex.value = 0;
+          _registerController.selectedPage.value = 0;
+          Get.back();
+        },
+          child: Icon(Icons.arrow_back_ios)),
     );
   }
 
