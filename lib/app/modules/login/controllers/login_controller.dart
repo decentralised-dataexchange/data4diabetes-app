@@ -19,29 +19,41 @@ class LoginController extends BaseController {
   String? isdCode;
 
   loginUser() async {
+    String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+    RegExp regExp = RegExp(pattern);
     showLoading();
+    if(phoneNumberController.text==""){
+      hideLoading();
+      GetSnackToast(message: appLocalization.loginPhoneNumberValidationText);
+    }
+    else if(!regExp.hasMatch(phoneNumberController.text)){
+      hideLoading();
+      GetSnackToast(message:appLocalization.loginValidPhoneNumberValidationText);
+    }
+    else{
+      sharePhoneNumber.value = isdCode! + phoneNumberController.text;
+      debugPrint("shared number:" + sharePhoneNumber.value);
+      LoginRequest request =
+      LoginRequest(mobile_number: isdCode! + phoneNumberController.text);
+      try {
+        LoginResponse response = await _impl.login(request);
+        if (response.msg == "OTP sent") {
+          hideLoading();
+          phoneNumberController.clear();
+          isControl.value = true;
+          Get.to(OtpView());
+          phoneNumberController.clear();
+        }
+      } catch (e) {
+        // showToast((e as ApiException).message);
+        GetSnackToast(message: (e as ApiException).message);
 
-    sharePhoneNumber.value = isdCode! + phoneNumberController.text;
-    debugPrint("shared number:" + sharePhoneNumber.value);
-    LoginRequest request =
-        LoginRequest(mobile_number: isdCode! + phoneNumberController.text);
-    try {
-      LoginResponse response = await _impl.login(request);
-      if (response.msg == "OTP sent") {
         hideLoading();
-        phoneNumberController.clear();
-        isControl.value = true;
-        Get.to(OtpView());
-        phoneNumberController.clear();
       }
-    } catch (e) {
-      // showToast((e as ApiException).message);
-      GetSnackToast(message: (e as ApiException).message);
+      finally{
+        hideLoading();
+      }
+    }
 
-      hideLoading();
-    }
-    finally{
-      hideLoading();
-    }
   }
 }
