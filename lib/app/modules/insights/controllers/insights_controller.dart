@@ -100,8 +100,14 @@ class InsightsController extends BaseController {
       }
     }
     averageBloodGlucose.value = totalGlucose / todaysGlucoseLevel.length;
-    averageValue.value = averageBloodGlucose.value / percentage;
-    gMIpercentage.value = (val1 + (val2 * averageBloodGlucose.value));
+    averageValue.value =
+        averageBloodGlucose.value.isInfinite || averageBloodGlucose.value.isNaN
+            ? 0.0
+            : averageBloodGlucose.value / percentage;
+    gMIpercentage.value =
+        averageBloodGlucose.value.isInfinite || averageBloodGlucose.value.isNaN
+            ? 0.0
+            : (val1 + (val2 * averageBloodGlucose.value));
   }
 
   tIRCalculator(String selectedValue) {
@@ -190,13 +196,15 @@ class InsightsController extends BaseController {
             ((totalVaryLow.value / totalGlucoseMmolValues.value) * percentage)
                 .isNaN
         ? 0
-        : ((totalVaryLow.value / totalGlucoseMmolValues.value) * percentage).round()
+        : ((totalVaryLow.value / totalGlucoseMmolValues.value) * percentage)
+            .round()
             .toInt();
     low.value = ((totalLow.value / totalGlucoseMmolValues.value) * percentage)
                 .isInfinite ||
             ((totalLow.value / totalGlucoseMmolValues.value) * percentage).isNaN
         ? 0
-        : ((totalLow.value / totalGlucoseMmolValues.value) * percentage).round()
+        : ((totalLow.value / totalGlucoseMmolValues.value) * percentage)
+            .round()
             .toInt();
 
     targetRange.value =
@@ -207,14 +215,16 @@ class InsightsController extends BaseController {
                     .isNaN
             ? 0
             : ((totalTargetRange.value / totalGlucoseMmolValues.value) *
-                    percentage).round()
+                    percentage)
+                .round()
                 .toInt();
     high.value = ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
                 .isInfinite ||
             ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
                 .isNaN
         ? 0
-        : ((totalHigh.value / totalGlucoseMmolValues.value) * percentage).round()
+        : ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
+            .round()
             .toInt();
     veryHigh.value = ((totalVaryHigh.value / totalGlucoseMmolValues.value) *
                     percentage)
@@ -222,7 +232,8 @@ class InsightsController extends BaseController {
             ((totalVaryHigh.value / totalGlucoseMmolValues.value) * percentage)
                 .isNaN
         ? 0
-        : ((totalVaryHigh.value / totalGlucoseMmolValues.value) * percentage).round()
+        : ((totalVaryHigh.value / totalGlucoseMmolValues.value) * percentage)
+            .round()
             .toInt();
     chartData.add(ChartData('', veryLow, low, targetRange, high, veryHigh));
   }
