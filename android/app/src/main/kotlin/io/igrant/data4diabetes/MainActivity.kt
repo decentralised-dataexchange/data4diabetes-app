@@ -1,17 +1,15 @@
 package io.igrant.data4diabetes
 
-import android.util.Log
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.igrant.data_wallet.indy.LedgerNetworkType
 import io.igrant.data_wallet.utils.DataWallet
 import io.igrant.data_wallet.utils.DataWalletConfigurations
 import io.igrant.data_wallet.utils.InitializeWalletCallback
 import io.igrant.data_wallet.utils.InitializeWalletState
-import io.igrant.igrant_org_sdk.utils.IgrantSdk
 import io.igrant.data_wallet.utils.dataAgreement.DataAgreementUtils
+import io.igrant.igrant_org_sdk.utils.IgrantSdk
 
 class MainActivity : FlutterActivity() {
 
@@ -78,6 +76,13 @@ class MainActivity : FlutterActivity() {
                         this
                     )
 
+                }
+                "QueryCredentials" -> {
+                    val credDefId: String? = call.argument("CredDefId")
+                    val schemaId: String? = call.argument("SchemaId")
+
+                    val data = DataWallet.queryCredentials(credDefId, schemaId)
+                    result.success(data)
                 }
             }
         }
