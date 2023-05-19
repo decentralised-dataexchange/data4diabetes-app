@@ -77,7 +77,7 @@ class RegisterController extends BaseController {
   }
 
   void showDataAgreement() {
-    if (Platform.isAndroid) {
+    // if (Platform.isAndroid) {
       switch (selectedIndex.value) {
         case 0:
           {
@@ -113,9 +113,9 @@ class RegisterController extends BaseController {
         default:
           break;
       }
-    } else if (Platform.isIOS) {
-      showToast('Coming soon');
-    }
+    // } else if (Platform.isIOS) {
+    //   showToast('Coming soon');
+    // }
   }
  void  termsOfServices(){
     Get.to(TermsOfServiceView());

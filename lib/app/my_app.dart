@@ -1,3 +1,4 @@
+import 'package:Data4Diabetes/app/LanguageSupport.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,10 +27,14 @@ class _MyAppState extends State<MyApp> {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         systemNavigationBarColor: AppColors.pageBackground,
-
-
       ),
     );
+    getLocale().then((value){
+       var platform = const MethodChannel('io.igrant.data4diabetes.channel');
+    platform.invokeMethod('SetLanguage', {
+      "code": value
+    });
+    });
 
     return GetMaterialApp(
       title: _envConfig.appName,
