@@ -56,9 +56,7 @@ class InsightsController extends BaseController {
     List<GlucoseData> evgsDataList = (jsonDecode(response) as List<dynamic>)
         .map((item) => GlucoseData.fromJson(item))
         .toList();
-    print('glucose values');
     for (var e in evgsDataList) {
-      print(e.evgsValue);
       DateTime currentDate = DateTime.now();
       DateTime sevenDaysAgo = currentDate.subtract(const Duration(days: 7));
       DateTime thirtyDaysAgo = currentDate.subtract(const Duration(days: 30));
@@ -104,7 +102,6 @@ class InsightsController extends BaseController {
     averageBloodGlucose.value = totalGlucose / todaysGlucoseLevel.length;
     averageValue.value = averageBloodGlucose.value / percentage;
     gMIpercentage.value = (val1 + (val2 * averageBloodGlucose.value));
-    print('gmi value: $gMIpercentage');
   }
 
   tIRCalculator(String selectedValue) {
@@ -158,16 +155,17 @@ class InsightsController extends BaseController {
       totalVaryLow.value = totalVaryLow.value + e;
     }
     for (var e in lowList) {
-      totalLow.value = totalVaryLow.value + e;
+      totalLow.value = totalLow.value + e;
     }
     for (var e in targetRangeList) {
-      totalTargetRange.value = totalVaryLow.value + e;
+      totalTargetRange.value = totalTargetRange.value + e;
     }
+
     for (var e in highList) {
-      totalHigh.value = totalVaryLow.value + e;
+      totalHigh.value = totalHigh.value + e;
     }
     for (var e in veryHighList) {
-      totalVaryHigh.value = totalVaryLow.value + e;
+      totalVaryHigh.value = totalVaryHigh.value + e;
     }
   }
 
@@ -200,18 +198,17 @@ class InsightsController extends BaseController {
         ? 0
         : ((totalLow.value / totalGlucoseMmolValues.value) * percentage)
             .toInt();
-    print(totalTargetRange.value);
-    print( totalGlucoseMmolValues.value);
 
-    targetRange.value = ((totalTargetRange.value / totalGlucoseMmolValues.value) *
+    targetRange.value =
+        ((totalTargetRange.value / totalGlucoseMmolValues.value) * percentage)
+                    .isInfinite ||
+                ((totalTargetRange.value / totalGlucoseMmolValues.value) *
+                        percentage)
+                    .isNaN
+            ? 0
+            : ((totalTargetRange.value / totalGlucoseMmolValues.value) *
                     percentage)
-                .isInfinite ||
-            ((totalTargetRange.value / totalGlucoseMmolValues.value) *
-                    percentage)
-                .isNaN
-        ? 0
-        : ((totalTargetRange.value / totalGlucoseMmolValues.value) * percentage)
-            .toInt();
+                .toInt();
     high.value = ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
                 .isInfinite ||
             ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
@@ -227,18 +224,17 @@ class InsightsController extends BaseController {
         ? 0
         : ((totalVaryHigh.value / totalGlucoseMmolValues.value) * percentage)
             .toInt();
-
     chartData.add(ChartData('', veryLow, low, targetRange, high, veryHigh));
   }
 }
 
 class ChartData {
-
   final String x;
   var veryLow = 0.obs;
   var low = 0.obs;
   var targetRange = 0.obs;
   var high = 0.obs;
   var veryHigh = 0.obs;
-  ChartData(this.x, this.veryLow, this.low, this.targetRange, this.high, this.veryHigh);
+  ChartData(this.x, this.veryLow, this.low, this.targetRange, this.high,
+      this.veryHigh);
 }
