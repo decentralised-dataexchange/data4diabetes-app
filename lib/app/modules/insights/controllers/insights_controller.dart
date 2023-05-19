@@ -227,16 +227,6 @@ class InsightsController extends BaseController {
         ? 0
         : ((totalVaryHigh.value / totalGlucoseMmolValues.value) * percentage)
             .toInt();
-    print('veryLow');
-    print(veryLow.value);
-    print("low");
-    print(low.value);
-    print("targetRange");
-    print(targetRange.value);
-    print("high");
-    print(high.value);
-    print("veryHigh");
-    print(veryHigh.value);
 
     chartData.add(ChartData('', veryLow, low, targetRange, high, veryHigh));
   }
