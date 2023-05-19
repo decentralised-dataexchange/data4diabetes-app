@@ -25,11 +25,11 @@ class InsightsController extends BaseController {
   List<String> todaysGlucoseLevel = [];
   List<String> last7DaysGlucoseLevel = [];
   List<String> last30DaysGlucoseLevel = [];
-  var y1 = 0.obs;
-  var y2 = 0.obs;
-  var y3 = 0.obs;
-  var y4 = 0.obs;
-  var y5 = 0.obs;
+  var veryLow = 0.obs;
+  var low = 0.obs;
+  var targetRange = 0.obs;
+  var high = 0.obs;
+  var veryHigh = 0.obs;
   RxList<ChartData> chartData = List<ChartData>.empty().obs;
   var lowRangeTo = 3.8;
   var highRangeFrom = 10.1;
@@ -186,7 +186,7 @@ class InsightsController extends BaseController {
   }
 
   void chartDataValues() {
-    y1.value = ((totalVaryLow.value / totalGlucoseMmolValues.value) *
+    veryLow.value = ((totalVaryLow.value / totalGlucoseMmolValues.value) *
                     percentage)
                 .isInfinite ||
             ((totalVaryLow.value / totalGlucoseMmolValues.value) * percentage)
@@ -194,13 +194,16 @@ class InsightsController extends BaseController {
         ? 0
         : ((totalVaryLow.value / totalGlucoseMmolValues.value) * percentage)
             .toInt();
-    y2.value = ((totalLow.value / totalGlucoseMmolValues.value) * percentage)
+    low.value = ((totalLow.value / totalGlucoseMmolValues.value) * percentage)
                 .isInfinite ||
             ((totalLow.value / totalGlucoseMmolValues.value) * percentage).isNaN
         ? 0
         : ((totalLow.value / totalGlucoseMmolValues.value) * percentage)
             .toInt();
-    y3.value = ((totalTargetRange.value / totalGlucoseMmolValues.value) *
+    print(totalTargetRange.value);
+    print( totalGlucoseMmolValues.value);
+
+    targetRange.value = ((totalTargetRange.value / totalGlucoseMmolValues.value) *
                     percentage)
                 .isInfinite ||
             ((totalTargetRange.value / totalGlucoseMmolValues.value) *
@@ -209,14 +212,14 @@ class InsightsController extends BaseController {
         ? 0
         : ((totalTargetRange.value / totalGlucoseMmolValues.value) * percentage)
             .toInt();
-    y4.value = ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
+    high.value = ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
                 .isInfinite ||
             ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
                 .isNaN
         ? 0
         : ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
             .toInt();
-    y5.value = ((totalVaryHigh.value / totalGlucoseMmolValues.value) *
+    veryHigh.value = ((totalVaryHigh.value / totalGlucoseMmolValues.value) *
                     percentage)
                 .isInfinite ||
             ((totalVaryHigh.value / totalGlucoseMmolValues.value) * percentage)
@@ -224,16 +227,28 @@ class InsightsController extends BaseController {
         ? 0
         : ((totalVaryHigh.value / totalGlucoseMmolValues.value) * percentage)
             .toInt();
-    chartData.add(ChartData('', y1, y2, y3, y4, y5));
+    print('veryLow');
+    print(veryLow.value);
+    print("low");
+    print(low.value);
+    print("targetRange");
+    print(targetRange.value);
+    print("high");
+    print(high.value);
+    print("veryHigh");
+    print(veryHigh.value);
+
+    chartData.add(ChartData('', veryLow, low, targetRange, high, veryHigh));
   }
 }
 
 class ChartData {
+
   final String x;
-  var y1 = 0.obs;
-  var y2 = 0.obs;
-  var y3 = 0.obs;
-  var y4 = 0.obs;
-  var y5 = 0.obs;
-  ChartData(this.x, this.y1, this.y2, this.y3, this.y4, this.y5);
+  var veryLow = 0.obs;
+  var low = 0.obs;
+  var targetRange = 0.obs;
+  var high = 0.obs;
+  var veryHigh = 0.obs;
+  ChartData(this.x, this.veryLow, this.low, this.targetRange, this.high, this.veryHigh);
 }
