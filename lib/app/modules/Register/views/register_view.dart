@@ -267,7 +267,7 @@ class RegisterView extends BaseView<RegisterController> {
            TextSpan(
             text: appLocalization.registerTrustContent+' ',
             style: const TextStyle(
-              fontSize: 16,
+              fontSize: 15,
               color: Colors.black,
             ),
           ),
@@ -276,7 +276,7 @@ class RegisterView extends BaseView<RegisterController> {
             style: const TextStyle(
               color: Colors.blue,
               decoration: TextDecoration.underline,
-              fontSize: 16,
+              fontSize: 15,
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
@@ -286,7 +286,7 @@ class RegisterView extends BaseView<RegisterController> {
          TextSpan(
             text: appLocalization.registerAnd+' ',
             style: const TextStyle(
-              fontSize: 16,
+              fontSize: 15,
               color: Colors.black,
             ),
           ),
@@ -295,7 +295,7 @@ class RegisterView extends BaseView<RegisterController> {
             style: const TextStyle(
               color: Colors.blue,
               decoration: TextDecoration.underline,
-              fontSize: 16,
+              fontSize: 15,
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {

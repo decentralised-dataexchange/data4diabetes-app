@@ -166,7 +166,12 @@ class LoginView extends BaseView<LoginController> {
             },
             child: Text(
               appLocalization.loginRegisterNow,
-              style: boldTitlePrimaryColorStyle,
+              style:  const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                height: 1.3,
+                color: AppColors.colorPrimary,
+              ),
             ),
           ),
         ],
