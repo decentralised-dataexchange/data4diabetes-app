@@ -66,14 +66,14 @@ class InsightsController extends BaseController {
         todaysGlucoseLevel.add(e.evgsValue!);
       }
       if (DateFormat('dd-MM-yyyy')
-          .parse(e.collectedDate!)
-          .isAfter(sevenDaysAgo) ||
+              .parse(e.collectedDate!)
+              .isAfter(sevenDaysAgo) ||
           DateFormat('dd-MM-yyyy').parse(e.collectedDate!) == sevenDaysAgo) {
         last7DaysGlucoseLevel.add(e.evgsValue!);
       }
       if (DateFormat('dd-MM-yyyy')
-          .parse(e.collectedDate!)
-          .isAfter(thirtyDaysAgo) ||
+              .parse(e.collectedDate!)
+              .isAfter(thirtyDaysAgo) ||
           DateFormat('dd-MM-yyyy').parse(e.collectedDate!) == thirtyDaysAgo) {
         last30DaysGlucoseLevel.add(e.evgsValue!);
       }
@@ -186,18 +186,43 @@ class InsightsController extends BaseController {
   }
 
   void chartDataValues() {
-    y1.value =
-        ((totalVaryLow.value / totalGlucoseMmolValues.value) * percentage)
+    y1.value = ((totalVaryLow.value / totalGlucoseMmolValues.value) *
+                    percentage)
+                .isInfinite ||
+            ((totalVaryLow.value / totalGlucoseMmolValues.value) * percentage)
+                .isNaN
+        ? 0
+        : ((totalVaryLow.value / totalGlucoseMmolValues.value) * percentage)
             .toInt();
-    y2.value =
-        ((totalLow.value / totalGlucoseMmolValues.value) * percentage).toInt();
-    y3.value =
-        ((totalTargetRange.value / totalGlucoseMmolValues.value) * percentage)
+    y2.value = ((totalLow.value / totalGlucoseMmolValues.value) * percentage)
+                .isInfinite ||
+            ((totalLow.value / totalGlucoseMmolValues.value) * percentage).isNaN
+        ? 0
+        : ((totalLow.value / totalGlucoseMmolValues.value) * percentage)
             .toInt();
-    y4.value =
-        ((totalHigh.value / totalGlucoseMmolValues.value) * percentage).toInt();
-    y5.value =
-        ((totalVaryHigh.value / totalGlucoseMmolValues.value) * percentage)
+    y3.value = ((totalTargetRange.value / totalGlucoseMmolValues.value) *
+                    percentage)
+                .isInfinite ||
+            ((totalTargetRange.value / totalGlucoseMmolValues.value) *
+                    percentage)
+                .isNaN
+        ? 0
+        : ((totalTargetRange.value / totalGlucoseMmolValues.value) * percentage)
+            .toInt();
+    y4.value = ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
+                .isInfinite ||
+            ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
+                .isNaN
+        ? 0
+        : ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
+            .toInt();
+    y5.value = ((totalVaryHigh.value / totalGlucoseMmolValues.value) *
+                    percentage)
+                .isInfinite ||
+            ((totalVaryHigh.value / totalGlucoseMmolValues.value) * percentage)
+                .isNaN
+        ? 0
+        : ((totalVaryHigh.value / totalGlucoseMmolValues.value) * percentage)
             .toInt();
     chartData.add(ChartData('', y1, y2, y3, y4, y5));
   }
