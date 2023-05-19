@@ -64,12 +64,17 @@ class BottomNavBar extends StatelessWidget {
               Fluttertoast.showToast(
                   msg: 'coming soon',
                   toastLength: Toast.LENGTH_SHORT,
-                  timeInSecForIosWeb: 1 );
+                  timeInSecForIosWeb: 1);
             }
           }
           if (index == 2) {
             await _insightsController.estimatedGlucoseValues();
-            _insightsController.gMICalculator(_insightsController.selectedValue.value='TODAY');
+            _insightsController.gMICalculator(
+                _insightsController.selectedValue.value = 'TODAY');
+            _insightsController.tIRCalculator(
+                _insightsController.selectedValue.value = 'TODAY');
+            _insightsController.addChartDataValues(
+                _insightsController.selectedValue.value = 'TODAY');
             navController.updateSelectedIndex(index);
             onNewMenuSelected(navItems[index].menuCode);
           } else {

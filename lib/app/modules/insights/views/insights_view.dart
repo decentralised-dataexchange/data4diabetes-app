@@ -21,7 +21,6 @@ class InsightsView extends BaseView<InsightsController> {
   static const double percentageValueWidth = 40;
   static const double percentageColorContainerSize = 10;
 
-  final List<ChartData> chartData = [ChartData('', 14, 50, 15, 5, 8)];
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return AppBarWithLogo(
@@ -49,31 +48,34 @@ class InsightsView extends BaseView<InsightsController> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16.0),
       child: Obx(
-        () => DropdownButtonHideUnderline(
+            () => DropdownButtonHideUnderline(
           child: DropdownButton2(
             isExpanded: true,
             items: _insightsController.items
                 .map<DropdownMenuItem<String>>(
                   (String item) => DropdownMenuItem<String>(
-                    value: item,
-                    child: Text(
-                      item,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                value: item,
+                child: Text(
+                  item,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
-                )
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            )
                 .toList(),
             value: _insightsController.selectedValue.value,
             onChanged: (value) {
               _insightsController.selectedValue.value = value as String;
               _insightsController
                   .gMICalculator(_insightsController.selectedValue.value);
-              _insightsController.tIRCalculator(_insightsController.selectedValue.value);
+              _insightsController
+                  .tIRCalculator(_insightsController.selectedValue.value);
+              _insightsController
+                  .addChartDataValues(_insightsController.selectedValue.value);
             },
             buttonStyleData: buttonStyle(context),
             iconStyleData: iconStyle(),
@@ -253,151 +255,143 @@ class InsightsView extends BaseView<InsightsController> {
   }
 
   Widget _stackedColumnRange() {
-    return SizedBox(
-      width: stackedChartWidth,
-      child: SfCartesianChart(
-        margin: EdgeInsets.zero,
-        plotAreaBorderWidth: 0,
-        primaryXAxis: CategoryAxis(
-          //Hide the gridlines of x-axis
-          majorGridLines: const MajorGridLines(width: 0),
-
-          //Hide the axis line of x-axis
-          axisLine: const AxisLine(width: 0),
-        ),
-        primaryYAxis: CategoryAxis(
-            //Hide the gridlines of y-axis
+    return Obx(
+          () => SizedBox(
+        width: stackedChartWidth,
+        child: SfCartesianChart(
+          margin: EdgeInsets.zero,
+          plotAreaBorderWidth: 0,
+          primaryXAxis: CategoryAxis(
+            //Hide the gridlines of x-axis
             majorGridLines: const MajorGridLines(width: 0),
 
-            //Hide the axis line of y-axis
-            axisLine: const AxisLine(width: 0)),
-        series: [
-          StackedColumnSeries(
-              // dataLabelSettings: const DataLabelSettings(
-              //     isVisible: true,
-              //     labelAlignment: ChartDataLabelAlignment.middle,
-              //     textStyle: TextStyle(color: Colors.white)),
-              dataSource: chartData,
-              xValueMapper: (ChartData ch, _) => ch.x,
-              yValueMapper: (ChartData ch, _) => ch.y1),
-          StackedColumnSeries(
-              // dataLabelSettings: const DataLabelSettings(
-              //     isVisible: true,
-              //     labelAlignment: ChartDataLabelAlignment.middle,
-              //     textStyle: TextStyle(color: Colors.white)),
-              dataSource: chartData,
-              xValueMapper: (ChartData ch, _) => ch.x,
-              yValueMapper: (ChartData ch, _) => ch.y2),
-          StackedColumnSeries(
-              // dataLabelSettings: const DataLabelSettings(
-              //     isVisible: true,
-              //     labelAlignment: ChartDataLabelAlignment.middle,
-              //     textStyle: TextStyle(color: Colors.white)),
-              dataSource: chartData,
-              xValueMapper: (ChartData ch, _) => ch.x,
-              yValueMapper: (ChartData ch, _) => ch.y3),
-          StackedColumnSeries(
-              // dataLabelSettings: const DataLabelSettings(
-              //     isVisible: true,
-              //     labelAlignment: ChartDataLabelAlignment.middle,
-              //     textStyle: TextStyle(color: Colors.white)),
-              dataSource: chartData,
-              xValueMapper: (ChartData ch, _) => ch.x,
-              yValueMapper: (ChartData ch, _) => ch.y4),
-          StackedColumnSeries(
-              // dataLabelSettings: const DataLabelSettings(
-              //     isVisible: true,
-              //     labelAlignment: ChartDataLabelAlignment.middle,
-              //     textStyle: TextStyle(color: Colors.white)),
-              dataSource: chartData,
-              xValueMapper: (ChartData ch, _) => ch.x,
-              yValueMapper: (ChartData ch, _) => ch.y5),
-        ],
+            //Hide the axis line of x-axis
+            axisLine: const AxisLine(width: 0),
+          ),
+          primaryYAxis: CategoryAxis(
+            //Hide the gridlines of y-axis
+              majorGridLines: const MajorGridLines(width: 0),
+
+              //Hide the axis line of y-axis
+              axisLine: const AxisLine(width: 0)),
+          series: [
+            StackedColumnSeries(
+                dataSource: _insightsController.chartData.value,
+                xValueMapper: (ChartData ch, _) => ch.x,
+                yValueMapper: (ChartData ch, _) => ch.y1.value),
+            StackedColumnSeries(
+                dataSource: _insightsController.chartData.value,
+                xValueMapper: (ChartData ch, _) => ch.x,
+                yValueMapper: (ChartData ch, _) => ch.y2.value),
+            StackedColumnSeries(
+                dataSource: _insightsController.chartData.value,
+                xValueMapper: (ChartData ch, _) => ch.x,
+                yValueMapper: (ChartData ch, _) => ch.y3.value),
+            StackedColumnSeries(
+                dataSource: _insightsController.chartData.value,
+                xValueMapper: (ChartData ch, _) => ch.x,
+                yValueMapper: (ChartData ch, _) => ch.y4.value),
+            StackedColumnSeries(
+                dataSource: _insightsController.chartData.value,
+                xValueMapper: (ChartData ch, _) => ch.x,
+                yValueMapper: (ChartData ch, _) => ch.y5.value),
+          ],
+        ),
       ),
     );
   }
 
   _percentageValue1() {
-    return SizedBox(
-      width: percentageValueWidth,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            height: percentageColorContainerSize,
-            width: percentageColorContainerSize,
-            color: const Color(0XFF74B49A),
-          ),
-          const Text('3%'),
-        ],
+    return Obx(
+          () => SizedBox(
+        width: percentageValueWidth,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: percentageColorContainerSize,
+              width: percentageColorContainerSize,
+              color: const Color(0XFF74B49A),
+            ),
+            Text('${_insightsController.y5.value} %'),
+          ],
+        ),
       ),
     );
   }
 
   _percentageValue2() {
-    return SizedBox(
-      width: percentageValueWidth,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            height: percentageColorContainerSize,
-            width: percentageColorContainerSize,
-            color: const Color(0XFFFAB093),
-          ),
-          const Text('6%'),
-        ],
+    return Obx(
+          () => SizedBox(
+        width: percentageValueWidth,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: percentageColorContainerSize,
+              width: percentageColorContainerSize,
+              color: const Color(0XFFFAB093),
+            ),
+            Text('${_insightsController.y4.value} %'),
+          ],
+        ),
       ),
     );
   }
 
   _percentageValue3() {
-    return SizedBox(
-      width: percentageValueWidth,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            height: percentageColorContainerSize,
-            width: percentageColorContainerSize,
-            color: const Color(0XFFF67280),
-          ),
-          const Text('22%'),
-        ],
+    return Obx(
+          () => SizedBox(
+        width: percentageValueWidth,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: percentageColorContainerSize,
+              width: percentageColorContainerSize,
+              color: const Color(0XFFF67280),
+            ),
+            Text('${_insightsController.y3.value} %'),
+          ],
+        ),
       ),
     );
   }
 
   _percentageValue4() {
-    return SizedBox(
-      width: percentageValueWidth,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            height: percentageColorContainerSize,
-            width: percentageColorContainerSize,
-            color: const Color(0XFFC06C84),
-          ),
-          const Text('38%'),
-        ],
+    return Obx(
+          () => SizedBox(
+        width: percentageValueWidth,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: percentageColorContainerSize,
+              width: percentageColorContainerSize,
+              color: const Color(0XFFC06C84),
+            ),
+            Text('${_insightsController.y2.value} %'),
+          ],
+        ),
       ),
     );
   }
 
   _percentageValue5() {
-    return SizedBox(
-      width: percentageValueWidth,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            height: percentageColorContainerSize,
-            width: percentageColorContainerSize,
-            color: const Color(0XFF4B87B9),
-          ),
-          const Text('8%'),
-        ],
+    return Obx(
+          () => SizedBox(
+        width: percentageValueWidth,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: percentageColorContainerSize,
+              width: percentageColorContainerSize,
+              color: const Color(0XFF4B87B9),
+            ),
+            Text('${_insightsController.y1.value} %'),
+          ],
+        ),
       ),
     );
   }
@@ -460,7 +454,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   _tileGMI() {
     return Obx(
-      () => GridTile(
+          () => GridTile(
         child: Container(
           color: Colors.white,
           child: Padding(
@@ -468,10 +462,10 @@ class InsightsView extends BaseView<InsightsController> {
             child: Align(
                 alignment: Alignment.centerLeft,
                 child: _insightsController.gMIpercentage.value.toString() ==
-                        'NaN'
+                    'NaN'
                     ? const Text('GMI 0.0%')
                     : Text(
-                        'GMI ${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
+                    'GMI ${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
           ),
         ),
       ),
@@ -480,7 +474,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   _tileGMIValue() {
     return Obx(
-      () => GridTile(
+          () => GridTile(
         child: Container(
           color: Colors.white,
           child: Padding(
@@ -488,10 +482,10 @@ class InsightsView extends BaseView<InsightsController> {
             child: Align(
                 alignment: Alignment.centerLeft,
                 child: _insightsController.gMIpercentage.value.toString() ==
-                        'NaN'
+                    'NaN'
                     ? const Text('0.0%')
                     : Text(
-                        '${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
+                    '${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
           ),
         ),
       ),
@@ -500,7 +494,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   _tileAverage() {
     return Obx(
-      () => GridTile(
+          () => GridTile(
         child: Container(
           color: Colors.white,
           child: Padding(
@@ -508,10 +502,10 @@ class InsightsView extends BaseView<InsightsController> {
             child: Align(
                 alignment: Alignment.centerLeft,
                 child: _insightsController.averageValue.value.toString() ==
-                        'NaN'
+                    'NaN'
                     ? const Text('Average Value 0.0')
                     : Text(
-                        'Average Value ${_insightsController.averageValue.value.toStringAsFixed(1)}')),
+                    'Average Value ${_insightsController.averageValue.value.toStringAsFixed(1)}')),
           ),
         ),
       ),
@@ -520,7 +514,7 @@ class InsightsView extends BaseView<InsightsController> {
 
   _tileAverageValue() {
     return Obx(
-      () => GridTile(
+          () => GridTile(
         child: Container(
           color: Colors.white,
           child: Padding(
@@ -528,10 +522,10 @@ class InsightsView extends BaseView<InsightsController> {
             child: Align(
                 alignment: Alignment.centerLeft,
                 child:
-                    _insightsController.averageValue.value.toString() == 'NaN'
-                        ? const Text('0.0')
-                        : Text(_insightsController.averageValue.value
-                            .toStringAsFixed(1))),
+                _insightsController.averageValue.value.toString() == 'NaN'
+                    ? const Text('0.0')
+                    : Text(_insightsController.averageValue.value
+                    .toStringAsFixed(1))),
           ),
         ),
       ),
@@ -561,14 +555,4 @@ class InsightsView extends BaseView<InsightsController> {
                   child: Text('90.8% (27.2 days)')),
             )));
   }
-}
-
-class ChartData {
-  final String x;
-  final int y1;
-  final int y2;
-  final int y3;
-  final int y4;
-  final int y5;
-  ChartData(this.x, this.y1, this.y2, this.y3, this.y4, this.y5);
 }
