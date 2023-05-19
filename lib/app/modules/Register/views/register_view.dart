@@ -104,15 +104,15 @@ class RegisterView extends BaseView<RegisterController> {
       padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 3.0),
       child: TextFormField(
         autofocus: false,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
+       // autovalidateMode: AutovalidateMode.disabled,
         controller: _registerController.firstNameController,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return appLocalization.registerFirstNameValidationText;
-          }
-
-          return null;
-        },
+        // validator: (value) {
+        //   if (value == null || value.isEmpty) {
+        //     return appLocalization.registerFirstNameValidationText;
+        //   }
+        //
+        //   return null;
+        // },
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
           hintText: appLocalization.registerFirstName,
@@ -159,7 +159,7 @@ class RegisterView extends BaseView<RegisterController> {
         keyboardAction: TextInputAction.go,
         autoFocus: false,
         formatInput: false,
-        autoValidateMode: AutovalidateMode.onUserInteraction,
+        // autovalidateMode: AutovalidateMode.disabled,
         onInputChanged: (val) {
           _registerController.isdCode = val.dialCode;
         },
@@ -168,17 +168,17 @@ class RegisterView extends BaseView<RegisterController> {
         },
         ignoreBlank: false,
         initialValue: _registerController.number,
-        validator: (value) {
-          String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
-          RegExp regExp = RegExp(pattern);
-          if (value == null || value.isEmpty) {
-            return appLocalization.registerPhoneNumberValidationText;
-          } else if (!regExp.hasMatch(value)) {
-            return appLocalization.registerValidPhoneNumberValidationText;
-          }
-
-          return null;
-        },
+        // validator: (value) {
+        //   String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+        //   RegExp regExp = RegExp(pattern);
+        //   if (value == null || value.isEmpty) {
+        //     return appLocalization.registerPhoneNumberValidationText;
+        //   } else if (!regExp.hasMatch(value)) {
+        //     return appLocalization.registerValidPhoneNumberValidationText;
+        //   }
+        //
+        //   return null;
+        // },
         textFieldController: _registerController.mobileNumberController,
         inputDecoration: const InputDecoration(
           isDense: true,
@@ -352,14 +352,15 @@ class RegisterView extends BaseView<RegisterController> {
           ),
         ),
         onPressed: () {
-          if (_registerFormKey.currentState!.validate()) {
-            FocusScope.of(context).requestFocus(FocusNode());
+         // if (_registerFormKey.currentState!.validate()) {
+            //FocusScope.of(context).requestFocus(FocusNode());
+          _registerController.onNextButtonTap();
 
-            int index = _registerController.selectedPage.value + 1;
-            _registerController.pageController.animateToPage(index,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.ease);
-          }
+            // int index = _registerController.selectedPage.value + 1;
+            // _registerController.pageController.animateToPage(index,
+            //     duration: const Duration(milliseconds: 500),
+            //     curve: Curves.ease);
+         // }
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

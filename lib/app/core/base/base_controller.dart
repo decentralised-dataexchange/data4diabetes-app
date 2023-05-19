@@ -130,11 +130,9 @@ abstract class BaseController extends GetxController {
   }
 
   void GetSnackToast({required String message, Color? color}) {
-    Get.snackbar('', message,
-       ///green color code #428959
-        ///red color code #C73E1D
+    Get.rawSnackbar(
+        message: message,
         snackPosition: SnackPosition.BOTTOM,
-        colorText: AppColors.colorWhite,
-        backgroundColor:color ?? const Color(0XFFC73E1D));
+        backgroundColor: color ?? const Color(0XFFC73E1D));
   }
 }
