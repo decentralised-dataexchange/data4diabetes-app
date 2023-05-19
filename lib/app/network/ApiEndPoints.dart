@@ -3,6 +3,6 @@ class ApiEndPoints {
   static const String Register = "register/";
   static const String VerifyOTP = "verify-otp/";
   static const String Login = "login/";
-
+  static const String ValidateMobileNumber = "validate-mobile-number/";
 
 }

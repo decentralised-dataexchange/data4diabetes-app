@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:Data4Diabetes/app/data/model/register/RegisterRequest.dart';
 import 'package:Data4Diabetes/app/data/model/register/RegisterResponse.dart';
+import 'package:Data4Diabetes/app/data/model/validateMobileNumber/ValidateMobileNumberRequest.dart';
+import 'package:Data4Diabetes/app/data/model/validateMobileNumber/ValidateMobileNumberResponse.dart';
 import 'package:Data4Diabetes/app/data/repository/user_repository_impl.dart';
 import 'package:Data4Diabetes/app/modules/Otp/views/otp_view.dart';
 import 'package:Data4Diabetes/app/modules/privacyPolicy/controllers/privacyPolicy_controller.dart';
@@ -36,7 +38,8 @@ class RegisterController extends BaseController {
   var shareLastName = "".obs;
   PhoneNumber number = PhoneNumber(isoCode: 'SE');
   String? isdCode;
-
+  var validateVisibility=false.obs;
+ // var circularVisibility=false.obs;
   @override
   void onInit() {
     pageController = PageController(initialPage: selectedPage.value);
@@ -120,4 +123,31 @@ class RegisterController extends BaseController {
  void  termsOfServices(){
     Get.to(TermsOfServiceView());
   }
+   validateMobileNumber() async {
+    ValidateMobileNumberRequest request =
+    ValidateMobileNumberRequest(mobile_number: isdCode! + mobileNumberController.text);
+    try {
+      ValidateMobileNumberResponse response = await _impl.validateMobileNumber(request);
+      if (response.isValidMobileNumber ==true) {
+        hideLoading();
+
+        validateVisibility.value=true;
+       // circularVisibility.value=false;
+      }
+      else if(response.isValidMobileNumber==false){
+
+        validateVisibility.value=false;
+
+      }
+    } catch (e) {
+      // showToast((e as ApiException).message);
+      GetSnackToast(message: (e as ApiException).message);
+
+      hideLoading();
+    }
+    finally{
+      hideLoading();
+    }
+  }
+
 }

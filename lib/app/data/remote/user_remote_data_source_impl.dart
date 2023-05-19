@@ -3,11 +3,13 @@ import 'package:Data4Diabetes/app/data/model/login/LoginRequest.dart';
 import 'package:Data4Diabetes/app/data/model/login/LoginResponse.dart';
 import 'package:Data4Diabetes/app/data/model/register/RegisterRequest.dart';
 import 'package:Data4Diabetes/app/data/model/register/RegisterResponse.dart';
+import 'package:Data4Diabetes/app/data/model/validateMobileNumber/ValidateMobileNumberResponse.dart';
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpRequest.dart';
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpResponse.dart';
 
 import '../../network/ApiEndPoints.dart';
 import '../../network/dio_provider.dart';
+import '../model/validateMobileNumber/ValidateMobileNumberRequest.dart';
 import '/app/core/base/base_remote_source.dart';
 import '/app/data/remote/user_remote_data_source.dart';
 
@@ -51,6 +53,20 @@ class UserRemoteDataSourceImpl extends BaseRemoteSource
     try {
       return callApiWithErrorParser(dioCall)
           .then((response) => VerifyOtpResponse.fromJson(response.data));
+    } catch (e) {
+      rethrow;
+    }
+  }
+  /// Validate mobile number
+  @override
+  Future<ValidateMobileNumberResponse> validateMobileNumber(ValidateMobileNumberRequest request) {
+    var endpoint = "${DioProvider.baseUrl}${ApiEndPoints.ValidateMobileNumber}";
+
+    var dioCall = postWithJson(endpoint, data: request, isAuthNeeded: true);
+
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => ValidateMobileNumberResponse.fromJson(response.data));
     } catch (e) {
       rethrow;
     }
