@@ -190,13 +190,13 @@ class InsightsController extends BaseController {
             ((totalVaryLow.value / totalGlucoseMmolValues.value) * percentage)
                 .isNaN
         ? 0
-        : ((totalVaryLow.value / totalGlucoseMmolValues.value) * percentage)
+        : ((totalVaryLow.value / totalGlucoseMmolValues.value) * percentage).round()
             .toInt();
     low.value = ((totalLow.value / totalGlucoseMmolValues.value) * percentage)
                 .isInfinite ||
             ((totalLow.value / totalGlucoseMmolValues.value) * percentage).isNaN
         ? 0
-        : ((totalLow.value / totalGlucoseMmolValues.value) * percentage)
+        : ((totalLow.value / totalGlucoseMmolValues.value) * percentage).round()
             .toInt();
 
     targetRange.value =
@@ -207,14 +207,14 @@ class InsightsController extends BaseController {
                     .isNaN
             ? 0
             : ((totalTargetRange.value / totalGlucoseMmolValues.value) *
-                    percentage)
+                    percentage).round()
                 .toInt();
     high.value = ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
                 .isInfinite ||
             ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
                 .isNaN
         ? 0
-        : ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
+        : ((totalHigh.value / totalGlucoseMmolValues.value) * percentage).round()
             .toInt();
     veryHigh.value = ((totalVaryHigh.value / totalGlucoseMmolValues.value) *
                     percentage)
@@ -222,7 +222,7 @@ class InsightsController extends BaseController {
             ((totalVaryHigh.value / totalGlucoseMmolValues.value) * percentage)
                 .isNaN
         ? 0
-        : ((totalVaryHigh.value / totalGlucoseMmolValues.value) * percentage)
+        : ((totalVaryHigh.value / totalGlucoseMmolValues.value) * percentage).round()
             .toInt();
     chartData.add(ChartData('', veryLow, low, targetRange, high, veryHigh));
   }
