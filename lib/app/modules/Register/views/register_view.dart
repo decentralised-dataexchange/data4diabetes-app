@@ -625,22 +625,22 @@ class RegisterView extends BaseView<RegisterController> {
                 textAlign: TextAlign.justify,
               ),
             ),
-            Card(
-              elevation: 0,
-              margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
-              color: AppColors.pageBackground,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(cardRadius),
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height *
-                        blankContainerHeight,
-                  ),
-                ],
-              ),
-            ),
+            // Card(
+            //   elevation: 0,
+            //   margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+            //   color: AppColors.pageBackground,
+            //   shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.circular(cardRadius),
+            //   ),
+            //   child: Column(
+            //     children: [
+            //       Container(
+            //         height: MediaQuery.of(context).size.height *
+            //             blankContainerHeight,
+            //       ),
+            //     ],
+            //   ),
+            // ),
             _bottomContentWidget(),
           ],
         ),
