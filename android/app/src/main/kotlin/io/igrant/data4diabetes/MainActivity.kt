@@ -60,9 +60,9 @@ class MainActivity : FlutterActivity() {
                     DataWallet.openShareData(this)
                 }
                 "Preferences" -> {
-                    IgrantSdk().withApiKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2MzhkZTMzMDJmNWQxNzAwMDE0NDMxZjMiLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcwMTM0NzQ2N30.2q7ENyEIXPRpQ1aF70jcF4XiQJs7YqOHwIogWXt1x5g")
-                        .withUserId("638de3302f5d1700014431f3")
-                        .withOrgId("638dd3b12f5d1700014431ec").start(this)
+                    IgrantSdk().withApiKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDVhNDE0YmI5YjA1NTAwMDE1MGIyNDciLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcxNDc0MDg4Nn0.u6pBpv12ZfdHYMPoQHYR-oBR9ZOZVeHiChaQ8yiEMxE")
+                        .withUserId("5d8db1428e252f000180b5a6")
+                        .withOrgId("645a4172b9b055000150b248").start(this)
                 }
                 "DataAgreementPolicy" -> {
                     val apiKey: String? = call.argument("ApiKey")
