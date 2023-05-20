@@ -12,7 +12,7 @@ Future<String> setLocale(String languageCode) async {
   platform.invokeMethod('SetLanguage', {
     "code": languageCode
   });
-  
+
   return languageCode;
 }
 

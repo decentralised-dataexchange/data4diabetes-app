@@ -60,6 +60,8 @@ import SwiftMessages
                     return
                 }
                 AriesMobileAgent.shared.changeSDKLanguage(languageCode: code)
+            case "SharedData":
+                AriesMobileAgent.shared.showDataWalletScannerViewController()
             default: break
             }
         })
