@@ -17,7 +17,18 @@ class RegisterView extends BaseView<RegisterController> {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: true,
+      leading: InkWell(
+          onTap: () {
+            _registerController.firstNameController.clear();
+            //_registerController.lastNameController..clear();
+            _registerController.mobileNumberController.clear();
+            _registerController.selectedIndex.value = 0;
+            _registerController.selectedPage.value = 0;
+            _registerController.validateVisibility.value=false;
+            Get.back();
+          },
+          child: Icon(Icons.arrow_back_ios)),
     );
   }
 
@@ -25,13 +36,15 @@ class RegisterView extends BaseView<RegisterController> {
   final double radiusConst = 18.0;
   final double verticalPadding = 15.0;
   final double buttonRadius = 50.0;
+  final double circularProgressSize = 20.0;
   final double cardRadius = 15.0;
   final double sizedBox = 0.12;
   final double buttonSizedWidth = 0.20;
   final double buttonSizedHeight = 0.02;
   final _registerFormKey = GlobalKey<FormState>();
+  final bool autoValidate = false;
   final RegisterController _registerController = Get.find();
-  final PrivacyPolicyController _privacyPolicyController=Get.find();
+  final PrivacyPolicyController _privacyPolicyController = Get.find();
   @override
   Widget body(BuildContext context) {
     return WillPopScope(
@@ -41,9 +54,9 @@ class RegisterView extends BaseView<RegisterController> {
         _registerController.mobileNumberController.clear();
         _registerController.selectedIndex.value = 0;
         _registerController.selectedPage.value = 0;
-        Get.back();
+        _registerController.validateVisibility.value=false;
 
-        return false;
+        return true;
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -93,14 +106,15 @@ class RegisterView extends BaseView<RegisterController> {
       padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 3.0),
       child: TextFormField(
         autofocus: false,
+        // autovalidateMode: AutovalidateMode.disabled,
         controller: _registerController.firstNameController,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return appLocalization.registerFirstNameValidationText;
-          }
-
-          return null;
-        },
+        // validator: (value) {
+        //   if (value == null || value.isEmpty) {
+        //     return appLocalization.registerFirstNameValidationText;
+        //   }
+        //
+        //   return null;
+        // },
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
           hintText: appLocalization.registerFirstName,
@@ -141,35 +155,58 @@ class RegisterView extends BaseView<RegisterController> {
   }
 
   Widget _internationalPhoneNumberInputWidget() {
+    String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+    RegExp regExp = RegExp(pattern);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 0.0),
       child: InternationalPhoneNumberInput(
         keyboardAction: TextInputAction.go,
         autoFocus: false,
         formatInput: false,
-        autoValidateMode: AutovalidateMode.disabled,
+        // autovalidateMode: AutovalidateMode.disabled,
         onInputChanged: (val) {
+          // _registerController.circularVisibility.value=true;
           _registerController.isdCode = val.dialCode;
+
+          if (!regExp.hasMatch(val.toString())) {
+            _registerController.validateMobileNumber();
+            //circularVisibility.value=false;
+          }
         },
         onSubmit: () {
           return;
         },
         ignoreBlank: false,
         initialValue: _registerController.number,
-        validator: (value) {
-          String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
-          RegExp regExp = RegExp(pattern);
-          if (value == null || value.isEmpty) {
-            return appLocalization.registerPhoneNumberValidationText;
-          } else if (!regExp.hasMatch(value)) {
-            return appLocalization.registerValidPhoneNumberValidationText;
-          }
-
-          return null;
-        },
+        // validator: (value) {
+        //   String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+        //   RegExp regExp = RegExp(pattern);
+        //   if (value == null || value.isEmpty) {
+        //     return appLocalization.registerPhoneNumberValidationText;
+        //   } else if (!regExp.hasMatch(value)) {
+        //     return appLocalization.registerValidPhoneNumberValidationText;
+        //   }
+        //
+        //   return null;
+        // },
         textFieldController: _registerController.mobileNumberController,
         inputDecoration: const InputDecoration(
           isDense: true,
+          // suffix: Obx(
+          //   () => Visibility(
+          //     visible: _registerController.circularVisibility.value,
+          //     child: SizedBox(
+          //       width: circularProgressSize,
+          //       height: circularProgressSize,
+          //       child: const CircularProgressIndicator(
+          //         backgroundColor: AppColors.lightGreyColor,
+          //         strokeWidth: 2,
+          //         color: AppColors.appBarColor,
+          //       ),
+          //     ),
+          //   ),
+          // ),
           fillColor: AppColors.pageBackground,
           filled: true,
           hintText: 'Mobile Number',
@@ -236,6 +273,7 @@ class RegisterView extends BaseView<RegisterController> {
                   ],
                 ),
               ),
+              _validateUserNumber(),
               _bottomContentWidget(),
             ],
           ),
@@ -264,15 +302,15 @@ class RegisterView extends BaseView<RegisterController> {
       textAlign: TextAlign.justify,
       text: TextSpan(
         children: [
-           TextSpan(
-            text: appLocalization.registerTrustContent+' ',
+          TextSpan(
+            text: appLocalization.registerTrustContent + ' ',
             style: const TextStyle(
               fontSize: 15,
               color: Colors.black,
             ),
           ),
           TextSpan(
-            text: appLocalization.registerDataAgreementDetails+' ',
+            text: appLocalization.registerDataAgreementDetails + ' ',
             style: const TextStyle(
               color: Colors.blue,
               decoration: TextDecoration.underline,
@@ -283,8 +321,8 @@ class RegisterView extends BaseView<RegisterController> {
                 _registerController.showDataAgreement();
               },
           ),
-         TextSpan(
-            text: appLocalization.registerAnd+' ',
+          TextSpan(
+            text: appLocalization.registerAnd + ' ',
             style: const TextStyle(
               fontSize: 15,
               color: Colors.black,
@@ -299,7 +337,7 @@ class RegisterView extends BaseView<RegisterController> {
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-              _registerController.termsOfServices();
+                _registerController.termsOfServices();
               },
           ),
         ],
@@ -340,14 +378,15 @@ class RegisterView extends BaseView<RegisterController> {
           ),
         ),
         onPressed: () {
-          if (_registerFormKey.currentState!.validate()) {
-            FocusScope.of(context).requestFocus(FocusNode());
+          // if (_registerFormKey.currentState!.validate()) {
+          //FocusScope.of(context).requestFocus(FocusNode());
+          _registerController.onNextButtonTap();
 
-            int index = _registerController.selectedPage.value + 1;
-            _registerController.pageController.animateToPage(index,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.ease);
-          }
+          // int index = _registerController.selectedPage.value + 1;
+          // _registerController.pageController.animateToPage(index,
+          //     duration: const Duration(milliseconds: 500),
+          //     curve: Curves.ease);
+          // }
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -615,22 +654,22 @@ class RegisterView extends BaseView<RegisterController> {
                 textAlign: TextAlign.justify,
               ),
             ),
-            Card(
-              elevation: 0,
-              margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
-              color: AppColors.pageBackground,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(cardRadius),
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height *
-                        blankContainerHeight,
-                  ),
-                ],
-              ),
-            ),
+            // Card(
+            //   elevation: 0,
+            //   margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+            //   color: AppColors.pageBackground,
+            //   shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.circular(cardRadius),
+            //   ),
+            //   child: Column(
+            //     children: [
+            //       Container(
+            //         height: MediaQuery.of(context).size.height *
+            //             blankContainerHeight,
+            //       ),
+            //     ],
+            //   ),
+            // ),
             _bottomContentWidget(),
           ],
         ),
@@ -665,6 +704,20 @@ class RegisterView extends BaseView<RegisterController> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  _validateUserNumber() {
+    return Obx(
+      () => Visibility(
+        visible: _registerController.validateVisibility.value,
+        child: Align(
+            alignment: Alignment.bottomRight,
+            child: Text(
+              appLocalization.registerExistingUser,
+              style: const TextStyle(fontSize: 12, color: Colors.redAccent),
+            )),
       ),
     );
   }

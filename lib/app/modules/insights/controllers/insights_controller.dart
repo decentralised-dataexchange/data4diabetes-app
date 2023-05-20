@@ -99,7 +99,7 @@ class InsightsController extends BaseController {
         totalGlucose = int.parse(e) + totalGlucose;
       }
     }
-    averageBloodGlucose.value = totalGlucose / todaysGlucoseLevel.length;
+    averageBloodGlucose.value = totalGlucose / glucoseLevel.length;
     averageValue.value =
         averageBloodGlucose.value.isInfinite || averageBloodGlucose.value.isNaN
             ? 0.0

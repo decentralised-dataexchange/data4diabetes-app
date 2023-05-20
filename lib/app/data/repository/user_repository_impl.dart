@@ -2,6 +2,8 @@ import 'package:Data4Diabetes/app/data/model/login/LoginRequest.dart';
 import 'package:Data4Diabetes/app/data/model/login/LoginResponse.dart';
 import 'package:Data4Diabetes/app/data/model/register/RegisterRequest.dart';
 import 'package:Data4Diabetes/app/data/model/register/RegisterResponse.dart';
+import 'package:Data4Diabetes/app/data/model/validateMobileNumber/ValidateMobileNumberRequest.dart';
+import 'package:Data4Diabetes/app/data/model/validateMobileNumber/ValidateMobileNumberResponse.dart';
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpRequest.dart';
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpResponse.dart';
 import 'package:get/get.dart';
@@ -26,5 +28,10 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<VerifyOtpResponse> verifyOTP(VerifyOtpRequest request) {
     return _remoteSource.verifyOTP(request);
+  }
+  /// Validate mobile number
+  @override
+  Future<ValidateMobileNumberResponse> validateMobileNumber(ValidateMobileNumberRequest request) {
+    return _remoteSource.validateMobileNumber(request);
   }
 }
