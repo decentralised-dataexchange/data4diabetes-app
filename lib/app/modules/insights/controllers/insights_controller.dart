@@ -51,8 +51,13 @@ class InsightsController extends BaseController {
     todaysGlucoseLevel.clear();
     last7DaysGlucoseLevel.clear();
     last30DaysGlucoseLevel.clear();
-    var response = await platform.invokeMethod('QueryCredentials',
+
+    String jsonString = await platform.invokeMethod('QueryCredentials',
         {"CredDefId": "CXcE5anqfGrnQEguoh8QXw:3:CL:376:default"});
+
+    String replacedQuotes =
+        jsonString.replaceAll('“', '"').replaceAll('”', '"');
+    String response = replacedQuotes.replaceAll('\\', '');
     List<GlucoseData> evgsDataList = (jsonDecode(response) as List<dynamic>)
         .map((item) => GlucoseData.fromJson(item))
         .toList();

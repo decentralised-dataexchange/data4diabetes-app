@@ -40,7 +40,7 @@ class SettingsView extends BaseView<SettingsController> {
               _insightsController.selectedValue.value = 'TODAY');
           _insightsController.addChartDataValues(
               _insightsController.selectedValue.value = 'TODAY');
-          Navigator.pop(context);
+          Get.back();
         },
         icon: const Icon(Icons.arrow_back_ios),
       ),
