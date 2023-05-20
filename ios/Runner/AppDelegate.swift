@@ -2,6 +2,7 @@ import UIKit
 import Flutter
 import iGrantioSDK
 import ama_ios_sdk
+import SwiftMessages
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -69,6 +70,30 @@ import ama_ios_sdk
 
 extension AppDelegate: AriesMobileAgentDelegate{
     func notificationReceived(message: String) {
-        debugPrint(message)
+        debugPrint("Notification recieved --- \(message)")
+        showSuccessSnackbar(message: message,navToNotifScreen: true)
+    }
+    
+    func showSuccessSnackbar(withTitle: String? = "", message: String,navToNotifScreen: Bool = false) {
+        DispatchQueue.main.async {
+            let success = MessageView.viewFromNib(layout: .messageView)
+            success.configureTheme(.success)
+            success.backgroundColor = #colorLiteral(red: 0.2666666667, green: 0.5803921569, blue: 0.2666666667, alpha: 1)
+            success.configureContent(title: withTitle!, body: message)
+            success.configureDropShadow()
+            success.button?.isHidden = true
+            if navToNotifScreen {
+                success.tapHandler = { _ in
+                    if (!navToNotifScreen){
+                        return
+                    }
+                    SwiftMessages.hide(animated: false)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+                        AriesMobileAgent.shared.showDataWalletNofificationViewController()
+                    })
+                }
+            }
+            SwiftMessages.show(view: success)
+        }
     }
 }
