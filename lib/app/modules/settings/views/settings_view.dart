@@ -190,11 +190,11 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-        if (Platform.isAndroid) {
+        // if (Platform.isAndroid) {
           _settingsController.platform.invokeMethod('Wallet');
-        } else if (Platform.isIOS) {
-          showToast('Coming soon');
-        }
+        // } else if (Platform.isIOS) {
+        //   showToast('Coming soon');
+        // }
       },
     );
   }
@@ -213,11 +213,11 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-        if (Platform.isAndroid) {
+        // if (Platform.isAndroid) {
           _settingsController.platform.invokeMethod('Connections');
-        } else if (Platform.isIOS) {
-          showToast('Coming soon');
-        }
+        // } else if (Platform.isIOS) {
+        //   showToast('Coming soon');
+        // }
       },
     );
   }
@@ -237,11 +237,11 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-        if (Platform.isAndroid) {
+        // if (Platform.isAndroid) {
           _settingsController.platform.invokeMethod('MySharedData');
-        } else if (Platform.isIOS) {
-          showToast('Coming soon');
-        }
+        // } else if (Platform.isIOS) {
+        //   showToast('Coming soon');
+        // }
       },
     );
   }
@@ -313,11 +313,11 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-        if (Platform.isAndroid) {
+        // if (Platform.isAndroid) {
           _settingsController.platform.invokeMethod('Notifications');
-        } else if (Platform.isIOS) {
-          showToast('Coming soon');
-        }
+        // } else if (Platform.isIOS) {
+        //   showToast('Coming soon');
+        // }
       },
     );
   }
