@@ -461,11 +461,8 @@ class InsightsView extends BaseView<InsightsController> {
             padding: const EdgeInsets.only(left: 5.0),
             child: Align(
                 alignment: Alignment.centerLeft,
-                child: _insightsController.gMIpercentage.value.toString() ==
-                        'NaN'
-                    ? const Text('GMI 0.0%')
-                    : Text(
-                        'GMI ${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
+                child: Text(
+                    'GMI ${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
           ),
         ),
       ),
@@ -481,11 +478,8 @@ class InsightsView extends BaseView<InsightsController> {
             padding: const EdgeInsets.only(left: 5.0),
             child: Align(
                 alignment: Alignment.centerLeft,
-                child: _insightsController.gMIpercentage.value.toString() ==
-                        'NaN'
-                    ? const Text('0.0%')
-                    : Text(
-                        '${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
+                child: Text(
+                    '${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
           ),
         ),
       ),
@@ -501,11 +495,8 @@ class InsightsView extends BaseView<InsightsController> {
             padding: const EdgeInsets.only(left: 5.0),
             child: Align(
                 alignment: Alignment.centerLeft,
-                child: _insightsController.averageValue.value.toString() ==
-                        'NaN'
-                    ? const Text('Average Value 0.0')
-                    : Text(
-                        'Average Value ${_insightsController.averageValue.value.toStringAsFixed(1)}')),
+                child: Text(
+                    'Average Value ${_insightsController.averageValue.value.toStringAsFixed(1)}')),
           ),
         ),
       ),
@@ -521,11 +512,8 @@ class InsightsView extends BaseView<InsightsController> {
             padding: const EdgeInsets.only(left: 5.0),
             child: Align(
                 alignment: Alignment.centerLeft,
-                child:
-                    _insightsController.averageValue.value.toString() == 'NaN'
-                        ? const Text('0.0')
-                        : Text(_insightsController.averageValue.value
-                            .toStringAsFixed(1))),
+                child: Text(
+                    _insightsController.averageValue.value.toStringAsFixed(1))),
           ),
         ),
       ),
