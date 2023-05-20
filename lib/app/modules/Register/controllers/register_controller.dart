@@ -162,6 +162,8 @@ class RegisterController extends BaseController {
     }
     else if(!regExp.hasMatch(mobileNumberController.text)){
       GetSnackToast(message: appLocalization.registerValidPhoneNumberValidationText);
+    } else if(validateVisibility.value==true){
+      GetSnackToast(message: appLocalization.registerExistingUser,);
     }
     else{
       int index = selectedPage.value + 1;

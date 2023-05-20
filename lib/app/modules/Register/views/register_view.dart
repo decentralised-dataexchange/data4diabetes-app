@@ -25,6 +25,7 @@ class RegisterView extends BaseView<RegisterController> {
             _registerController.mobileNumberController.clear();
             _registerController.selectedIndex.value = 0;
             _registerController.selectedPage.value = 0;
+            _registerController.validateVisibility.value=false;
             Get.back();
           },
           child: Icon(Icons.arrow_back_ios)),
@@ -53,9 +54,9 @@ class RegisterView extends BaseView<RegisterController> {
         _registerController.mobileNumberController.clear();
         _registerController.selectedIndex.value = 0;
         _registerController.selectedPage.value = 0;
-        Get.back();
+        _registerController.validateVisibility.value=false;
 
-        return false;
+        return true;
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
