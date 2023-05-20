@@ -12,10 +12,9 @@ import SwiftMessages
     ) -> Bool {
         GeneratedPluginRegistrant.register(with: self)
         let flutterViewController : FlutterViewController = window?.rootViewController as! FlutterViewController
-        let navigationController = UINavigationController(rootViewController: flutterViewController)
-        navigationController.interactivePopGestureRecognizer?.delegate = self
-        window.rootViewController = navigationController
-        navigationController.delegate = self
+//        let navigationController = UINavigationController(rootViewController: flutterViewController)
+//        window.rootViewController = navigationController
+//        navigationController.delegate = self
         
         let flutterChannel = FlutterMethodChannel(name: "io.igrant.data4diabetes.channel",
                                                    binaryMessenger: flutterViewController.binaryMessenger)
