@@ -68,7 +68,7 @@ class LoginView extends BaseView<LoginController> {
       keyboardAction: TextInputAction.go,
       autoFocus: true,
       formatInput: false,
-      autoValidateMode: AutovalidateMode.disabled,
+     // autoValidateMode: AutovalidateMode.disabled,
       onInputChanged: (val) {
         _loginController.isdCode = val.dialCode;
       },
@@ -77,17 +77,17 @@ class LoginView extends BaseView<LoginController> {
       },
       ignoreBlank: false,
       initialValue: _loginController.number,
-      validator: (value) {
-        String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
-        RegExp regExp = RegExp(pattern);
-        if (value == null || value.isEmpty) {
-          return appLocalization.loginPhoneNumberValidationText;
-        } else if (!regExp.hasMatch(value)) {
-          return appLocalization.loginValidPhoneNumberValidationText;
-        }
-
-        return null;
-      },
+      // validator: (value) {
+      //   String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+      //   RegExp regExp = RegExp(pattern);
+      //   if (value == null || value.isEmpty) {
+      //     return appLocalization.loginPhoneNumberValidationText;
+      //   } else if (!regExp.hasMatch(value)) {
+      //     return appLocalization.loginValidPhoneNumberValidationText;
+      //   }
+      //
+      //   return null;
+      // },
       textFieldController: _loginController.phoneNumberController,
       inputDecoration: const InputDecoration(
         isDense: true,
@@ -128,11 +128,11 @@ class LoginView extends BaseView<LoginController> {
               ),
             ),
             onPressed: () {
-              if (_loginFormKey.currentState!.validate()) {
-                FocusScope.of(context).requestFocus(FocusNode());
+              // if (_loginFormKey.currentState!.validate()) {
+              //   FocusScope.of(context).requestFocus(FocusNode());
 
                 _loginController.loginUser();
-              }
+           //   }
             },
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -162,6 +162,7 @@ class LoginView extends BaseView<LoginController> {
           ),
           TextButton(
             onPressed: () => {
+            _loginController. phoneNumberController.clear(),
               Get.to(RegisterView()),
             },
             child: Text(

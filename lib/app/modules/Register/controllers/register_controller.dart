@@ -150,4 +150,25 @@ class RegisterController extends BaseController {
     }
   }
 
+  void onNextButtonTap(){
+    String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+    RegExp regExp = RegExp(pattern);
+    if(firstNameController.text==""){
+      GetSnackToast(message: appLocalization.registerFirstNameValidationText);
+    }
+    else if(mobileNumberController.text==""){
+
+      GetSnackToast(message: appLocalization.registerPhoneNumberValidationText);
+    }
+    else if(!regExp.hasMatch(mobileNumberController.text)){
+      GetSnackToast(message: appLocalization.registerValidPhoneNumberValidationText);
+    }
+    else{
+      int index = selectedPage.value + 1;
+      pageController.animateToPage(index,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.ease);
+    }
+
+  }
 }
