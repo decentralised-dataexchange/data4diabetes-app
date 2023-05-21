@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -54,31 +55,32 @@ class InsightsController extends BaseController {
 
     String jsonString = await platform.invokeMethod('QueryCredentials',
         {"CredDefId": "CXcE5anqfGrnQEguoh8QXw:3:CL:376:default"});
-
-    String replacedQuotes =
-        jsonString.replaceAll('“', '"').replaceAll('”', '"');
-    String response = replacedQuotes.replaceAll('\\', '');
-    List<GlucoseData> evgsDataList = (jsonDecode(response) as List<dynamic>)
+    List<GlucoseData> evgsDataList = (jsonDecode(jsonString) as List<dynamic>)
         .map((item) => GlucoseData.fromJson(item))
         .toList();
     for (var e in evgsDataList) {
-      DateTime currentDate = DateTime.now();
+      try {
+        DateTime currentDate = DateTime.now();
       DateTime sevenDaysAgo = currentDate.subtract(const Duration(days: 7));
       DateTime thirtyDaysAgo = currentDate.subtract(const Duration(days: 30));
-      if (e.collectedDate == DateFormat('dd-MM-yyyy').format(currentDate)) {
-        todaysGlucoseLevel.add(e.evgsValue!);
-      }
       if (DateFormat('dd-MM-yyyy')
-              .parse(e.collectedDate!)
-              .isAfter(sevenDaysAgo) ||
-          DateFormat('dd-MM-yyyy').parse(e.collectedDate!) == sevenDaysAgo) {
-        last7DaysGlucoseLevel.add(e.evgsValue!);
-      }
-      if (DateFormat('dd-MM-yyyy')
-              .parse(e.collectedDate!)
-              .isAfter(thirtyDaysAgo) ||
-          DateFormat('dd-MM-yyyy').parse(e.collectedDate!) == thirtyDaysAgo) {
-        last30DaysGlucoseLevel.add(e.evgsValue!);
+                .parse(e.collectedDate!)
+                .isAfter(sevenDaysAgo) ||
+            DateFormat('dd-MM-yyyy').parse(e.collectedDate!) == sevenDaysAgo) {
+          last7DaysGlucoseLevel.add(e.evgsValue!);
+        }
+        if (DateFormat('dd-MM-yyyy')
+                .parse(e.collectedDate!)
+                .isAfter(thirtyDaysAgo) ||
+            DateFormat('dd-MM-yyyy').parse(e.collectedDate!) == thirtyDaysAgo) {
+          last30DaysGlucoseLevel.add(e.evgsValue!);
+        }
+        if (e.collectedDate == DateFormat('dd-MM-yyyy').format(currentDate)) {
+          todaysGlucoseLevel.add(e.evgsValue!);
+        }
+      } catch (e) {
+        print("error == $e");
+        // Handle the parsing error, e.g., show an error message or assign a default value
       }
     }
   }

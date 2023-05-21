@@ -5,19 +5,23 @@ import ama_ios_sdk
 import SwiftMessages
 
 @UIApplicationMain
-@objc class AppDelegate: FlutterAppDelegate {
+@objc class AppDelegate: FlutterAppDelegate,UIGestureRecognizerDelegate {
     override func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         GeneratedPluginRegistrant.register(with: self)
-        let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
-        let carePlanChannel = FlutterMethodChannel(name: "io.igrant.data4diabetes.channel",
-                                                   binaryMessenger: controller.binaryMessenger)
+        let flutterViewController : FlutterViewController = window?.rootViewController as! FlutterViewController
+//        let navigationController = UINavigationController(rootViewController: flutterViewController)
+//        window.rootViewController = navigationController
+//        navigationController.delegate = self
+        
+        let flutterChannel = FlutterMethodChannel(name: "io.igrant.data4diabetes.channel",
+                                                   binaryMessenger: flutterViewController.binaryMessenger)
         AriesMobileAgent.shared.configureWallet(delegate: self) { success in
             debugPrint("Wallet configured --- \(success ?? false)")
         }
-        carePlanChannel.setMethodCallHandler({
+        flutterChannel.setMethodCallHandler({
             (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
             switch call.method{
             case "Preferences":
@@ -43,12 +47,12 @@ import SwiftMessages
                 }
                 AriesMobileAgent.shared.showDataAgreementScreen(dataAgreementID: dataAgreementId, apiKey: apiKey, orgId: orgId)
             case "QueryCredentials":
-                guard let arguments = call.arguments as? [String: Any],
-                      let CredDefId = arguments["CredDefId"] as? String,
-                      let SchemaId = arguments["SchemaId"] as? String else {
+                guard let arguments = call.arguments as? [String: Any]else {
                     result(FlutterError(code: "INVALID_ARGUMENTS", message: "Invalid arguments", details: nil))
                     return
                 }
+                let CredDefId = arguments["CredDefId"] as? String ?? ""
+                let SchemaId = arguments["SchemaId"] as? String ?? ""
                 Task{
                     let queryResult = await AriesMobileAgent.shared.queryCredentials(CredDefId: CredDefId, SchemaId: SchemaId)
                     result(queryResult)
@@ -67,6 +71,20 @@ import SwiftMessages
         })
 
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return true
+    }
+}
+
+extension AppDelegate: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if viewController == navigationController.viewControllers.first {
+            navigationController.isNavigationBarHidden = true
+        } else {
+            navigationController.isNavigationBarHidden = false
+        }
     }
 }
 
