@@ -103,7 +103,7 @@ class InsightsController extends BaseController {
     totalGlucose = 0;
     if (glucoseLevel.isNotEmpty) {
       for (var e in glucoseLevel) {
-        totalGlucose = int.parse(e) + totalGlucose;
+        totalGlucose = double.parse(e).round() + totalGlucose;
       }
     }
     averageBloodGlucose.value = totalGlucose / glucoseLevel.length;
