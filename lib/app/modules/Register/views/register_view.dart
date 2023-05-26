@@ -6,8 +6,6 @@ import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import '../../../core/values/app_colors.dart';
 import '../../../core/values/text_styles.dart';
-import '../../privacyPolicy/controllers/privacyPolicy_controller.dart';
-import '../../privacyPolicy/views/privacyPolicy_view.dart';
 import '/app/core/base/base_view.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 
@@ -21,14 +19,13 @@ class RegisterView extends BaseView<RegisterController> {
       leading: InkWell(
           onTap: () {
             _registerController.firstNameController.clear();
-            //_registerController.lastNameController..clear();
             _registerController.mobileNumberController.clear();
             _registerController.selectedIndex.value = 0;
             _registerController.selectedPage.value = 0;
-            _registerController.validateVisibility.value=false;
+            _registerController.validateVisibility.value = false;
             Get.back();
           },
-          child: Icon(Icons.arrow_back_ios)),
+          child: const Icon(Icons.arrow_back_ios)),
     );
   }
 
@@ -44,17 +41,15 @@ class RegisterView extends BaseView<RegisterController> {
   final _registerFormKey = GlobalKey<FormState>();
   final bool autoValidate = false;
   final RegisterController _registerController = Get.find();
-  final PrivacyPolicyController _privacyPolicyController = Get.find();
   @override
   Widget body(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         _registerController.firstNameController.clear();
-        //_registerController.lastNameController..clear();
         _registerController.mobileNumberController.clear();
         _registerController.selectedIndex.value = 0;
         _registerController.selectedPage.value = 0;
-        _registerController.validateVisibility.value=false;
+        _registerController.validateVisibility.value = false;
 
         return true;
       },
@@ -106,15 +101,7 @@ class RegisterView extends BaseView<RegisterController> {
       padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 3.0),
       child: TextFormField(
         autofocus: false,
-        // autovalidateMode: AutovalidateMode.disabled,
         controller: _registerController.firstNameController,
-        // validator: (value) {
-        //   if (value == null || value.isEmpty) {
-        //     return appLocalization.registerFirstNameValidationText;
-        //   }
-        //
-        //   return null;
-        // },
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
           hintText: appLocalization.registerFirstName,
@@ -132,19 +119,6 @@ class RegisterView extends BaseView<RegisterController> {
           enabledBorder: InputBorder.none,
           errorBorder: InputBorder.none,
           disabledBorder: InputBorder.none,
-          // border: const OutlineInputBorder(
-          //     borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          //     borderSide: BorderSide(color: Color(0xFF707070), width: .5)),
-          // enabledBorder: const OutlineInputBorder(
-          //     borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          //     borderSide: BorderSide(color: Color(0xFF707070), width: .5)),
-          // focusedBorder: const OutlineInputBorder(
-          //     borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          //     borderSide: BorderSide(color: Color(0xFF707070), width: .5)),
-          // errorBorder: const OutlineInputBorder(
-          //   borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          //   borderSide: BorderSide(color: Colors.red, width: .5),
-          // ),
         ),
       ),
     );
@@ -164,14 +138,10 @@ class RegisterView extends BaseView<RegisterController> {
         keyboardAction: TextInputAction.go,
         autoFocus: false,
         formatInput: false,
-        // autovalidateMode: AutovalidateMode.disabled,
         onInputChanged: (val) {
-          // _registerController.circularVisibility.value=true;
           _registerController.isdCode = val.dialCode;
-
           if (!regExp.hasMatch(val.toString())) {
             _registerController.validateMobileNumber();
-            //circularVisibility.value=false;
           }
         },
         onSubmit: () {
@@ -179,34 +149,9 @@ class RegisterView extends BaseView<RegisterController> {
         },
         ignoreBlank: false,
         initialValue: _registerController.number,
-        // validator: (value) {
-        //   String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
-        //   RegExp regExp = RegExp(pattern);
-        //   if (value == null || value.isEmpty) {
-        //     return appLocalization.registerPhoneNumberValidationText;
-        //   } else if (!regExp.hasMatch(value)) {
-        //     return appLocalization.registerValidPhoneNumberValidationText;
-        //   }
-        //
-        //   return null;
-        // },
         textFieldController: _registerController.mobileNumberController,
         inputDecoration: const InputDecoration(
           isDense: true,
-          // suffix: Obx(
-          //   () => Visibility(
-          //     visible: _registerController.circularVisibility.value,
-          //     child: SizedBox(
-          //       width: circularProgressSize,
-          //       height: circularProgressSize,
-          //       child: const CircularProgressIndicator(
-          //         backgroundColor: AppColors.lightGreyColor,
-          //         strokeWidth: 2,
-          //         color: AppColors.appBarColor,
-          //       ),
-          //     ),
-          //   ),
-          // ),
           fillColor: AppColors.pageBackground,
           filled: true,
           hintText: 'Mobile Number',
@@ -378,15 +323,7 @@ class RegisterView extends BaseView<RegisterController> {
           ),
         ),
         onPressed: () {
-          // if (_registerFormKey.currentState!.validate()) {
-          //FocusScope.of(context).requestFocus(FocusNode());
           _registerController.onNextButtonTap();
-
-          // int index = _registerController.selectedPage.value + 1;
-          // _registerController.pageController.animateToPage(index,
-          //     duration: const Duration(milliseconds: 500),
-          //     curve: Curves.ease);
-          // }
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -470,32 +407,14 @@ class RegisterView extends BaseView<RegisterController> {
             ),
           ),
           onPressed: () {
-            // String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
-            // RegExp regExp = RegExp(pattern);
-            // if (_registerController.firstNameController.text == "" ||
-            //     _registerController.mobileNumberController.text == "") {
-            //   Get.snackbar('Registration',
-            //       'Please provide your Name and Mobile number',
-            //       snackPosition: SnackPosition.BOTTOM,
-            //       colorText: AppColors.colorWhite,
-            //       backgroundColor: const Color(0XFFC73E1D));
-            // }
-            // else if (!regExp.hasMatch(_registerController.mobileNumberController.text)) {
-            //   Get.snackbar('Registration',
-            //       'Please enter valid mobile number',
-            //       snackPosition: SnackPosition.BOTTOM,
-            //       colorText: AppColors.colorWhite,
-            //       backgroundColor: const Color(0XFFC73E1D));
-            // }
-            // else {
             _registerController.registerUser();
-            // }
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12.5),
             child: Text(
               appLocalization.registerAgreeFinish,
               style: const TextStyle(fontSize: 16, color: Colors.white),
+              textAlign: TextAlign.center,
             ),
           )),
     );
@@ -560,37 +479,6 @@ class RegisterView extends BaseView<RegisterController> {
         ),
       ),
     );
-    // return Padding(
-    //   padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
-    //   child: TextFormField(
-    //     autofocus: false,
-    //     controller: _registerController.ageController,
-    //     validator: (value) {
-    //       if (value == null || value.isEmpty) {
-    //         return 'Please enter age';
-    //       }
-    //
-    //       return null;
-    //     },
-    //     decoration: InputDecoration(
-    //       contentPadding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-    //       hintText: appLocalization.registerAge,
-    //       fillColor: AppColors.pageBackground,
-    //       filled: true,
-    //       errorStyle: const TextStyle(height: 0, color: Colors.red),
-    //       hintStyle: const TextStyle(
-    //         fontSize: 16,
-    //         fontWeight: FontWeight.w500,
-    //         color: Colors.black,
-    //       ),
-    //       border: InputBorder.none,
-    //       focusedBorder: InputBorder.none,
-    //       enabledBorder: InputBorder.none,
-    //       errorBorder: InputBorder.none,
-    //       disabledBorder: InputBorder.none,
-    //     ),
-    //   ),
-    // );
   }
 
   Widget _cgmWidget(BuildContext context) {
@@ -654,22 +542,6 @@ class RegisterView extends BaseView<RegisterController> {
                 textAlign: TextAlign.justify,
               ),
             ),
-            // Card(
-            //   elevation: 0,
-            //   margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
-            //   color: AppColors.pageBackground,
-            //   shape: RoundedRectangleBorder(
-            //     borderRadius: BorderRadius.circular(cardRadius),
-            //   ),
-            //   child: Column(
-            //     children: [
-            //       Container(
-            //         height: MediaQuery.of(context).size.height *
-            //             blankContainerHeight,
-            //       ),
-            //     ],
-            //   ),
-            // ),
             _bottomContentWidget(),
           ],
         ),

@@ -22,22 +22,21 @@ class SettingsView extends BaseView<SettingsController> {
   static const double switchScaleSize = 0.9;
   static const double imagelogoHeight = 100;
   var switchValue = false.obs;
- final InsightsController _insightsController=Get.find();
+  final InsightsController _insightsController = Get.find();
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-
     return AppBar(
       backgroundColor: Palette.backgroundColor,
       //centerTitle: true,
       elevation: 0,
       automaticallyImplyLeading: true,
       leading: IconButton(
-        onPressed: () async{
+        onPressed: () async {
           await _insightsController.estimatedGlucoseValues();
-          _insightsController.gMICalculator(
-              _insightsController.selectedValue.value = 'TODAY');
-          _insightsController.tIRCalculator(
-              _insightsController.selectedValue.value = 'TODAY');
+          _insightsController
+              .gMICalculator(_insightsController.selectedValue.value = 'TODAY');
+          _insightsController
+              .tIRCalculator(_insightsController.selectedValue.value = 'TODAY');
           _insightsController.addChartDataValues(
               _insightsController.selectedValue.value = 'TODAY');
           Get.back();
@@ -60,7 +59,7 @@ class SettingsView extends BaseView<SettingsController> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 _settingsSection1(),
-                _settingsSection2(),
+                _settingsSection2(context),
               ],
             ),
           ),
@@ -93,7 +92,7 @@ class SettingsView extends BaseView<SettingsController> {
     );
   }
 
-  Widget _settingsSection2() {
+  Widget _settingsSection2(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: Container(
@@ -106,6 +105,8 @@ class SettingsView extends BaseView<SettingsController> {
             _languageWidget(controller),
             const Divider(),
             _securityWidget(controller),
+            const Divider(),
+            _deleteAccountWidget(context),
             const Divider(),
             _logoutWidget(),
           ],
@@ -175,6 +176,7 @@ class SettingsView extends BaseView<SettingsController> {
       ),
     );
   }
+
   Widget _myWalletWidget() {
     return ListTile(
       dense: true,
@@ -191,13 +193,14 @@ class SettingsView extends BaseView<SettingsController> {
       ),
       onTap: () {
         // if (Platform.isAndroid) {
-          _settingsController.platform.invokeMethod('Wallet');
+        _settingsController.platform.invokeMethod('Wallet');
         // } else if (Platform.isIOS) {
         //   showToast('Coming soon');
         // }
       },
     );
   }
+
   Widget _myConnectionsWidget() {
     return ListTile(
       dense: true,
@@ -214,7 +217,7 @@ class SettingsView extends BaseView<SettingsController> {
       ),
       onTap: () {
         // if (Platform.isAndroid) {
-          _settingsController.platform.invokeMethod('Connections');
+        _settingsController.platform.invokeMethod('Connections');
         // } else if (Platform.isIOS) {
         //   showToast('Coming soon');
         // }
@@ -237,11 +240,7 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-        // if (Platform.isAndroid) {
-          _settingsController.platform.invokeMethod('MySharedData');
-        // } else if (Platform.isIOS) {
-        //   showToast('Coming soon');
-        // }
+        _settingsController.platform.invokeMethod('MySharedData');
       },
     );
   }
@@ -261,11 +260,7 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-        // if (Platform.isAndroid) {
-          _settingsController.platform.invokeMethod('Preferences');
-        // } else if (Platform.isIOS) {
-        //   showToast('Coming soon');
-        // }
+        _settingsController.platform.invokeMethod('Preferences');
       },
     );
   }
@@ -279,18 +274,20 @@ class SettingsView extends BaseView<SettingsController> {
         Image.asset(
           'images/igrant_icon.png',
           height: imagelogoHeight,
-
-
         ),
         InkWell(
-          onTap: (){
-           Get.to(PrivacyPolicyView());
-          },
+            onTap: () {
+              Get.to(PrivacyPolicyView());
+            },
             child: Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(appLocalization.settingsPrivacyPolicy,style:const TextStyle(fontSize: 14)),
+              child: Text(appLocalization.settingsPrivacyPolicy,
+                  style: const TextStyle(fontSize: 14)),
             )),
-        Text("v " + _settingsController.ver.value+" - "+_settingsController.build.value),
+        Text("v " +
+            _settingsController.ver.value +
+            " - " +
+            _settingsController.build.value),
         const SizedBox(
           height: 10,
         ),
@@ -313,32 +310,65 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-        // if (Platform.isAndroid) {
-          _settingsController.platform.invokeMethod('Notifications');
-        // } else if (Platform.isIOS) {
-        //   showToast('Coming soon');
-        // }
+        _settingsController.platform.invokeMethod('Notifications');
       },
     );
   }
 
- Widget _logoutWidget() {  return ListTile(
-   dense: true,
-   visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
-   title: Text(
-     controller.appLocalization.settingsLogout,
-     style: const TextStyle(
-       fontSize: 14,
-       color: Palette.red,
-     ),
-   ),
+  Widget _logoutWidget() {
+    return ListTile(
+      dense: true,
+      visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
+      title: Text(
+        controller.appLocalization.settingsLogout,
+        style: const TextStyle(
+          fontSize: 14,
+          color: Palette.red,
+        ),
+      ),
+      onTap: () {
+        _settingsController.logout();
+      },
+    );
+  }
 
-   onTap: () {
-     _settingsController.logout();
-   },
- );}
+  _deleteAccountWidget(BuildContext context) {
+    return ListTile(
+      dense: true,
+      visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
+      title: Text(
+        controller.appLocalization.settingsDeleteAccount,
+        style: const TextStyle(
+          fontSize: 14,
+        ),
+      ),
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text(appLocalization.settingsDeleteAccount),
+              content: Text(appLocalization.settingsDeleteAccountContent),
+              actions: [
+                CupertinoDialogAction(
+                  child: Text(appLocalization.settingsDeleteAccountYes),
+                  onPressed: () {
+                    _settingsController.deleteAccount();
+                  },
+                ),
+                CupertinoDialogAction(
+                  child: Text(appLocalization.settingsDeleteAccountNo),
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+              ],
+            );
+          },
+        );
 
-
-
-
+        return;
+      },
+    );
+  }
 }
