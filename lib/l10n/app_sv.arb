@@ -68,10 +68,10 @@
   "registerDonateDataContent":"Data4Diabetes rekommenderar att du donerar dina diabetesdata och insikter till forskare, som kommer att dela dem anonymt.",
   "registerExistingUser":"Användaren finns redan och är aktiv",
   "registerNotExistingUser":"Användaren finns inte",
-  "insightsToday":"I DAG",
+  "insightsToday":"IDAG",
   "insightsLast7Days":"SENASTE 7 DAGARNA",
   "insightsLast30Days":"SENASTE 30 DAGARNA",
-  "insightsGlucoseTIR":"Glukos - Tid inom intervallet",
+  "insightsGlucoseTIR":"Glukos - tid inom intervall",
   "insightsVeryHighRange":"Mycket hög > 13.9 mmol/l",
   "insightsHighRange":"Hög 10.1 - 13.9 mmol/l",
   "insightsTargetRange":"Målområde 3.9 - 10 mmol/l",
@@ -80,5 +80,5 @@
   "insightsSummary":"Sammanfattning",
   "insightsGMI":"GMI",
   "insightsAvgValue":"Genomsnittligt värde",
-  "insightsActiveCGM":"% aktiv tid med CGM"
+  "insightsActiveCGM":"% Aktiv tid med CGM"
 }
