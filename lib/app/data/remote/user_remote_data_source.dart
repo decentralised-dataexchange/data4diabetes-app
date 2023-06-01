@@ -5,6 +5,7 @@ import 'package:Data4Diabetes/app/data/model/validateMobileNumber/ValidateMobile
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpRequest.dart';
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpResponse.dart';
 
+import '../model/deleteAccount/deleteAccountResponse.dart';
 import '../model/login/LoginRequest.dart';
 import '../model/login/LoginResponse.dart';
 
@@ -13,4 +14,5 @@ abstract class UserRemoteDataSource {
   Future<RegisterResponse> register(RegisterRequest request);
   Future<VerifyOtpResponse> verifyOTP(VerifyOtpRequest request);
   Future<ValidateMobileNumberResponse> validateMobileNumber(ValidateMobileNumberRequest request);
+  Future<dynamic> deleteUserAccount();
 }
