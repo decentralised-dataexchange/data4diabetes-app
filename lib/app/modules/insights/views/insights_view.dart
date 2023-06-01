@@ -278,22 +278,27 @@ class InsightsView extends BaseView<InsightsController> {
           series: [
             StackedColumnSeries(
                 dataSource: _insightsController.chartData.value,
+                color: const Color(0xFF851a10),
                 xValueMapper: (ChartData ch, _) => ch.x,
                 yValueMapper: (ChartData ch, _) => ch.veryLow.value),
             StackedColumnSeries(
                 dataSource: _insightsController.chartData.value,
+                color: const Color(0xFFce3813),
                 xValueMapper: (ChartData ch, _) => ch.x,
                 yValueMapper: (ChartData ch, _) => ch.low.value),
             StackedColumnSeries(
                 dataSource: _insightsController.chartData.value,
+                color: const Color(0xFF30bc5c),
                 xValueMapper: (ChartData ch, _) => ch.x,
                 yValueMapper: (ChartData ch, _) => ch.targetRange.value),
             StackedColumnSeries(
                 dataSource: _insightsController.chartData.value,
+                color: const Color(0xFFfdc333),
                 xValueMapper: (ChartData ch, _) => ch.x,
                 yValueMapper: (ChartData ch, _) => ch.high.value),
             StackedColumnSeries(
                 dataSource: _insightsController.chartData.value,
+                color: const Color(0xFFfb9531),
                 xValueMapper: (ChartData ch, _) => ch.x,
                 yValueMapper: (ChartData ch, _) => ch.veryHigh.value),
           ],
@@ -312,7 +317,7 @@ class InsightsView extends BaseView<InsightsController> {
             Container(
               height: percentageColorContainerSize,
               width: percentageColorContainerSize,
-              color: const Color(0XFF74B49A),
+              color: const Color(0xFFfb9531),
             ),
             Text('${_insightsController.veryHigh.value} %'),
           ],
@@ -331,7 +336,7 @@ class InsightsView extends BaseView<InsightsController> {
             Container(
               height: percentageColorContainerSize,
               width: percentageColorContainerSize,
-              color: const Color(0XFFFAB093),
+              color: const Color(0xFFfdc333),
             ),
             Text('${_insightsController.high.value} %'),
           ],
@@ -350,7 +355,7 @@ class InsightsView extends BaseView<InsightsController> {
             Container(
               height: percentageColorContainerSize,
               width: percentageColorContainerSize,
-              color: const Color(0XFFF67280),
+              color: const Color(0xFF30bc5c),
             ),
             Text('${_insightsController.targetRange.value} %'),
           ],
@@ -369,7 +374,7 @@ class InsightsView extends BaseView<InsightsController> {
             Container(
               height: percentageColorContainerSize,
               width: percentageColorContainerSize,
-              color: const Color(0XFFC06C84),
+              color: const Color(0xFFce3813),
             ),
             Text('${_insightsController.low.value} %'),
           ],
@@ -388,7 +393,7 @@ class InsightsView extends BaseView<InsightsController> {
             Container(
               height: percentageColorContainerSize,
               width: percentageColorContainerSize,
-              color: const Color(0XFF4B87B9),
+              color: const Color(0xFF851a10),
             ),
             Text('${_insightsController.veryLow.value} %'),
           ],
