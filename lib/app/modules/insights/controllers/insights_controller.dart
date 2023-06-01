@@ -41,11 +41,6 @@ class InsightsController extends BaseController {
   List highList = [];
   List veryHighList = [];
   var totalGlucoseMmolValues = 0.0.obs;
-  var totalVaryLow = 0.0.obs;
-  var totalLow = 0.0.obs;
-  var totalTargetRange = 0.0.obs;
-  var totalHigh = 0.0.obs;
-  var totalVaryHigh = 0.0.obs;
 // Define the input formats
   List<String> inputFormats = [
     'dd/MM/yyyy',
@@ -77,6 +72,7 @@ class InsightsController extends BaseController {
     'yyyy.MM.dd',
     // Add more formats as needed
   ];
+
   estimatedGlucoseValues() async {
     todaysGlucoseLevel.clear();
     last7DaysGlucoseLevel.clear();
@@ -141,7 +137,11 @@ class InsightsController extends BaseController {
     totalGlucose = 0;
     if (glucoseLevel.isNotEmpty) {
       for (var e in glucoseLevel) {
-        totalGlucose = int.parse(e) + totalGlucose;
+        if (double.tryParse(e) != null) {
+          totalGlucose = double.parse(e).round() + totalGlucose;
+        } else {
+          print("Skipping invalid input: $e");
+        }
       }
     }
     averageBloodGlucose.value = totalGlucose / glucoseLevel.length;
@@ -177,19 +177,16 @@ class InsightsController extends BaseController {
     highList.clear();
     veryHighList.clear();
     glucoseMmolvaluesList.clear();
-    totalGlucoseMmolValues = 0.0.obs;
-    totalVaryLow = 0.0.obs;
-    totalLow = 0.0.obs;
-    totalTargetRange = 0.0.obs;
-    totalHigh = 0.0.obs;
-    totalVaryHigh = 0.0.obs;
 
     for (var e in glucoseLevel) {
-      var glucoseMmolValue = double.parse(e) * convertMgValToMmolVal;
-      glucoseMmolvaluesList.add(glucoseMmolValue);
+      if (double.tryParse(e) != null) {
+        var glucoseMmolValue = double.parse(e) * convertMgValToMmolVal;
+        glucoseMmolvaluesList.add(glucoseMmolValue);
+      } else {
+        print("Skipping invalid input: $e");
+      }
     }
     for (var e in glucoseMmolvaluesList) {
-      totalGlucoseMmolValues.value = totalGlucoseMmolValues.value + e;
       if (e < 3.0) {
         veryLowList.add(e);
       } else if (e >= 3.0 && e <= lowRangeTo) {
@@ -201,22 +198,6 @@ class InsightsController extends BaseController {
       } else {
         veryHighList.add(e);
       }
-    }
-    for (var e in veryLowList) {
-      totalVaryLow.value = totalVaryLow.value + e;
-    }
-    for (var e in lowList) {
-      totalLow.value = totalLow.value + e;
-    }
-    for (var e in targetRangeList) {
-      totalTargetRange.value = totalTargetRange.value + e;
-    }
-
-    for (var e in highList) {
-      totalHigh.value = totalHigh.value + e;
-    }
-    for (var e in veryHighList) {
-      totalVaryHigh.value = totalVaryHigh.value + e;
     }
   }
 
@@ -235,49 +216,49 @@ class InsightsController extends BaseController {
   }
 
   void chartDataValues() {
-    veryLow.value = ((totalVaryLow.value / totalGlucoseMmolValues.value) *
+    veryLow.value = ((veryLowList.length / glucoseMmolvaluesList.length) *
                     percentage)
                 .isInfinite ||
-            ((totalVaryLow.value / totalGlucoseMmolValues.value) * percentage)
+            ((veryLowList.length / glucoseMmolvaluesList.length) * percentage)
                 .isNaN
         ? 0
-        : ((totalVaryLow.value / totalGlucoseMmolValues.value) * percentage)
+        : ((veryLowList.length / glucoseMmolvaluesList.length) * percentage)
             .round()
             .toInt();
-    low.value = ((totalLow.value / totalGlucoseMmolValues.value) * percentage)
+    low.value = ((lowList.length / glucoseMmolvaluesList.length) * percentage)
                 .isInfinite ||
-            ((totalLow.value / totalGlucoseMmolValues.value) * percentage).isNaN
+            ((lowList.length / glucoseMmolvaluesList.length) * percentage).isNaN
         ? 0
-        : ((totalLow.value / totalGlucoseMmolValues.value) * percentage)
+        : ((lowList.length / glucoseMmolvaluesList.length) * percentage)
             .round()
             .toInt();
 
     targetRange.value =
-        ((totalTargetRange.value / totalGlucoseMmolValues.value) * percentage)
+        ((targetRangeList.length / glucoseMmolvaluesList.length) * percentage)
                     .isInfinite ||
-                ((totalTargetRange.value / totalGlucoseMmolValues.value) *
+                ((targetRangeList.length / glucoseMmolvaluesList.length) *
                         percentage)
                     .isNaN
             ? 0
-            : ((totalTargetRange.value / totalGlucoseMmolValues.value) *
+            : ((targetRangeList.length / glucoseMmolvaluesList.length) *
                     percentage)
                 .round()
                 .toInt();
-    high.value = ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
+    high.value = ((highList.length / glucoseMmolvaluesList.length) * percentage)
                 .isInfinite ||
-            ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
+            ((highList.length / glucoseMmolvaluesList.length) * percentage)
                 .isNaN
         ? 0
-        : ((totalHigh.value / totalGlucoseMmolValues.value) * percentage)
+        : ((highList.length / glucoseMmolvaluesList.length) * percentage)
             .round()
             .toInt();
-    veryHigh.value = ((totalVaryHigh.value / totalGlucoseMmolValues.value) *
+    veryHigh.value = ((veryHighList.length / glucoseMmolvaluesList.length) *
                     percentage)
                 .isInfinite ||
-            ((totalVaryHigh.value / totalGlucoseMmolValues.value) * percentage)
+            ((veryHighList.length / glucoseMmolvaluesList.length) * percentage)
                 .isNaN
         ? 0
-        : ((totalVaryHigh.value / totalGlucoseMmolValues.value) * percentage)
+        : ((veryHighList.length / glucoseMmolvaluesList.length) * percentage)
             .round()
             .toInt();
     chartData.add(ChartData('', veryLow, low, targetRange, high, veryHigh));
