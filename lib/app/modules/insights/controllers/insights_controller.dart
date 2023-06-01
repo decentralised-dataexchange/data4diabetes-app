@@ -78,8 +78,6 @@ class InsightsController extends BaseController {
       }
       if (parsedSuccessfully) {
         String formattedDate = outputFormat.format(parsedDate!);
-        print('parsedDate:$parsedDate');
-        print('formattedDate:$formattedDate');
         DateTime currentDate = DateTime.now();
         DateTime sevenDaysAgo = currentDate.subtract(const Duration(days: 7));
         DateTime thirtyDaysAgo = currentDate.subtract(const Duration(days: 30));
@@ -92,7 +90,6 @@ class InsightsController extends BaseController {
         if (formattedDate == outputFormat.format(currentDate)) {
           todaysGlucoseLevel.add(e.evgsValue!);
         }
-        // Rest of the code...
       } else {
         print("Parsing failed for all input formats. Unable to process date: ${e.collectedDate}");
       }
