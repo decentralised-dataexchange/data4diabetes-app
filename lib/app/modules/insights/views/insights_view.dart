@@ -51,22 +51,23 @@ class InsightsView extends BaseView<InsightsController> {
         () => DropdownButtonHideUnderline(
           child: DropdownButton2(
             isExpanded: true,
-            items: _insightsController.items
-                .map<DropdownMenuItem<String>>(
-                  (String item) => DropdownMenuItem<String>(
-                    value: item,
-                    child: Text(
-                      item,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                )
-                .toList(),
+            items: [
+              DropdownMenuItem<String>(
+                value: 'TODAY',
+                child: Text(appLocalization.insightsToday, style: cardSmallTagStyle,
+                  overflow: TextOverflow.ellipsis,),
+              ),
+              DropdownMenuItem<String>(
+                value: 'LAST 7 DAYS',
+                child: Text(appLocalization.insightsLast7Days, style: cardSmallTagStyle,
+                  overflow: TextOverflow.ellipsis,),
+              ),
+              DropdownMenuItem<String>(
+                value: 'LAST 30 DAYS',
+                child: Text(appLocalization.insightsLast30Days, style: cardSmallTagStyle,
+                  overflow: TextOverflow.ellipsis,),
+              ),
+            ],
             value: _insightsController.selectedValue.value,
             onChanged: (value) {
               _insightsController.selectedValue.value = value as String;
@@ -148,10 +149,10 @@ class InsightsView extends BaseView<InsightsController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
+             Padding(
+              padding:const EdgeInsets.all(8.0),
               child: Text(
-                'Glucose - Time in range',
+               appLocalization.insightsGlucoseTIR,
                 style: descriptionTextStyle,
               ),
             ),
@@ -214,40 +215,40 @@ class InsightsView extends BaseView<InsightsController> {
   Widget _rangeDetailsSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children:  [
         Text(
-          'Very high > 13.9 mmol/l',
-          style: TextStyle(fontSize: 15),
+         appLocalization.insightsVeryHighRange,
+          style: const TextStyle(fontSize: 15),
         ),
-        SizedBox(
+        const SizedBox(
           height: 25,
         ),
         Text(
-          'High 10.1-13.9 mmol/l',
-          style: TextStyle(fontSize: 15),
+          appLocalization.insightsHighRange,
+          style: const TextStyle(fontSize: 15),
         ),
-        SizedBox(
+        const SizedBox(
           height: 25,
         ),
         Text(
-          'Target range 3.9-10 mmol/l',
-          style: TextStyle(fontSize: 15),
+          appLocalization.insightsTargetRange,
+          style:const TextStyle(fontSize: 15),
         ),
-        SizedBox(
+        const SizedBox(
           height: 25,
         ),
         Text(
-          'Low 3-3.8 mmol/',
-          style: TextStyle(fontSize: 15),
+          appLocalization.insightsLowRange,
+          style:const TextStyle(fontSize: 15),
         ),
-        SizedBox(
+       const SizedBox(
           height: 25,
         ),
         Text(
-          'Very low < 3 mmol/l',
-          style: TextStyle(fontSize: 15),
+         appLocalization.insightsVeryLow,
+          style:const TextStyle(fontSize: 15),
         ),
-        SizedBox(
+        const SizedBox(
           height: 25,
         ),
       ],
@@ -277,22 +278,27 @@ class InsightsView extends BaseView<InsightsController> {
           series: [
             StackedColumnSeries(
                 dataSource: _insightsController.chartData.value,
+                color: const Color(0xFF851a10),
                 xValueMapper: (ChartData ch, _) => ch.x,
                 yValueMapper: (ChartData ch, _) => ch.veryLow.value),
             StackedColumnSeries(
                 dataSource: _insightsController.chartData.value,
+                color: const Color(0xFFce3813),
                 xValueMapper: (ChartData ch, _) => ch.x,
                 yValueMapper: (ChartData ch, _) => ch.low.value),
             StackedColumnSeries(
                 dataSource: _insightsController.chartData.value,
+                color: const Color(0xFF30bc5c),
                 xValueMapper: (ChartData ch, _) => ch.x,
                 yValueMapper: (ChartData ch, _) => ch.targetRange.value),
             StackedColumnSeries(
                 dataSource: _insightsController.chartData.value,
+                color: const Color(0xFFfdc333),
                 xValueMapper: (ChartData ch, _) => ch.x,
                 yValueMapper: (ChartData ch, _) => ch.high.value),
             StackedColumnSeries(
                 dataSource: _insightsController.chartData.value,
+                color: const Color(0xFFfb9531),
                 xValueMapper: (ChartData ch, _) => ch.x,
                 yValueMapper: (ChartData ch, _) => ch.veryHigh.value),
           ],
@@ -311,7 +317,7 @@ class InsightsView extends BaseView<InsightsController> {
             Container(
               height: percentageColorContainerSize,
               width: percentageColorContainerSize,
-              color: const Color(0XFF74B49A),
+              color: const Color(0xFFfb9531),
             ),
             Text('${_insightsController.veryHigh.value} %'),
           ],
@@ -330,7 +336,7 @@ class InsightsView extends BaseView<InsightsController> {
             Container(
               height: percentageColorContainerSize,
               width: percentageColorContainerSize,
-              color: const Color(0XFFFAB093),
+              color: const Color(0xFFfdc333),
             ),
             Text('${_insightsController.high.value} %'),
           ],
@@ -349,7 +355,7 @@ class InsightsView extends BaseView<InsightsController> {
             Container(
               height: percentageColorContainerSize,
               width: percentageColorContainerSize,
-              color: const Color(0XFFF67280),
+              color: const Color(0xFF30bc5c),
             ),
             Text('${_insightsController.targetRange.value} %'),
           ],
@@ -368,7 +374,7 @@ class InsightsView extends BaseView<InsightsController> {
             Container(
               height: percentageColorContainerSize,
               width: percentageColorContainerSize,
-              color: const Color(0XFFC06C84),
+              color: const Color(0xFFce3813),
             ),
             Text('${_insightsController.low.value} %'),
           ],
@@ -387,7 +393,7 @@ class InsightsView extends BaseView<InsightsController> {
             Container(
               height: percentageColorContainerSize,
               width: percentageColorContainerSize,
-              color: const Color(0XFF4B87B9),
+              color: const Color(0xFF851a10),
             ),
             Text('${_insightsController.veryLow.value} %'),
           ],
@@ -407,10 +413,10 @@ class InsightsView extends BaseView<InsightsController> {
         ),
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
+             Padding(
+              padding:const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
               child: Text(
-                'Summary',
+                appLocalization.insightsSummary,
                 style: descriptionTextStyle,
               ),
             ),
@@ -462,7 +468,7 @@ class InsightsView extends BaseView<InsightsController> {
             child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                    'GMI ${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
+                    '${appLocalization.insightsGMI} ${_insightsController.gMIpercentage.value.toStringAsFixed(1)}%')),
           ),
         ),
       ),
@@ -496,7 +502,7 @@ class InsightsView extends BaseView<InsightsController> {
             child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                    'Average Value ${_insightsController.averageValue.value.toStringAsFixed(1)}')),
+                    '${appLocalization.insightsAvgValue} ${_insightsController.averageValue.value.toStringAsFixed(1)}')),
           ),
         ),
       ),
@@ -524,11 +530,11 @@ class InsightsView extends BaseView<InsightsController> {
     return GridTile(
         child: Container(
             color: Colors.white,
-            child: const Padding(
+            child:  Padding(
               padding: EdgeInsets.only(left: 5.0),
               child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('% Active time with CGM')),
+                  child: Text(appLocalization.insightsActiveCGM)),
             )));
   }
 
