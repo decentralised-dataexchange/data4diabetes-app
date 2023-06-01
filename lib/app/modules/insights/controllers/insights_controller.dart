@@ -9,7 +9,6 @@ import '../../../data/model/estimatedGlucoseValue/EgvsResponse.dart';
 import '/app/core/base/base_controller.dart';
 
 class InsightsController extends BaseController {
-  final List<String> items = ['TODAY', 'LAST 7 DAYS', 'LAST 30 DAYS'];
   RxString selectedValue = 'TODAY'.obs;
   var totalGlucose = 0;
   var val1 = 3.31;

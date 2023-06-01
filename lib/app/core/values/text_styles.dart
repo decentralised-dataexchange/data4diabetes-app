@@ -143,7 +143,7 @@ const cardSmallTagStyle = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w500,
     height: 1.2,
-    color: AppColors.textColorGreyDark);
+    color: Colors.black);
 
 const pageTitleStyle = TextStyle(
     fontSize: 20,
