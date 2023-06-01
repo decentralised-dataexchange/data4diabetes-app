@@ -52,21 +52,6 @@ class InsightsController extends BaseController {
     'M/d/yyyy',
     'M-d-yyyy',
     'M.d.yyyy',
-    'M/d/yy',
-    'M-d-yy',
-    'M.d.yy',
-    'd/M/yy',
-    'd-M-yy',
-    'd.M.yy',
-    'MM/dd/yy',
-    'MM-dd-yy',
-    'MM.dd.yy',
-    'yy/MM/dd',
-    'yy-MM-dd',
-    'yy.MM.dd',
-    'yy/M/d',
-    'yy-M-d',
-    'yy.M.d',
     'yyyy-MM-dd',
     'yyyy/MM/dd',
     'yyyy.MM.dd',
@@ -88,8 +73,9 @@ class InsightsController extends BaseController {
       DateTime? parsedDate;
       for (String format in inputFormats) {
         try {
+          String modifiedDate = e.collectedDate!.replaceAll('/', '-').replaceAll('.', '-');
           DateFormat inputFormat = DateFormat(format);
-          parsedDate = inputFormat.parse(e.collectedDate!);
+          parsedDate = inputFormat.parseStrict(modifiedDate);
           parsedSuccessfully = true;
           break; // Break the loop if parsing is successful
         } catch (e) {
@@ -98,25 +84,26 @@ class InsightsController extends BaseController {
       }
       if (parsedSuccessfully) {
         String formattedDate = outputFormat.format(parsedDate!);
+        print('parsedDate:$parsedDate');
+        print('formattedDate:$formattedDate');
         DateTime currentDate = DateTime.now();
         DateTime sevenDaysAgo = currentDate.subtract(const Duration(days: 7));
         DateTime thirtyDaysAgo = currentDate.subtract(const Duration(days: 30));
-        if (parsedDate.isAfter(sevenDaysAgo) ||
-            parsedDate.isAtSameMomentAs(sevenDaysAgo)) {
+        if (parsedDate.isAfter(sevenDaysAgo) || parsedDate.isAtSameMomentAs(sevenDaysAgo)) {
           last7DaysGlucoseLevel.add(e.evgsValue!);
         }
-        if (parsedDate.isAfter(thirtyDaysAgo) ||
-            parsedDate.isAtSameMomentAs(thirtyDaysAgo)) {
+        if (parsedDate.isAfter(thirtyDaysAgo) || parsedDate.isAtSameMomentAs(thirtyDaysAgo)) {
           last30DaysGlucoseLevel.add(e.evgsValue!);
         }
         if (formattedDate == outputFormat.format(currentDate)) {
           todaysGlucoseLevel.add(e.evgsValue!);
         }
+        // Rest of the code...
       } else {
-        print(
-            "Parsing failed for all input formats. Unable to process date: ${e.collectedDate}");
+        print("Parsing failed for all input formats. Unable to process date: ${e.collectedDate}");
       }
     }
+
   }
 
   gMICalculator(String selectedValue) {
