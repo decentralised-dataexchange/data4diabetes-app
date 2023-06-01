@@ -1,3 +1,4 @@
+import 'package:Data4Diabetes/app/data/model/deleteAccount/deleteAccountResponse.dart';
 import 'package:Data4Diabetes/app/data/model/login/LoginRequest.dart';
 import 'package:Data4Diabetes/app/data/model/login/LoginResponse.dart';
 import 'package:Data4Diabetes/app/data/model/register/RegisterRequest.dart';
@@ -33,5 +34,10 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<ValidateMobileNumberResponse> validateMobileNumber(ValidateMobileNumberRequest request) {
     return _remoteSource.validateMobileNumber(request);
+  }
+  /// delete user account
+  @override
+  Future<dynamic> deleteUserAccount() {
+    return _remoteSource.deleteUserAccount();
   }
 }
