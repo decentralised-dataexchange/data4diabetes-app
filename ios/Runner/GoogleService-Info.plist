@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>798588239750-7s1honebiu822n8dinenaehgcc9ltm9q.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.798588239750-7s1honebiu822n8dinenaehgcc9ltm9q</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>798588239750-jnf79v75q7nifdqgqc96lqf8fq3v9sbg.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBe0wedHddLrgzNDdmv8K54NgunZintev4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>798588239750</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>io.igrant.data4diabetes</string>
+	<key>PROJECT_ID</key>
+	<string>data4diabetes</string>
+	<key>STORAGE_BUCKET</key>
+	<string>data4diabetes.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:798588239750:ios:2a54b4a5a151fdccd43607</string>
+</dict>
+</plist>

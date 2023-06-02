@@ -1,3 +1,4 @@
+import 'package:Data4Diabetes/app/modules/insights/views/insights_view.dart';
 import 'package:Data4Diabetes/app/modules/scan_and_check/views/scanAndCheck_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,15 +32,16 @@ class MainView extends BaseView<MainController> {
 
   final HomeView homeView = HomeView();
   final ScanAndCheckView scanAndCheckView = ScanAndCheckView();
+  final InsightsView insights = InsightsView();
 
   Widget getPageOnSelectedMenu(MenuCode menuCode) {
     switch (menuCode) {
       case MenuCode.HOME:
         return homeView;
-      case MenuCode.CONNECTIONS:
+      case MenuCode.MYWALLET:
         return homeView;
       case MenuCode.INSIGHTS:
-        return homeView;
+        return insights;
       case MenuCode.SCAN_AND_CHECK:
         return scanAndCheckView;
     }

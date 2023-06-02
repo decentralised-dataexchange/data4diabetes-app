@@ -1,6 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../data/local/preference/preference_manager_impl.dart';
 import '/app/network/dio_provider.dart';
 import '/app/network/error_handlers.dart';
 import '/app/network/exceptions/base_exception.dart';
@@ -20,6 +23,7 @@ abstract class BaseRemoteSource {
               HttpStatus.ok) {
         // TODO
       }
+      debugPrint('received status: $response');
 
       return response;
     } on DioError catch (dioError) {
@@ -44,12 +48,21 @@ abstract class BaseRemoteSource {
         Options? options,
         bool isAuthNeeded = false}) async {
     final Map<String, String> headers = <String, String>{};
-    headers['Content-Type'] = 'application/json';
-    // if (isAuthNeeded) {
-      // var accessToken = await TokenRepository().getAccessToken();
-      // headers['Authorization'] = 'Bearer $accessToken';
-    // }
+    if (isAuthNeeded) {
+      var accessToken = await TokenRepository().getAccessToken();
+      headers['Content-Type'] = 'application/json';
+      headers['Authorization'] = 'Bearer Token $accessToken';
+    }
+    else{
+      headers['Content-Type'] = 'application/json';
+    }
 
     return dioClient.post(path, data: data, options: Options(headers: headers));
+  }
+}
+
+class TokenRepository {
+  getAccessToken()async{
+    return await PreferenceManagerImpl().getString('token');
   }
 }

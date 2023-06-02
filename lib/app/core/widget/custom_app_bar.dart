@@ -10,6 +10,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final Color? backgroundColor;
   final List<Widget>? actions;
   final bool isBackButtonEnabled;
+  final Color? backgroundColor;
 
   CustomAppBar({
     Key? key,
@@ -17,6 +18,8 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
     this.actions,
     this.backgroundColor,
     this.isBackButtonEnabled = true,
+    this.backgroundColor,
+
   }) : super(key: key);
 
   @override

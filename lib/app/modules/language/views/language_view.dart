@@ -1,14 +1,10 @@
 import 'package:Data4Diabetes/app/Constants/Palette.dart';
 import 'package:Data4Diabetes/app/modules/language/controllers/language_controller.dart';
-import 'package:Data4Diabetes/app/modules/settings/controllers/settings_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '/app/core/base/base_view.dart';
 import '/app/core/widget/custom_app_bar.dart';
-import 'package:flutter/services.dart';
-
-import 'package:mobile_scanner/mobile_scanner.dart';
 
 class LanguageView extends BaseView<LanguageController> {
   static const double containerHeight = 400;

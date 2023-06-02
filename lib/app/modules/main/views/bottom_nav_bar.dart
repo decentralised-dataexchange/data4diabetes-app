@@ -1,3 +1,4 @@
+import 'package:Data4Diabetes/app/modules/insights/controllers/insights_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,7 +21,7 @@ class BottomNavBar extends StatelessWidget {
   final navController = BottomNavController();
 
   final Key bottomNavKey = GlobalKey();
-
+  final InsightsController _insightsController = Get.find();
   @override
   Widget build(BuildContext context) {
     appLocalization = AppLocalizations.of(context)!;
@@ -31,13 +32,10 @@ class BottomNavBar extends StatelessWidget {
 
     return Obx(
       () => BottomNavigationBar(
-
-
         key: bottomNavKey,
         items: navItems
             .map(
-              (BottomNavItem navItem) =>
-                  BottomNavigationBarItem(
+              (BottomNavItem navItem) => BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     "images/${navItem.iconSvgName}",
                     height: AppValues.iconDefaultSize,
@@ -48,7 +46,6 @@ class BottomNavBar extends StatelessWidget {
                             : unselectedItemColor,
                   ),
                   label: navItem.navTitle,
-
                   tooltip: ""),
             )
             .toList(),
@@ -59,21 +56,27 @@ class BottomNavBar extends StatelessWidget {
         selectedItemColor: selectedItemColor,
         unselectedItemColor: unselectedItemColor,
         currentIndex: navController.selectedIndex,
-        onTap: (index) {
+        onTap: (index) async {
           if (index == 1) {
-            if (Platform.isAndroid) {
-              navController.platform.invokeMethod('Connections');
-            } else if (Platform.isIOS) {
-              Fluttertoast.showToast(
-                  msg: 'coming soon',
-                  toastLength: Toast.LENGTH_SHORT,
-                  timeInSecForIosWeb: 1);
-            }
-          } else if (index == 2) {
-            Fluttertoast.showToast(
-                msg: 'coming soon',
-                toastLength: Toast.LENGTH_SHORT,
-                timeInSecForIosWeb: 1);
+            // if (Platform.isAndroid) {
+              navController.platform.invokeMethod('Wallet');
+            // } else if (Platform.isIOS) {
+            //   Fluttertoast.showToast(
+            //       msg: 'coming soon',
+            //       toastLength: Toast.LENGTH_SHORT,
+            //       timeInSecForIosWeb: 1);
+            // }
+          }
+          if (index == 2) {
+            await _insightsController.estimatedGlucoseValues();
+            _insightsController.gMICalculator(
+                _insightsController.selectedValue.value = 'TODAY');
+            _insightsController.tIRCalculator(
+                _insightsController.selectedValue.value = 'TODAY');
+            _insightsController.addChartDataValues(
+                _insightsController.selectedValue.value = 'TODAY');
+            navController.updateSelectedIndex(index);
+            onNewMenuSelected(navItems[index].menuCode);
           } else {
             navController.updateSelectedIndex(index);
             onNewMenuSelected(navItems[index].menuCode);
@@ -91,9 +94,9 @@ class BottomNavBar extends StatelessWidget {
         menuCode: MenuCode.HOME,
       ),
       BottomNavItem(
-          navTitle: appLocalization.bottomNavConnections,
-          iconSvgName: "ic_share.svg",
-          menuCode: MenuCode.CONNECTIONS),
+          navTitle: appLocalization.bottomNavMyWallet,
+          iconSvgName: "ic_mywallet.svg",
+          menuCode: MenuCode.MYWALLET),
       BottomNavItem(
           navTitle: appLocalization.bottomNavInsights,
           iconSvgName: "ic_insights.svg",

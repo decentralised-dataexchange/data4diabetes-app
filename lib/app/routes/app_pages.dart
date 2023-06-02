@@ -4,16 +4,22 @@ import 'package:Data4Diabetes/app/modules/Otp/bindings/otp_binding.dart';
 import 'package:Data4Diabetes/app/modules/Otp/views/otp_view.dart';
 import 'package:Data4Diabetes/app/modules/Register/bindings/register_binding.dart';
 import 'package:Data4Diabetes/app/modules/Register/views/register_view.dart';
+import 'package:Data4Diabetes/app/modules/insights/bindings/insights_binding.dart';
+import 'package:Data4Diabetes/app/modules/insights/views/insights_view.dart';
 import 'package:Data4Diabetes/app/modules/language/bindings/language_binding.dart';
 import 'package:Data4Diabetes/app/modules/language/views/language_view.dart';
 import 'package:Data4Diabetes/app/modules/launcher/bindings/launcher_binding.dart';
 import 'package:Data4Diabetes/app/modules/launcher/views/launcher_view.dart';
 import 'package:Data4Diabetes/app/modules/login/bindings/login_binding.dart';
 import 'package:Data4Diabetes/app/modules/login/views/login_view.dart';
+import 'package:Data4Diabetes/app/modules/privacyPolicy/bindings/privacyPolicy_binding.dart';
+import 'package:Data4Diabetes/app/modules/privacyPolicy/views/privacyPolicy_view.dart';
 import 'package:Data4Diabetes/app/modules/scan_and_check/bindings/scanAndCheck_binding.dart';
 import 'package:Data4Diabetes/app/modules/scan_and_check/views/scanAndCheck_view.dart';
 import 'package:Data4Diabetes/app/modules/settings/bindings/settings_binding.dart';
 import 'package:Data4Diabetes/app/modules/settings/views/settings_view.dart';
+import 'package:Data4Diabetes/app/modules/termsOfService/bindings/termsOfService_binding.dart';
+import 'package:Data4Diabetes/app/modules/termsOfService/views/termsOfService_view.dart';
 import 'package:get/get.dart';
 
 import '../data/local/preference/preference_manager_impl.dart';
@@ -29,9 +35,11 @@ class AppPages {
   static const INITIAL = Routes.LAUNCHER;
 
   static final routes = [
-    GetPage(name:_Paths.LAUNCHER ,
+    GetPage(
+      name: _Paths.LAUNCHER,
       page: () => LauncherView(),
-      binding: LauncherBinding(),),
+      binding: LauncherBinding(),
+    ),
     GetPage(
       name: _Paths.LOGIN,
       page: () => LoginView(),
@@ -76,6 +84,19 @@ class AppPages {
       name: _Paths.DEXCOM,
       page: () => DexcomView(),
       binding: DexcomBinding(),
+      name: _Paths.PRIVACYPOLICY,
+      page: () => PrivacyPolicyView(),
+      binding: PrivacyPolicyBinding(),
+    ),
+    GetPage(
+      name: _Paths.INSIGHTS,
+      page: () => InsightsView(),
+      binding: InsightsBinding(),
+    ),
+    GetPage(
+      name: _Paths.TERMSOFSERVICE,
+      page: () => TermsOfServiceView(),
+      binding: TermsOfServiceBinding(),
     ),
   ];
 }
