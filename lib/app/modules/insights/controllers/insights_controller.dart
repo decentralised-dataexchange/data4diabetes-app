@@ -41,42 +41,60 @@ class InsightsController extends BaseController {
   List highList = [];
   List veryHighList = [];
   var totalGlucoseMmolValues = 0.0.obs;
+// Define the input formats
+  List<String> inputFormats = [
+    'dd/MM/yyyy',
+    'dd-MM-yyyy',
+    'dd.MM.yyyy',
+    'yyyy-MM-dd',
+    'yyyy/MM/dd',
+    'yyyy.MM.dd',
+    // Add more formats as needed
+  ];
 
   estimatedGlucoseValues() async {
     todaysGlucoseLevel.clear();
     last7DaysGlucoseLevel.clear();
     last30DaysGlucoseLevel.clear();
-
     String jsonString = await platform.invokeMethod('QueryCredentials',
         {"CredDefId": "CXcE5anqfGrnQEguoh8QXw:3:CL:376:default"});
     List<GlucoseData> evgsDataList = (jsonDecode(jsonString) as List<dynamic>)
         .map((item) => GlucoseData.fromJson(item))
         .toList();
     for (var e in evgsDataList) {
-      try {
+      DateFormat outputFormat = DateFormat('dd-MM-yyyy');
+      bool parsedSuccessfully = false;
+      DateTime? parsedDate;
+      for (String format in inputFormats) {
+        try {
+          String modifiedDate = e.collectedDate!.replaceAll('/', '-').replaceAll('.', '-');
+          DateFormat inputFormat = DateFormat(format);
+          parsedDate = inputFormat.parseStrict(modifiedDate);
+          parsedSuccessfully = true;
+          break; // Break the loop if parsing is successful
+        } catch (e) {
+          print("Error parsing $format: $e");
+        }
+      }
+      if (parsedSuccessfully) {
+        String formattedDate = outputFormat.format(parsedDate!);
         DateTime currentDate = DateTime.now();
-      DateTime sevenDaysAgo = currentDate.subtract(const Duration(days: 7));
-      DateTime thirtyDaysAgo = currentDate.subtract(const Duration(days: 30));
-      if (DateFormat('dd-MM-yyyy')
-                .parse(e.collectedDate!)
-                .isAfter(sevenDaysAgo) ||
-            DateFormat('dd-MM-yyyy').parse(e.collectedDate!) == sevenDaysAgo) {
+        DateTime sevenDaysAgo = currentDate.subtract(const Duration(days: 7));
+        DateTime thirtyDaysAgo = currentDate.subtract(const Duration(days: 30));
+        if (parsedDate.isAfter(sevenDaysAgo) || parsedDate.isAtSameMomentAs(sevenDaysAgo)) {
           last7DaysGlucoseLevel.add(e.evgsValue!);
         }
-        if (DateFormat('dd-MM-yyyy')
-                .parse(e.collectedDate!)
-                .isAfter(thirtyDaysAgo) ||
-            DateFormat('dd-MM-yyyy').parse(e.collectedDate!) == thirtyDaysAgo) {
+        if (parsedDate.isAfter(thirtyDaysAgo) || parsedDate.isAtSameMomentAs(thirtyDaysAgo)) {
           last30DaysGlucoseLevel.add(e.evgsValue!);
         }
-        if (e.collectedDate == DateFormat('dd-MM-yyyy').format(currentDate)) {
+        if (formattedDate == outputFormat.format(currentDate)) {
           todaysGlucoseLevel.add(e.evgsValue!);
         }
-      } catch (e) {
-        print("error == $e");
-        // Handle the parsing error, e.g., show an error message or assign a default value
+      } else {
+        print("Parsing failed for all input formats. Unable to process date: ${e.collectedDate}");
       }
     }
+
   }
 
   gMICalculator(String selectedValue) {
@@ -102,7 +120,6 @@ class InsightsController extends BaseController {
         } else {
           print("Skipping invalid input: $e");
         }
-
       }
     }
     averageBloodGlucose.value = totalGlucose / glucoseLevel.length;
@@ -143,11 +160,9 @@ class InsightsController extends BaseController {
       if (double.tryParse(e) != null) {
         var glucoseMmolValue = double.parse(e) * convertMgValToMmolVal;
         glucoseMmolvaluesList.add(glucoseMmolValue);
-      }
-      else{
+      } else {
         print("Skipping invalid input: $e");
       }
-
     }
     for (var e in glucoseMmolvaluesList) {
       if (e < 3.0) {
@@ -182,24 +197,24 @@ class InsightsController extends BaseController {
     veryLow.value = ((veryLowList.length / glucoseMmolvaluesList.length) *
                     percentage)
                 .isInfinite ||
-            ((veryLowList.length  / glucoseMmolvaluesList.length) * percentage)
+            ((veryLowList.length / glucoseMmolvaluesList.length) * percentage)
                 .isNaN
         ? 0
-        : ((veryLowList.length/ glucoseMmolvaluesList.length) * percentage)
+        : ((veryLowList.length / glucoseMmolvaluesList.length) * percentage)
             .round()
             .toInt();
     low.value = ((lowList.length / glucoseMmolvaluesList.length) * percentage)
                 .isInfinite ||
             ((lowList.length / glucoseMmolvaluesList.length) * percentage).isNaN
         ? 0
-        : ((lowList.length  / glucoseMmolvaluesList.length) * percentage)
+        : ((lowList.length / glucoseMmolvaluesList.length) * percentage)
             .round()
             .toInt();
 
     targetRange.value =
         ((targetRangeList.length / glucoseMmolvaluesList.length) * percentage)
                     .isInfinite ||
-                ((targetRangeList.length/ glucoseMmolvaluesList.length) *
+                ((targetRangeList.length / glucoseMmolvaluesList.length) *
                         percentage)
                     .isNaN
             ? 0
@@ -212,7 +227,7 @@ class InsightsController extends BaseController {
             ((highList.length / glucoseMmolvaluesList.length) * percentage)
                 .isNaN
         ? 0
-        : ((highList.length  / glucoseMmolvaluesList.length) * percentage)
+        : ((highList.length / glucoseMmolvaluesList.length) * percentage)
             .round()
             .toInt();
     veryHigh.value = ((veryHighList.length / glucoseMmolvaluesList.length) *
