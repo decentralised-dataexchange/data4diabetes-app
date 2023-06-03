@@ -99,10 +99,10 @@ class DexcomController extends BaseController {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     await _prefs.setString('access_token', resultedData.accessToken!);
     await _prefs.setString('refresh_token', resultedData.refreshToken!);
-    evgsDataList  =getEgvs();
+    evgsDataList  = await getEgvs();
   }
 
-  getEgvs() async {
+ Future<EstimatedGlucoseValue> getEgvs() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     var token = _prefs.getString('access_token');
     HttpProvider _httpProvider = HttpProvider();
@@ -117,7 +117,7 @@ class DexcomController extends BaseController {
       startDate: startDate.toString(),
       endDate: endDate.toString(),
     );
-    var resultedData = EstimatedGlucoseValue.fromJson(response);
+    EstimatedGlucoseValue resultedData = EstimatedGlucoseValue.fromJson(response);
     print(resultedData.userId);
 
 

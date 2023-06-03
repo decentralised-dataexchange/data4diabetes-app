@@ -34,13 +34,13 @@ class SettingsView extends BaseView<SettingsController> {
       automaticallyImplyLeading: true,
       leading: IconButton(
         onPressed: () async {
-          await _insightsController.estimatedGlucoseValues();
-          _insightsController
-              .gMICalculator(_insightsController.selectedValue.value = 'TODAY');
-          _insightsController
-              .tIRCalculator(_insightsController.selectedValue.value = 'TODAY');
-          _insightsController.addChartDataValues(
-              _insightsController.selectedValue.value = 'TODAY');
+          // await _insightsController.estimatedGlucoseValues();
+          // _insightsController
+          //     .gMICalculator(_insightsController.selectedValue.value = 'TODAY');
+          // _insightsController
+          //     .tIRCalculator(_insightsController.selectedValue.value = 'TODAY');
+          // _insightsController.addChartDataValues(
+          //     _insightsController.selectedValue.value = 'TODAY');
           Get.back();
         },
         icon: const Icon(Icons.arrow_back_ios),
@@ -107,6 +107,7 @@ class SettingsView extends BaseView<SettingsController> {
             _languageWidget(controller),
             const Divider(),
             _securityWidget(controller),
+            const Divider(),
             _dexcomDashboard(),
             const Divider(),
             _deleteAccountWidget(context),

@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:Data4Diabetes/app/modules/Dexcom/controllers/dexcom_controller.dart';
+import 'package:Data4Diabetes/app/modules/Dexcom/views/dexcom_view.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +12,7 @@ import '../../../data/model/estimatedGlucoseValue/EgvsResponse.dart';
 import '/app/core/base/base_controller.dart';
 
 class InsightsController extends BaseController {
-  final DexcomController _dexcomController=Get.find();
+  final DexcomController _dexcomController = Get.find();
   RxString selectedValue = 'TODAY'.obs;
   var totalGlucose = 0;
   var val1 = 3.31;
@@ -53,7 +55,6 @@ class InsightsController extends BaseController {
     'yyyy.MM.dd',
     // Add more formats as needed
   ];
-
 
   // estimatedGlucoseValues() async {
   //   todaysGlucoseLevel.clear();
@@ -103,41 +104,57 @@ class InsightsController extends BaseController {
     todaysGlucoseLevel.clear();
     last7DaysGlucoseLevel.clear();
     last30DaysGlucoseLevel.clear();
+    DateTime currentDate = DateTime.now();
+    DateTime sevenDaysAgo = currentDate.subtract(const Duration(days: 7));
+    DateTime thirtyDaysAgo = currentDate.subtract(const Duration(days: 30));
+    if (_dexcomController.evgsDataList != null) {
+      if (_dexcomController.evgsDataList!.records != null) {
+        if (_dexcomController.evgsDataList!.records!.isNotEmpty) {
+          for (var e in _dexcomController.evgsDataList!.records!) {
+            if (DateFormat('yyyy-MM-dd')
+                    .parse(e.systemTime!)
+                    .isAfter(sevenDaysAgo) ||
+                DateFormat('yyyy-MM-dd')
+                    .parse(e.systemTime!)
+                    .isAtSameMomentAs(sevenDaysAgo)) {
+              last7DaysGlucoseLevel.add(e.value.toString());
+            }
+            if (DateFormat('yyyy-MM-dd')
+                    .parse(e.systemTime!)
+                    .isAfter(thirtyDaysAgo) ||
+                DateFormat('yyyy-MM-dd')
+                    .parse(e.systemTime!)
+                    .isAtSameMomentAs(thirtyDaysAgo)) {
+              last30DaysGlucoseLevel.add(e.value.toString());
+            }
+            if (DateFormat('yyyy-MM-dd').parse(e.systemTime!) == currentDate) {
+              todaysGlucoseLevel.add(e.value.toString());
+            }
+          }
+        }
+      }
+    } else {
+    Get.defaultDialog(
+      barrierDismissible: false,
+      title: 'Dexcom Login',
+      titleStyle: const TextStyle(fontSize: 16.0),
+      content:const Text('Please Login to Dexcom to get your estimated glucose values.\n Do you want to Login?',style: TextStyle(fontSize: 14),textAlign: TextAlign.center,) ,
+      actions: [
+        ElevatedButton(
+          style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
+            onPressed: (){Get.off(DexcomView());
+        }, child: const Text('Yes',style: TextStyle(color: Colors.white),)),
+        ElevatedButton(
+            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.redAccent)),
+            onPressed: (){Get.back();
+        }, child: const Text('No',style: TextStyle(color: Colors.white),)),
+      ]
 
-    for (var e in _dexcomController.evgsDataList) {
-      DateFormat outputFormat = DateFormat('dd-MM-yyyy');
-      bool parsedSuccessfully = false;
-      DateTime? parsedDate;
-      for (String format in inputFormats) {
-        try {
-          String modifiedDate = e.collectedDate!.replaceAll('/', '-').replaceAll('.', '-');
-          DateFormat inputFormat = DateFormat(format);
-          parsedDate = inputFormat.parseStrict(modifiedDate);
-          parsedSuccessfully = true;
-          break; // Break the loop if parsing is successful
-        } catch (e) {
-          print("Error parsing $format: $e");
-        }
-      }
-      if (parsedSuccessfully) {
-        String formattedDate = outputFormat.format(parsedDate!);
-        DateTime currentDate = DateTime.now();
-        DateTime sevenDaysAgo = currentDate.subtract(const Duration(days: 7));
-        DateTime thirtyDaysAgo = currentDate.subtract(const Duration(days: 30));
-        if (parsedDate.isAfter(sevenDaysAgo) || parsedDate.isAtSameMomentAs(sevenDaysAgo)) {
-          last7DaysGlucoseLevel.add(e.evgsValue!);
-        }
-        if (parsedDate.isAfter(thirtyDaysAgo) || parsedDate.isAtSameMomentAs(thirtyDaysAgo)) {
-          last30DaysGlucoseLevel.add(e.evgsValue!);
-        }
-        if (formattedDate == outputFormat.format(currentDate)) {
-          todaysGlucoseLevel.add(e.evgsValue!);
-        }
-      } else {
-        print("Parsing failed for all input formats. Unable to process date: ${e.collectedDate}");
-      }
+    );
     }
-
+    print('todaysGlucoseLevel:$todaysGlucoseLevel');
+    print('last7DaysGlucoseLevel:$last7DaysGlucoseLevel');
+    print('last30DaysGlucoseLevel:$last30DaysGlucoseLevel');
   }
 
   gMICalculator(String selectedValue) {
