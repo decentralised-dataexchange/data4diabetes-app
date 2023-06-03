@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:Data4Diabetes/app/modules/Dexcom/controllers/dexcom_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import '../../../data/model/estimatedGlucoseValue/EgvsResponse.dart';
 import '/app/core/base/base_controller.dart';
 
 class InsightsController extends BaseController {
+  final DexcomController _dexcomController=Get.find();
   RxString selectedValue = 'TODAY'.obs;
   var totalGlucose = 0;
   var val1 = 3.31;
@@ -52,16 +54,57 @@ class InsightsController extends BaseController {
     // Add more formats as needed
   ];
 
+
+  // estimatedGlucoseValues() async {
+  //   todaysGlucoseLevel.clear();
+  //   last7DaysGlucoseLevel.clear();
+  //   last30DaysGlucoseLevel.clear();
+  //   String jsonString = await platform.invokeMethod('QueryCredentials',
+  //       {"CredDefId": "CXcE5anqfGrnQEguoh8QXw:3:CL:376:default"});
+  //   List<GlucoseData> evgsDataList = (jsonDecode(jsonString) as List<dynamic>)
+  //       .map((item) => GlucoseData.fromJson(item))
+  //       .toList();
+  //   for (var e in evgsDataList) {
+  //     DateFormat outputFormat = DateFormat('dd-MM-yyyy');
+  //     bool parsedSuccessfully = false;
+  //     DateTime? parsedDate;
+  //     for (String format in inputFormats) {
+  //       try {
+  //         String modifiedDate = e.collectedDate!.replaceAll('/', '-').replaceAll('.', '-');
+  //         DateFormat inputFormat = DateFormat(format);
+  //         parsedDate = inputFormat.parseStrict(modifiedDate);
+  //         parsedSuccessfully = true;
+  //         break; // Break the loop if parsing is successful
+  //       } catch (e) {
+  //         print("Error parsing $format: $e");
+  //       }
+  //     }
+  //     if (parsedSuccessfully) {
+  //       String formattedDate = outputFormat.format(parsedDate!);
+  //       DateTime currentDate = DateTime.now();
+  //       DateTime sevenDaysAgo = currentDate.subtract(const Duration(days: 7));
+  //       DateTime thirtyDaysAgo = currentDate.subtract(const Duration(days: 30));
+  //       if (parsedDate.isAfter(sevenDaysAgo) || parsedDate.isAtSameMomentAs(sevenDaysAgo)) {
+  //         last7DaysGlucoseLevel.add(e.evgsValue!);
+  //       }
+  //       if (parsedDate.isAfter(thirtyDaysAgo) || parsedDate.isAtSameMomentAs(thirtyDaysAgo)) {
+  //         last30DaysGlucoseLevel.add(e.evgsValue!);
+  //       }
+  //       if (formattedDate == outputFormat.format(currentDate)) {
+  //         todaysGlucoseLevel.add(e.evgsValue!);
+  //       }
+  //     } else {
+  //       print("Parsing failed for all input formats. Unable to process date: ${e.collectedDate}");
+  //     }
+  //   }
+  //
+  // }
   estimatedGlucoseValues() async {
     todaysGlucoseLevel.clear();
     last7DaysGlucoseLevel.clear();
     last30DaysGlucoseLevel.clear();
-    String jsonString = await platform.invokeMethod('QueryCredentials',
-        {"CredDefId": "CXcE5anqfGrnQEguoh8QXw:3:CL:376:default"});
-    List<GlucoseData> evgsDataList = (jsonDecode(jsonString) as List<dynamic>)
-        .map((item) => GlucoseData.fromJson(item))
-        .toList();
-    for (var e in evgsDataList) {
+
+    for (var e in _dexcomController.evgsDataList) {
       DateFormat outputFormat = DateFormat('dd-MM-yyyy');
       bool parsedSuccessfully = false;
       DateTime? parsedDate;

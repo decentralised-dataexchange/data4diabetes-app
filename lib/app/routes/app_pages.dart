@@ -84,6 +84,8 @@ class AppPages {
       name: _Paths.DEXCOM,
       page: () => DexcomView(),
       binding: DexcomBinding(),
+    ),
+    GetPage(
       name: _Paths.PRIVACYPOLICY,
       page: () => PrivacyPolicyView(),
       binding: PrivacyPolicyBinding(),

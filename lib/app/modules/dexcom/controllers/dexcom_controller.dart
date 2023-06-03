@@ -24,6 +24,7 @@ class DexcomController extends BaseController {
   var redirectUri;
   var getGlucoseValues;
   int maxProgressValue=100;
+  EstimatedGlucoseValue? evgsDataList;
   @override
   void onInit() {
     clientID = _dexcomValues.clientID;
@@ -98,7 +99,7 @@ class DexcomController extends BaseController {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     await _prefs.setString('access_token', resultedData.accessToken!);
     await _prefs.setString('refresh_token', resultedData.refreshToken!);
-    getGlucoseValues=getEgvs();
+    evgsDataList  =getEgvs();
   }
 
   getEgvs() async {
@@ -106,8 +107,8 @@ class DexcomController extends BaseController {
     var token = _prefs.getString('access_token');
     HttpProvider _httpProvider = HttpProvider();
     DateTime now = DateTime.now();
-    DateTime sixtyDaysAgo = now.subtract(const Duration(days: 1));
-    String startDate = DateFormat('yyyy-MM-ddTHH:mm:ss').format(sixtyDaysAgo);
+    DateTime thirtyDaysAgo = now.subtract(const Duration(days: 30));
+    String startDate = DateFormat('yyyy-MM-ddTHH:mm:ss').format(thirtyDaysAgo);
     String endDate = DateFormat('yyyy-MM-ddTHH:mm:ss').format(now);
 
     var response = await _httpProvider.getEGVs(
