@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:Data4Diabetes/app/Constants/dexcom_values.dart';
+import 'package:Data4Diabetes/app/data/model/dexcom/AccessTokenRequest.dart';
 import 'package:Data4Diabetes/app/data/model/dexcom/AccessTokenResponse.dart';
+import 'package:Data4Diabetes/app/data/model/dexcom/EstimatedGlucoseValueRequest.dart';
 import 'package:Data4Diabetes/app/network/http_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../../../flavors/build_config.dart';
 import '../../../data/model/dexcom/EstimatedGlucoseValue.dart';
+import '../../../data/repository/user_repository_impl.dart';
 import '/app/core/base/base_controller.dart';
 
 class DexcomController extends BaseController {
@@ -25,6 +28,7 @@ class DexcomController extends BaseController {
   int maxProgressValue = 100;
   var secondsRemaining = 0.obs;
   Timer? timer;
+  final UserRepositoryImpl _impl = UserRepositoryImpl();
   @override
   void onInit() {
     clientID = _dexcomValues.clientID;
@@ -84,6 +88,13 @@ class DexcomController extends BaseController {
   }
 
   void obtainAccessToken(code) async {
+    // AccessTokenRequest request = AccessTokenRequest(
+    //     clientID: clientID,
+    //     clientSecret: clientSecret,
+    //     code: code,
+    //     grantType: 'authorization_code',
+    //     redirectUri: redirectUri);
+    // AccessTokenResponse response=await _impl.obtainAccessToken(request);
     HttpProvider _httpProvider = HttpProvider();
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['client_id'] = clientID;
@@ -122,6 +133,13 @@ class DexcomController extends BaseController {
     data['refresh_token'] = refreshToken;
     data['grant_type'] = 'refresh_token';
     data['redirect_uri'] = redirectUri;
+    // AccessTokenRequest request = AccessTokenRequest(
+    //     clientID: clientID,
+    //     clientSecret: clientSecret,
+    //     code: code,
+    //     grantType: 'refresh_token',
+    //     redirectUri: redirectUri);
+    // AccessTokenResponse response=await _impl.obtainAccessToken(request);
     var response = await _httpProvider.postData('/v2/oauth2/token', data);
     var resultedData = AccessTokenResponse.fromJson(response);
     await _prefs.setString('access_token', resultedData.accessToken!);
@@ -138,6 +156,12 @@ class DexcomController extends BaseController {
     DateTime thirtyDaysAgo = now.subtract(const Duration(days: 30));
     String startDate = DateFormat('yyyy-MM-ddTHH:mm:ss').format(thirtyDaysAgo);
     String endDate = DateFormat('yyyy-MM-ddTHH:mm:ss').format(now);
+    // EstimatedGlucoseValueRequest request = EstimatedGlucoseValueRequest(
+    //   startDate: startDate,
+    //   endDate: endDate,
+    //   accessToken: token,
+    // );
+   // EstimatedGlucoseValue response = await _impl.evgs(request);
     var response = await _httpProvider.getEGVs(
       token!,
       url: '/v3/users/self/egvs',
@@ -147,6 +171,9 @@ class DexcomController extends BaseController {
     EstimatedGlucoseValue resultedData =
         EstimatedGlucoseValue.fromJson(response);
 
-    return resultedData;
+   return resultedData;
+
+
+   // return response;
   }
 }
