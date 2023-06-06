@@ -1,13 +1,11 @@
 import 'dart:convert';
 
 import 'package:Data4Diabetes/app/modules/Dexcom/controllers/dexcom_controller.dart';
-import 'package:Data4Diabetes/app/modules/Dexcom/views/dexcom_view.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../data/model/dexcom/EstimatedGlucoseValue.dart';
 import '../../../data/model/estimatedGlucoseValue/EgvsResponse.dart';
 import '/app/core/base/base_controller.dart';
 
@@ -45,6 +43,7 @@ class InsightsController extends BaseController {
   List highList = [];
   List veryHighList = [];
   var totalGlucoseMmolValues = 0.0.obs;
+  EstimatedGlucoseValue? evgsDataList;
 // Define the input formats
   List<String> inputFormats = [
     'dd/MM/yyyy',
@@ -100,17 +99,25 @@ class InsightsController extends BaseController {
   //   }
   //
   // }
+
   estimatedGlucoseValues() async {
+    showLoading();
     todaysGlucoseLevel.clear();
     last7DaysGlucoseLevel.clear();
     last30DaysGlucoseLevel.clear();
     DateTime currentDate = DateTime.now();
     DateTime sevenDaysAgo = currentDate.subtract(const Duration(days: 7));
     DateTime thirtyDaysAgo = currentDate.subtract(const Duration(days: 30));
-    if (_dexcomController.evgsDataList != null) {
-      if (_dexcomController.evgsDataList!.records != null) {
-        if (_dexcomController.evgsDataList!.records!.isNotEmpty) {
-          for (var e in _dexcomController.evgsDataList!.records!) {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    var token = _prefs.getString('access_token');
+    if (token != null) {
+      evgsDataList = await _dexcomController.getEgvs();
+      hideLoading();
+    }
+    if (evgsDataList != null) {
+      if (evgsDataList!.records != null) {
+        if (evgsDataList!.records!.isNotEmpty) {
+          for (var e in evgsDataList!.records!) {
             if (DateFormat('yyyy-MM-dd')
                     .parse(e.systemTime!)
                     .isAfter(sevenDaysAgo) ||
@@ -134,27 +141,9 @@ class InsightsController extends BaseController {
         }
       }
     } else {
-    Get.defaultDialog(
-      barrierDismissible: false,
-      title: 'Dexcom Login',
-      titleStyle: const TextStyle(fontSize: 16.0),
-      content:const Text('Please Login to Dexcom to get your estimated glucose values.\n Do you want to Login?',style: TextStyle(fontSize: 14),textAlign: TextAlign.center,) ,
-      actions: [
-        ElevatedButton(
-          style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
-            onPressed: (){Get.off(DexcomView());
-        }, child: const Text('Yes',style: TextStyle(color: Colors.white),)),
-        ElevatedButton(
-            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.redAccent)),
-            onPressed: (){Get.back();
-        }, child: const Text('No',style: TextStyle(color: Colors.white),)),
-      ]
-
-    );
+      hideLoading();
+      print('not logged in');
     }
-    print('todaysGlucoseLevel:$todaysGlucoseLevel');
-    print('last7DaysGlucoseLevel:$last7DaysGlucoseLevel');
-    print('last30DaysGlucoseLevel:$last30DaysGlucoseLevel');
   }
 
   gMICalculator(String selectedValue) {
