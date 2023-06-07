@@ -11,7 +11,7 @@ void main() async {
   EnvConfig prodConfig = EnvConfig(
     appName: "Flutter GetX Template Prod",
     baseUrl: "https://data4diabetes-staging-api.igrant.io/",
-    dexComBaseUrl: "https://api.dexcom.com",
+    dexComBaseUrl: "https://sandbox-api.dexcom.com",
     shouldCollectCrashLog: true,
   );
 
