@@ -19,6 +19,7 @@
   "settingsMySharedData":"Min Delade Data",
   "settingsPrivacyDashboard":"Min Integritets Dashboard",
   "settingsNotification":"Meddelanden",
+  "settingsDexcom":"Dexcom Översikt",
   "settingsLogout":"Logga ut",
   "settingsSettings":"Inställningar",
   "settingsDeleteAccount":"Ta bort konto",
@@ -44,7 +45,6 @@
   "otpResend":"skicka igen",
   "otpConfirm":"Bekräfta",
   "otpCancel":"Avbryt",
-
   "register":"Registrera",
   "registerTrustContent":"Du kan dela känslig information med den här webbplatsen eller appen. Se",
   "registerAnd":"och",

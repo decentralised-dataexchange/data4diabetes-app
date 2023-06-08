@@ -45,7 +45,6 @@
   "otpResend":"RESEND",
   "otpConfirm":"Confirm",
   "otpCancel":"Cancel",
-
   "register":"Registration",
   "registerTrustContent":"You may be sharing sensitive info with this site or app. See the",
   "registerAnd":"and",
@@ -88,7 +87,4 @@
   "insightsGMI":"GMI",
   "insightsAvgValue":"Average Value",
   "insightsActiveCGM":"% Active time with CGM"
-
-
-
 }
