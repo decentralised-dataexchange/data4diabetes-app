@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:Data4Diabetes/app/modules/Dexcom/controllers/dexcom_controller.dart';
+import 'package:Data4Diabetes/app/modules/Dexcom/views/dexcom_view.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -142,7 +145,7 @@ class InsightsController extends BaseController {
       }
     } else {
       hideLoading();
-      print('not logged in');
+      alertDialog();
     }
   }
 
@@ -289,6 +292,28 @@ class InsightsController extends BaseController {
             .round()
             .toInt();
     chartData.add(ChartData('', veryLow, low, targetRange, high, veryHigh));
+  }
+
+  void alertDialog() {
+    Get.defaultDialog(
+        barrierDismissible: false,
+        title: 'Dexcom Login',
+        content: const Text(
+          'Please login to Dexcom to get your estimated glucose values',
+          textAlign: TextAlign.center,
+        ),
+        actions: [
+          CupertinoButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Get.off(DexcomView());
+              }),
+          CupertinoButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Get.back();
+              }),
+        ]);
   }
 }
 
