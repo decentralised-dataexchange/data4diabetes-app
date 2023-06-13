@@ -5,6 +5,7 @@ import '/app/core/values/app_values.dart';
 class EnvConfig {
   final String appName;
   final String baseUrl;
+  final String? dexComBaseUrl;
   final bool shouldCollectCrashLog;
 
   late final Logger logger;
@@ -12,6 +13,7 @@ class EnvConfig {
   EnvConfig({
     required this.appName,
     required this.baseUrl,
+   this.dexComBaseUrl,
     this.shouldCollectCrashLog = false,
   }) {
     logger = Logger(

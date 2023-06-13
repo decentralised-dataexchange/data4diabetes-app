@@ -1,4 +1,5 @@
 import 'package:Data4Diabetes/app/Constants/Palette.dart';
+import 'package:Data4Diabetes/app/modules/Dexcom/views/dexcom_view.dart';
 import 'package:Data4Diabetes/app/modules/insights/controllers/insights_controller.dart';
 import 'package:Data4Diabetes/app/modules/language/views/language_view.dart';
 import 'package:Data4Diabetes/app/modules/launcher/views/launcher_view.dart';
@@ -8,6 +9,7 @@ import 'package:Data4Diabetes/app/modules/settings/controllers/settings_controll
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../../core/values/app_colors.dart';
@@ -32,13 +34,18 @@ class SettingsView extends BaseView<SettingsController> {
       automaticallyImplyLeading: true,
       leading: IconButton(
         onPressed: () async {
-          await _insightsController.estimatedGlucoseValues();
-          _insightsController
-              .gMICalculator(_insightsController.selectedValue.value = 'TODAY');
-          _insightsController
-              .tIRCalculator(_insightsController.selectedValue.value = 'TODAY');
-          _insightsController.addChartDataValues(
-              _insightsController.selectedValue.value = 'TODAY');
+          SharedPreferences _prefs = await SharedPreferences.getInstance();
+          var token = _prefs.getString('access_token');
+          if (token != null) {
+            _insightsController.estimatedGlucoseValues();
+            _insightsController.gMICalculator(
+                _insightsController.selectedValue.value = 'TODAY');
+            _insightsController.tIRCalculator(
+                _insightsController.selectedValue.value = 'TODAY');
+            _insightsController.addChartDataValues(
+                _insightsController.selectedValue.value = 'TODAY');
+          }
+
           Get.back();
         },
         icon: const Icon(Icons.arrow_back_ios),
@@ -105,6 +112,8 @@ class SettingsView extends BaseView<SettingsController> {
             _languageWidget(controller),
             const Divider(),
             _securityWidget(controller),
+            const Divider(),
+            _dexcomDashboard(),
             const Divider(),
             _deleteAccountWidget(context),
             const Divider(),
@@ -368,6 +377,26 @@ class SettingsView extends BaseView<SettingsController> {
         );
 
         return;
+      },
+    );
+  }
+
+  Widget _dexcomDashboard() {
+    return ListTile(
+      dense: true,
+      visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
+      title: Text(
+        controller.appLocalization.settingsDexcom,
+        style: const TextStyle(
+          fontSize: 14,
+        ),
+      ),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        size: 15.0,
+      ),
+      onTap: () {
+        Get.to(DexcomView());
       },
     );
   }

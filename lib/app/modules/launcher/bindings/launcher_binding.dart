@@ -1,3 +1,4 @@
+import 'package:Data4Diabetes/app/modules/Dexcom/controllers/dexcom_controller.dart';
 import 'package:Data4Diabetes/app/modules/insights/controllers/insights_controller.dart';
 import 'package:Data4Diabetes/app/modules/launcher/controller/launcher_controller.dart';
 import 'package:Data4Diabetes/app/modules/privacyPolicy/controllers/privacyPolicy_controller.dart';
@@ -61,7 +62,11 @@ class LauncherBinding extends Bindings {
       fenix: true,
     );
     Get.lazyPut<TermsOfServiceController>(
-          () => TermsOfServiceController(),
+      () => TermsOfServiceController(),
+      fenix: true,
+    );
+    Get.lazyPut<DexcomController>(
+      () => DexcomController(),
       fenix: true,
     );
   }

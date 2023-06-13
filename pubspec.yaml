@@ -31,6 +31,7 @@ dependencies:
   intl_phone_number_input: ^0.7.3+1
   sms_autofill: ^2.3.0
   webview_flutter: ^4.2.0
+  http: ^0.13.6
   page_view_dot_indicator: ^2.1.0
   dropdown_button2: ^2.1.0
   syncfusion_flutter_charts: ^21.2.4

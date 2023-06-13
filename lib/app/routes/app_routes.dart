@@ -12,6 +12,7 @@ abstract class Routes {
   static const SCANANDCHECK = _Paths.SCANANDCHECK;
   static const SETTINGS = _Paths.SETTINGS;
   static const LANGUAGE = _Paths.LANGUAGE;
+  static const DEXCOM = _Paths.DEXCOM;
   static const PRIVACYPOLICY = _Paths.PRIVACYPOLICY;
   static const INSIGHTS = _Paths.INSIGHTS;
   static const TERMSOFSERVICE = _Paths.TERMSOFSERVICE;
@@ -27,6 +28,7 @@ abstract class _Paths {
   static const SCANANDCHECK = '/scanAndCheck';
   static const SETTINGS = '/settings';
   static const LANGUAGE = '/language';
+  static const DEXCOM = '/dexcom';
   static const PRIVACYPOLICY = '/privacyPolicy';
   static const INSIGHTS = '/insights';
   static const TERMSOFSERVICE = '/termsOfService';

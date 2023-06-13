@@ -4,6 +4,7 @@ import 'package:get/get_connect/http/src/status/http_status.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/local/preference/preference_manager_impl.dart';
+import '../../data/model/dexcom/AccessTokenRequest.dart';
 import '/app/network/dio_provider.dart';
 import '/app/network/error_handlers.dart';
 import '/app/network/exceptions/base_exception.dart';
@@ -29,7 +30,8 @@ abstract class BaseRemoteSource {
     } on DioError catch (dioError) {
       Exception exception = handleDioError(dioError);
       logger.e(
-          "Throwing error from repository: >>>>>>> $exception : ${(exception as BaseException).message}");
+          "Throwing error from repository: >>>>>>> $exception : ${(exception as BaseException)
+              .message}");
       throw exception;
     } catch (error) {
       logger.e("Generic error: >>>>>>> $error");
@@ -53,11 +55,31 @@ abstract class BaseRemoteSource {
       headers['Content-Type'] = 'application/json';
       headers['Authorization'] = 'Bearer Token $accessToken';
     }
-    else{
+    else {
       headers['Content-Type'] = 'application/json';
     }
 
     return dioClient.post(path, data: data, options: Options(headers: headers));
+  }
+
+
+  Future<Response<T>> postDexcom<T>(String path,
+      {data,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+        bool isAuthNeeded = false
+        }) async {
+
+    return dioClient.post(path, data: data, options: options);
+  }
+  Future<Response<T>> getDexcom<T>(String path,
+      {
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+        bool isAuthNeeded = false
+      }) async {
+
+    return dioClient.get(path, options: options,queryParameters: queryParameters);
   }
 }
 

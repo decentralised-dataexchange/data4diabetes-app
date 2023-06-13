@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../Constants/Palette.dart';
 import '../../modules/settings/views/settings_view.dart';
-class AppBarWithLogo extends StatelessWidget  with PreferredSizeWidget {
+class AppBarWithLogo extends StatelessWidget  implements PreferredSizeWidget {
   var title;
   AppBarWithLogo({Key? key,this.title}) : super(key: key);
   static const double toolbarHeight = 80;

@@ -5,18 +5,18 @@ import '/app/core/values/app_colors.dart';
 import '/app/core/widget/app_bar_title.dart';
 
 //Default appbar customized with the design of our app
-class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String appBarTitleText;
+  final Color? backgroundColor;
   final List<Widget>? actions;
   final bool isBackButtonEnabled;
-  final Color? backgroundColor;
 
   CustomAppBar({
     Key? key,
     required this.appBarTitleText,
     this.actions,
-    this.isBackButtonEnabled = true,
     this.backgroundColor,
+    this.isBackButtonEnabled = true,
 
   }) : super(key: key);
 

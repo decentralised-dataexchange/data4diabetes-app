@@ -24,7 +24,6 @@ class OtpController extends BaseController {
   final int statusCode = 200;
   void verifyOTP() async {
     showLoading();
-
     VerifyOtpRequest request = VerifyOtpRequest(
       otp: verifyOtpController.text,
     );

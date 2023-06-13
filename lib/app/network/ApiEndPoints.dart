@@ -5,5 +5,9 @@ class ApiEndPoints {
   static const String Login = "login/";
   static const String ValidateMobileNumber = "validate-mobile-number/";
   static const String deleteAccount = "delete-user-account/";
+  static const String dexcomAccessToken = "/v2/oauth2/token";
+  static const String dexcomRefreshToken = "/v2/oauth2/token";
+  static const String dexcomEVGS = "/v3/users/self/egvs";
+
 
 }

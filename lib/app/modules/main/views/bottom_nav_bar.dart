@@ -68,7 +68,7 @@ class BottomNavBar extends StatelessWidget {
             // }
           }
           if (index == 2) {
-            await _insightsController.estimatedGlucoseValues();
+             _insightsController.estimatedGlucoseValues();
             _insightsController.gMICalculator(
                 _insightsController.selectedValue.value = 'TODAY');
             _insightsController.tIRCalculator(
