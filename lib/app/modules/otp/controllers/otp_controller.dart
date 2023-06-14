@@ -29,15 +29,14 @@ class OtpController extends BaseController {
     );
     try {
       VerifyOtpResponse response = await _impl.verifyOTP(request);
-      if (response.token!=null) {
+      if (response.token != null) {
         _preferenceManagerImpl.setString('token', response.token);
         hideLoading();
         verifyOtpController.clear();
         Get.offAll(MainView());
       }
     } catch (e) {
-      debugPrint("arg error -- " + (e as ArgumentError).message);
-      GetSnackToast(message: (e as ApiException).message);
+      GetSnackToast(message: 'Invalid otp');
       hideLoading();
     } finally {
       hideLoading();
