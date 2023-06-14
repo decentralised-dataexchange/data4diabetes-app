@@ -37,7 +37,6 @@ class OtpController extends BaseController {
       }
     } catch (e) {
       GetSnackToast(message: 'Invalid otp');
-
       hideLoading();
     } finally {
       hideLoading();
