@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:Data4Diabetes/app/Constants/Palette.dart';
 import 'package:Data4Diabetes/app/Constants/dexcom_values.dart';
 import 'package:Data4Diabetes/app/data/model/dexcom/AccessTokenRequest.dart';
 import 'package:Data4Diabetes/app/data/model/dexcom/AccessTokenResponse.dart';
@@ -75,6 +76,7 @@ class DexcomController extends BaseController {
               SharedPreferences _prefs = await SharedPreferences.getInstance();
               await _prefs.setString('authorization_code', code!);
               obtainAccessToken(code);
+              Get.back();
 
               return NavigationDecision.prevent;
             }
@@ -161,7 +163,7 @@ class DexcomController extends BaseController {
     //   endDate: endDate,
     //   accessToken: token,
     // );
-   // EstimatedGlucoseValue response = await _impl.evgs(request);
+    // EstimatedGlucoseValue response = await _impl.evgs(request);
     var response = await _httpProvider.getEGVs(
       token!,
       url: '/v3/users/self/egvs',
@@ -171,9 +173,8 @@ class DexcomController extends BaseController {
     EstimatedGlucoseValue resultedData =
         EstimatedGlucoseValue.fromJson(response);
 
-   return resultedData;
+    return resultedData;
 
-
-   // return response;
+    // return response;
   }
 }
