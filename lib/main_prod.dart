@@ -19,6 +19,7 @@ void main() async {
     envType: Environment.PRODUCTION,
     envConfig: prodConfig,
   );
+  debugPrint("Config -- main_prod");
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

@@ -20,6 +20,7 @@ void main() async {
     envConfig: prodConfig,
   );
 
+  debugPrint("Config -- main");
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
