@@ -20,7 +20,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final EnvConfig _envConfig = BuildConfig.instance.config;
 
-
   @override
   Widget build(BuildContext context) {
    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [ SystemUiOverlay.bottom]);

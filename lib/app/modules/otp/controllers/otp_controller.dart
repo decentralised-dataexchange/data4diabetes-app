@@ -36,8 +36,8 @@ class OtpController extends BaseController {
         Get.offAll(MainView());
       }
     } catch (e) {
+      debugPrint("arg error -- " + (e as ArgumentError).message);
       GetSnackToast(message: (e as ApiException).message);
-
       hideLoading();
     } finally {
       hideLoading();
