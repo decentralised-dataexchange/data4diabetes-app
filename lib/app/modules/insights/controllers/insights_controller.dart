@@ -113,40 +113,43 @@ class InsightsController extends BaseController {
     DateTime thirtyDaysAgo = currentDate.subtract(const Duration(days: 30));
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     var token = _prefs.getString('access_token');
+    print('token value $token');
     if (token != null) {
       evgsDataList = await _dexcomController.getEgvs();
-      hideLoading();
-    }
-    if (evgsDataList != null) {
-      if (evgsDataList!.records != null) {
-        if (evgsDataList!.records!.isNotEmpty) {
-          for (var e in evgsDataList!.records!) {
-            if (DateFormat('yyyy-MM-dd')
-                    .parse(e.systemTime!)
-                    .isAfter(sevenDaysAgo) ||
-                DateFormat('yyyy-MM-dd')
-                    .parse(e.systemTime!)
-                    .isAtSameMomentAs(sevenDaysAgo)) {
-              last7DaysGlucoseLevel.add(e.value.toString());
-            }
-            if (DateFormat('yyyy-MM-dd')
-                    .parse(e.systemTime!)
-                    .isAfter(thirtyDaysAgo) ||
-                DateFormat('yyyy-MM-dd')
-                    .parse(e.systemTime!)
-                    .isAtSameMomentAs(thirtyDaysAgo)) {
-              last30DaysGlucoseLevel.add(e.value.toString());
-            }
-            if (DateFormat('yyyy-MM-dd').parse(e.systemTime!) == currentDate) {
-              todaysGlucoseLevel.add(e.value.toString());
+      if (evgsDataList != null) {
+        if (evgsDataList!.records != null) {
+          if (evgsDataList!.records!.isNotEmpty) {
+            for (var e in evgsDataList!.records!) {
+              if (DateFormat('yyyy-MM-dd')
+                  .parse(e.systemTime!)
+                  .isAfter(sevenDaysAgo) ||
+                  DateFormat('yyyy-MM-dd')
+                      .parse(e.systemTime!)
+                      .isAtSameMomentAs(sevenDaysAgo)) {
+                last7DaysGlucoseLevel.add(e.value.toString());
+              }
+              if (DateFormat('yyyy-MM-dd')
+                  .parse(e.systemTime!)
+                  .isAfter(thirtyDaysAgo) ||
+                  DateFormat('yyyy-MM-dd')
+                      .parse(e.systemTime!)
+                      .isAtSameMomentAs(thirtyDaysAgo)) {
+                last30DaysGlucoseLevel.add(e.value.toString());
+              }
+              if (DateFormat('yyyy-MM-dd').parse(e.systemTime!) == currentDate) {
+                todaysGlucoseLevel.add(e.value.toString());
+              }
             }
           }
         }
+        hideLoading();
       }
-    } else {
+    }
+    else{
       hideLoading();
       alertDialog();
     }
+
   }
 
   gMICalculator(String selectedValue) {

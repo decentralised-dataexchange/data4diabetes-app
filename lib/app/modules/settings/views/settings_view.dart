@@ -113,7 +113,7 @@ class SettingsView extends BaseView<SettingsController> {
             const Divider(),
             _securityWidget(controller),
             const Divider(),
-            _dexcomDashboard(),
+            _dexcomDashboard(context),
             const Divider(),
             _deleteAccountWidget(context),
             const Divider(),
@@ -381,7 +381,7 @@ class SettingsView extends BaseView<SettingsController> {
     );
   }
 
-  Widget _dexcomDashboard() {
+  Widget _dexcomDashboard(BuildContext context) {
     return ListTile(
       dense: true,
       visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
@@ -396,7 +396,7 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-        Get.to(DexcomView());
+        _settingsController.dexcomLoginWidget(context);
       },
     );
   }
