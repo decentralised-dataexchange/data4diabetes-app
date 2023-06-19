@@ -13,7 +13,7 @@ class SettingsController extends BaseController {
   var platform = const MethodChannel('io.igrant.data4diabetes.channel');
   final ver = Rx<String>("");
   final build = Rx<String>("");
-  RxString languageCode = 'en'.obs;
+  RxString languageCode = ''.obs;
   final PreferenceManagerImpl _preferenceManagerImpl = PreferenceManagerImpl();
   final UserRepositoryImpl _impl = UserRepositoryImpl();
   int successWithoutContent = 204;
@@ -21,8 +21,13 @@ class SettingsController extends BaseController {
   @override
   void onInit() {
     packageInfo();
+    getLanguageCode();
     super.onInit();
-    languageCode.value = Get.locale?.languageCode ?? 'en';
+    // languageCode.value = Get.locale?.languageCode??'';
+  }
+  getLanguageCode()async{
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    languageCode.value= _prefs.getString('languageCode')!;
   }
 
   packageInfo() async {
@@ -31,13 +36,22 @@ class SettingsController extends BaseController {
     build.value = packageInfo?.buildNumber ?? "";
   }
 
-  void refreshLanguage() {
-    languageCode.value = Get.locale?.languageCode ?? 'en';
+  void refreshLanguage() async{
+    //languageCode.value = Get.locale?.languageCode ?? 'en';
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    languageCode.value= _prefs.getString('languageCode')!;
   }
 
   Future<void> logout() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    _prefs.clear();
+   // _prefs.clear();
+    Set<String> keys = _prefs.getKeys();
+
+    for (String key in keys) {
+      if (key != 'languageCode') {
+        await _prefs.remove(key);
+      }
+    }
     Get.offAll(const LauncherView());
   }
 
