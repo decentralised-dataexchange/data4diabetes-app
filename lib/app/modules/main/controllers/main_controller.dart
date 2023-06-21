@@ -13,24 +13,24 @@ class MainController extends BaseController {
 
   final lifeCardUpdateController = false.obs;
 
-  // @override
-  // void onInit() async {
-  //   super.onInit();
-  //
-  //   var locales = Locale(await getLocale());
-  //
-  //   if (locales.languageCode == "en" && Get.locale != "en") {
-  //     locales = Locale(ENGLISH);
-  //     setLocale(ENGLISH);
-  //     Get.updateLocale(locales);
-  //     print("english");
-  //   } else if (locales.languageCode == "sv" && Get.locale != "sv") {
-  //     locales = Locale(SWEDISH);
-  //     setLocale(SWEDISH);
-  //     Get.updateLocale(locales);
-  //     print("swedish");
-  //   }
-  // }
+  @override
+  void onInit() async {
+    super.onInit();
+
+    var locales = Locale(await getLocale());
+
+    if (locales.languageCode == "en") {
+      locales = Locale(ENGLISH);
+      setLocale(ENGLISH);
+      Get.updateLocale(locales);
+      print("english");
+    } else if (locales.languageCode == "sv") {
+      locales = Locale(SWEDISH);
+      setLocale(SWEDISH);
+      Get.updateLocale(locales);
+      print("swedish");
+    }
+  }
 
   onMenuSelected(MenuCode menuCode) async {
     _selectedMenuCodeController(menuCode);

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -14,20 +13,14 @@ class SettingsController extends BaseController {
   final ver = Rx<String>("");
   final build = Rx<String>("");
   RxString languageCode = ''.obs;
-  final PreferenceManagerImpl _preferenceManagerImpl = PreferenceManagerImpl();
   final UserRepositoryImpl _impl = UserRepositoryImpl();
   int successWithoutContent = 204;
   int unauthorizedStatusCode = 400;
   @override
   void onInit() {
     packageInfo();
-    getLanguageCode();
     super.onInit();
-    // languageCode.value = Get.locale?.languageCode??'';
-  }
-  getLanguageCode()async{
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    languageCode.value= _prefs.getString('languageCode')!;
+     languageCode.value = Get.locale?.languageCode??'';
   }
 
   packageInfo() async {
@@ -36,15 +29,13 @@ class SettingsController extends BaseController {
     build.value = packageInfo?.buildNumber ?? "";
   }
 
-  void refreshLanguage() async{
-    //languageCode.value = Get.locale?.languageCode ?? 'en';
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    languageCode.value= _prefs.getString('languageCode')!;
+  void refreshLanguage() async {
+    languageCode.value = Get.locale?.languageCode ?? '';
   }
 
   Future<void> logout() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-   // _prefs.clear();
+    // _prefs.clear();
     Set<String> keys = _prefs.getKeys();
 
     for (String key in keys) {
@@ -56,17 +47,17 @@ class SettingsController extends BaseController {
   }
 
   void deleteAccount() async {
-    int response= await _impl.deleteUserAccount();
+    int response = await _impl.deleteUserAccount();
     debugPrint('this is the response:$response');
-    if(response == successWithoutContent){
+    if (response == successWithoutContent) {
       GetSnackToast(
-                message: appLocalization.settingsDeleteAccountSuccess, color: Colors.green);
-            SharedPreferences _prefs = await SharedPreferences.getInstance();
-            _prefs.clear();
-            Get.offAll(const LauncherView());
-    }
-    else{
-      GetSnackToast(message:appLocalization.settingsDeleteAccountFail);
+          message: appLocalization.settingsDeleteAccountSuccess,
+          color: Colors.green);
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      _prefs.clear();
+      Get.offAll(const LauncherView());
+    } else {
+      GetSnackToast(message: appLocalization.settingsDeleteAccountFail);
     }
   }
 }

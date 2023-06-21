@@ -11,14 +11,9 @@ class LanguageController extends BaseController {
   RxString languageCode = ''.obs;
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
-  //  languageCode.value = Get.locale?.languageCode ?? 'en';
-    getLanguageCode();
-  }
-  getLanguageCode()async{
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    languageCode.value= _prefs.getString('languageCode')!;
+      languageCode.value = Get.locale?.languageCode ?? '';
   }
   void updateLanguage(BuildContext context, String langauge) async {
     if (langauge == 'English') {

@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
     if(lang==null){
       Locale deviceLocale = window.locale;
       langCode = deviceLocale.languageCode;
-      await _prefs.setString('languageCode', langCode);
+       setLocale(langCode);
     }else{
       langCode=lang;
     }
