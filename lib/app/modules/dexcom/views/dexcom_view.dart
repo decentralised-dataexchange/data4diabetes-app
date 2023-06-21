@@ -44,6 +44,20 @@ class DexcomView extends BaseView<DexcomController> {
   final DexcomController _dexcomController = Get.find();
   @override
   Widget body(BuildContext context) {
-    return WebViewWidget(controller: _dexcomController.controller);
+    return FutureBuilder<String>(
+      future: _dexcomController.dexcomLogin(),
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // Display a loading spinner while waiting for the future to complete
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          // Display an error message if the future throws an error
+          return Text('Error: ${snapshot.error}');
+        } else {
+          // Display the fetched data
+          return WebViewWidget(controller: _dexcomController.controller!);
+        }
+      },
+    );
   }
 }

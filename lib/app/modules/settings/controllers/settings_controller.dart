@@ -1,9 +1,11 @@
 
+import 'package:Data4Diabetes/app/modules/Dexcom/controllers/dexcom_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../../flavors/build_config.dart';
 import '../../../data/local/preference/preference_manager_impl.dart';
 import '../../../data/repository/user_repository_impl.dart';
 import '../../launcher/views/launcher_view.dart';
@@ -18,6 +20,8 @@ class SettingsController extends BaseController {
   final UserRepositoryImpl _impl = UserRepositoryImpl();
   int successWithoutContent = 204;
   int unauthorizedStatusCode = 400;
+  var firstRadioButtonSelected = true.obs;
+  final DexcomController _dexcomController=Get.find();
   @override
   void onInit() {
     packageInfo();
@@ -54,5 +58,12 @@ class SettingsController extends BaseController {
     else{
       GetSnackToast(message:appLocalization.settingsDeleteAccountFail);
     }
+  }
+  void defaultDexcomEnvironment(){
+    _dexcomController.dexComBaseUrl.value=BuildConfig.instance.config.dexComBaseUrl!;
+  }
+  void limitedDexcomEnvironment(){
+    _dexcomController.dexComBaseUrl.value='https://api.dexcom.com';
+    print('changed url${_dexcomController.dexComBaseUrl.value}');
   }
 }
