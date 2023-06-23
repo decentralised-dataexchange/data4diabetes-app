@@ -18,9 +18,9 @@ import '/app/core/base/base_controller.dart';
 
 class DexcomController extends BaseController {
   final DexcomValues _dexcomValues = DexcomValues();
-  static final String? dexComBaseUrl =
-      BuildConfig.instance.config.dexComBaseUrl;
-  late final WebViewController controller;
+  var dexComBaseUrl = ''.obs;
+
+    WebViewController? controller;
   var visibilityValue = false.obs;
   var clientID;
   var clientSecret;
@@ -32,10 +32,12 @@ class DexcomController extends BaseController {
   final UserRepositoryImpl _impl = UserRepositoryImpl();
   @override
   void onInit() {
+    
+    dexComBaseUrl.value = BuildConfig.instance.config.dexComBaseUrl!;
     clientID = _dexcomValues.clientID;
     clientSecret = _dexcomValues.clientSecret;
     redirectUri = _dexcomValues.redirectUri;
-    dexcomLogin();
+    //dexcomLogin();
     super.onInit();
   }
 
@@ -86,7 +88,7 @@ class DexcomController extends BaseController {
         ),
       )
       ..loadRequest(Uri.parse(
-          '$dexComBaseUrl/v2/oauth2/login?client_id=$clientID&redirect_uri=$redirectUri&response_type=code&scope=offline_access'));
+          '${dexComBaseUrl.value}/v2/oauth2/login?client_id=$clientID&redirect_uri=$redirectUri&response_type=code&scope=offline_access'));
   }
 
   void obtainAccessToken(code) async {

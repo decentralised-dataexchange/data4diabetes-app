@@ -2,19 +2,19 @@ import 'package:Data4Diabetes/app/modules/settings/controllers/settings_controll
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../LanguageSupport.dart';
 import '/app/core/base/base_controller.dart';
 
 class LanguageController extends BaseController {
-  RxString languageCode = 'en'.obs;
+  RxString languageCode = ''.obs;
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
-    languageCode.value = Get.locale?.languageCode ?? 'en';
+      languageCode.value = Get.locale?.languageCode ?? '';
   }
-
   void updateLanguage(BuildContext context, String langauge) async {
     if (langauge == 'English') {
       var locale = const Locale(ENGLISH);

@@ -19,12 +19,12 @@ class MainController extends BaseController {
 
     var locales = Locale(await getLocale());
 
-    if (locales.languageCode == "en" && Get.locale != "en") {
+    if (locales.languageCode == "en") {
       locales = Locale(ENGLISH);
       setLocale(ENGLISH);
       Get.updateLocale(locales);
       print("english");
-    } else if (locales.languageCode == "sv" && Get.locale != "sv") {
+    } else if (locales.languageCode == "sv") {
       locales = Locale(SWEDISH);
       setLocale(SWEDISH);
       Get.updateLocale(locales);
