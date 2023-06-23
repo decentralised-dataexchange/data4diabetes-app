@@ -113,7 +113,7 @@ class SettingsView extends BaseView<SettingsController> {
             const Divider(),
             _securityWidget(controller),
             const Divider(),
-            _dexcomDashboard(),
+            _dexcomDashboard(context),
             const Divider(),
             _deleteAccountWidget(context),
             const Divider(),
@@ -381,7 +381,7 @@ class SettingsView extends BaseView<SettingsController> {
     );
   }
 
-  Widget _dexcomDashboard() {
+  Widget _dexcomDashboard(BuildContext context) {
     return ListTile(
       dense: true,
       visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
@@ -396,7 +396,66 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-        Get.to(DexcomView());
+        _settingsController.dexcomLoginWidget(context);
+      },
+      onLongPress: () {
+        _showDialogueWidget(context);
+      },
+    );
+  }
+
+  void _showDialogueWidget(BuildContext context) {
+
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Obx((){
+          return AlertDialog(
+            title: Text('Switch Dexcom Envionment'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                RadioListTile(
+                  title: Text('Default url'),
+                  value: true,
+                  groupValue: _settingsController.firstRadioButtonSelected.value,
+
+                  onChanged: (value) {
+                    _settingsController.firstRadioButtonSelected.value =
+                    value as bool;
+                    _settingsController.defaultDexcomEnvironment();
+
+
+                  },
+                ),
+                RadioListTile(
+                  title: Text('Limited Users url'),
+                  value: false,
+                  groupValue: _settingsController.firstRadioButtonSelected.value,
+                  onChanged: (value) {
+                    _settingsController.firstRadioButtonSelected.value =
+                    value as bool;
+                    _settingsController.limitedDexcomEnvironment();
+                  },
+                ),
+              ],
+            ),
+            actions: [
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15,vertical: 8.0),
+                    child: Text('Close',style: TextStyle(color: Colors.white),),
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
+
       },
     );
   }
