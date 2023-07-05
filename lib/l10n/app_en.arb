@@ -90,5 +90,10 @@
   "insightsSummary":"Summary",
   "insightsGMI":"GMI",
   "insightsAvgValue":"Average Value",
-  "insightsActiveCGM":"% Active time with CGM"
+  "insightsActiveCGM":"% Active time with CGM",
+  "insightsDexcomTitle":"Dexcom Login",
+  "insightsDexcomContent":"Please login to Dexcom to get your estimated glucose values",
+  "insightsOk":"Ok",
+  "insightsCancel":"Cancel"
+
 }

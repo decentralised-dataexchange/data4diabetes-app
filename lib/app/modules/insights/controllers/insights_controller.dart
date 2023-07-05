@@ -300,19 +300,19 @@ class InsightsController extends BaseController {
   void alertDialog() {
     Get.defaultDialog(
         barrierDismissible: false,
-        title: 'Dexcom Login',
-        content: const Text(
-          'Please login to Dexcom to get your estimated glucose values',
+        title:appLocalization.insightsDexcomTitle ,
+        content:  Text(
+         appLocalization.insightsDexcomContent ,
           textAlign: TextAlign.center,
         ),
         actions: [
           CupertinoButton(
-              child: const Text('OK'),
+              child:  Text(appLocalization.insightsOk),
               onPressed: () {
                 Get.off(DexcomView());
               }),
           CupertinoButton(
-              child: const Text('Cancel'),
+              child:  Text(appLocalization.insightsCancel),
               onPressed: () {
                 Get.back();
               }),

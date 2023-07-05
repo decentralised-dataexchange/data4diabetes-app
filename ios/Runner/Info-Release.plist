@@ -24,8 +24,13 @@
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>NSCameraUsageDescription</key>
-    <string>Allowing camera access enables you to take pictures of your food, which we will use to calculate its calories and provide you with nutritional information. We will not access your camera for any other purpose without your permission.</string>
+    <key>NSCameraUsageDescription</key>
+    <dict>
+        <key>en</key>
+        <string>Allowing camera access enables you to take pictures of your food, which we will use to calculate its calories and provide you with nutritional information. We will not access your camera for any other purpose without your permission.</string>
+        <key>sv</key>
+        <string>Genom att tillåta kameraåtkomst kan du ta bilder av din mat, som vi kommer att använda för att beräkna dess kalorier och ge dig näringsinformation. Vi kommer inte att komma åt din kamera för något annat ändamål utan ditt tillstånd.</string>
+    </dict>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
