@@ -90,5 +90,9 @@
   "insightsSummary":"Sammanfattning",
   "insightsGMI":"GMI",
   "insightsAvgValue":"Genomsnittligt värde",
-  "insightsActiveCGM":"% Aktiv tid med CGM"
+  "insightsActiveCGM":"% Aktiv tid med CGM",
+  "insightsDexcomTitle":"Dexcom inloggning",
+  "insightsDexcomContent":"Logga in på Dexcom för att få dina uppskattade glukosvärden",
+  "insightsOk":"Okej",
+  "insightsCancel":"Annullera"
 }
