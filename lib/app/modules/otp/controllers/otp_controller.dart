@@ -6,7 +6,7 @@ import 'package:Data4Diabetes/app/modules/login/controllers/login_controller.dar
 import 'package:Data4Diabetes/app/network/exceptions/api_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../data/model/login/LoginRequest.dart';
 import '../../../data/model/login/LoginResponse.dart';
 import '../../../data/model/register/RegisterRequest.dart';
@@ -49,47 +49,77 @@ class OtpController extends BaseController {
   }
 
   void resendLoginOTP() async {
-    debugPrint(
-        "shared Login Resend number:" + loginController.sharePhoneNumber.value);
-    LoginRequest request =
-        LoginRequest(mobile_number: loginController.sharePhoneNumber.value);
-    try {
-      LoginResponse response = await _impl.login(request);
-      if (response.msg == "OTP send") {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final int currentTime = DateTime.now().millisecondsSinceEpoch;
+    int lastMessageTime = prefs.getInt('last_message_time_$sessionToken') ?? 0;
+    int messageCount = prefs.getInt('message_count_$sessionToken') ?? 0;
+    if (currentTime - lastMessageTime >= timeWindow) {
+      // Reset the rate limit if the time window has elapsed
+      messageCount = 0;
+      lastMessageTime = currentTime;
+    }
+    if (messageCount >= maxMessagesPerWindow) {
+      // Rate limit exceeded, display an error message or take appropriate action
+      hideLoading();
+      GetSnackToast(
+          message: "OTP request limit exceeded. Please try again after sometime.");
+    } else {
+      messageCount++;
+      lastMessageTime = currentTime;
+
+      await prefs.setInt('message_count_$sessionToken', messageCount);
+      await prefs.setInt('last_message_time_$sessionToken', lastMessageTime);
+      LoginRequest request =
+          LoginRequest(mobile_number: loginController.sharePhoneNumber.value);
+      try {
+        LoginResponse response = await _impl.login(request);
+        if (response.msg == "OTP send") {
+          hideLoading();
+        }
+      } catch (e) {
+        GetSnackToast(message: (e as ApiException).message);
+        hideLoading();
+      } finally {
         hideLoading();
       }
-    } catch (e) {
-      GetSnackToast(message: (e as ApiException).message);
-
-      hideLoading();
-    } finally {
-      hideLoading();
     }
   }
 
   void resendRegisterOTP() async {
-    debugPrint("shared Register Resend number:" +
-        registerController.sharePhoneNumber.value);
-    debugPrint(
-        "shared Register firstname:" + registerController.shareFirstName.value);
-    debugPrint(
-        "shared Register lastname:" + registerController.shareLastName.value);
-    RegisterRequest request = RegisterRequest(
-        firstname: registerController.shareFirstName.value,
-        lastname: registerController.shareLastName.value,
-        mobile_number: registerController.sharePhoneNumber.value);
-    try {
-      RegisterResponse response = await _impl.register(request);
-
-      if (response.msg == "OTP sent") {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final int currentTime = DateTime.now().millisecondsSinceEpoch;
+    int lastMessageTime = prefs.getInt('last_message_time_$sessionToken') ?? 0;
+    int messageCount = prefs.getInt('message_count_$sessionToken') ?? 0;
+    if (currentTime - lastMessageTime >= timeWindow) {
+      // Reset the rate limit if the time window has elapsed
+      messageCount = 0;
+      lastMessageTime = currentTime;
+    }
+    if (messageCount >= maxMessagesPerWindow) {
+      // Rate limit exceeded, display an error message or take appropriate action
+      hideLoading();
+      GetSnackToast(
+          message: "OTP request limit exceeded. Please try again after sometime.");
+    } else {
+      messageCount++;
+      lastMessageTime = currentTime;
+      await prefs.setInt('message_count_$sessionToken', messageCount);
+      await prefs.setInt('last_message_time_$sessionToken', lastMessageTime);
+      RegisterRequest request = RegisterRequest(
+          firstname: registerController.shareFirstName.value,
+          lastname: registerController.shareLastName.value,
+          mobile_number: registerController.sharePhoneNumber.value);
+      try {
+        RegisterResponse response = await _impl.register(request);
+        if (response.msg == "OTP sent") {
+          hideLoading();
+        }
+      } catch (e) {
+        GetSnackToast(message: (e as ApiException).message);
+        hideLoading();
+      } finally {
         hideLoading();
       }
-    } catch (e) {
-      GetSnackToast(message: (e as ApiException).message);
-
-      hideLoading();
-    } finally {
-      hideLoading();
     }
   }
 }
