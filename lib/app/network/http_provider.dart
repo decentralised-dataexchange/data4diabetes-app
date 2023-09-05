@@ -38,19 +38,17 @@ class HttpProvider {
       },
     );
     print(uri);
-    print('received accessToken:$accessToken');
+    print(accessToken);
     final response = await http.get(
       uri,
       headers: {'Authorization': 'Bearer $accessToken'},
     );
-    print('response_statuscode:${response.statusCode}');
+
     if (response.statusCode == statusCodeValue) {
-      print('success section');
       final data = jsonDecode(response.body);
 
       return data;
     } else if (response.statusCode == invalidAccessToken) {
-      print('401 section');
 
       return '401';
     } else {

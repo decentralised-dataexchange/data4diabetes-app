@@ -148,8 +148,6 @@ class DexcomController extends BaseController {
     var resultedData = AccessTokenResponse.fromJson(response);
     await _prefs.setString('access_token', resultedData.accessToken!);
     await _prefs.setString('refresh_token', resultedData.refreshToken!);
-    var c=_prefs.getString('access_token');
-    print('refreshed access token$c');
     secondsRemaining.value = resultedData.expiresIn!;
     startTimer();
   }
@@ -164,17 +162,13 @@ class DexcomController extends BaseController {
 
     while (true) {
       var token = _prefs.getString('access_token'); // Retrieve the current access token
-
-      print('new token $token');
       var response = await _httpProvider.getEGVs(
         token!,
         url: '/v3/users/self/egvs',
         startDate: startDate.toString(),
         endDate: endDate.toString(),
       );
-      print('the response=$response');
       if (response == '401') {
-        print('refresh token section');
         await refreshToken(); // Refresh the token
         continue; // Continue the loop to retry the API call with the new token
       }
