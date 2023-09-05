@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import '../../flavors/build_config.dart';
 
 const int statusCodeValue = 200;
+const int invalidAccessToken = 401;
 
 class HttpProvider {
   static final String? baseUrl = BuildConfig.instance.config.dexComBaseUrl;
@@ -37,17 +38,21 @@ class HttpProvider {
       },
     );
     print(uri);
-    print(accessToken);
+    print('received accessToken:$accessToken');
     final response = await http.get(
       uri,
       headers: {'Authorization': 'Bearer $accessToken'},
     );
-
+    print('response_statuscode:${response.statusCode}');
     if (response.statusCode == statusCodeValue) {
+      print('success section');
       final data = jsonDecode(response.body);
 
-
       return data;
+    } else if (response.statusCode == invalidAccessToken) {
+      print('401 section');
+
+      return '401';
     } else {
       throw Exception('Failed to retrieve glucose values.');
     }
