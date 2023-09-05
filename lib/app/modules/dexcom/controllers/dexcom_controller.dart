@@ -148,35 +148,42 @@ class DexcomController extends BaseController {
     var resultedData = AccessTokenResponse.fromJson(response);
     await _prefs.setString('access_token', resultedData.accessToken!);
     await _prefs.setString('refresh_token', resultedData.refreshToken!);
+    var c=_prefs.getString('access_token');
+    print('refreshed access token$c');
     secondsRemaining.value = resultedData.expiresIn!;
     startTimer();
   }
 
   Future<EstimatedGlucoseValue> getEgvs() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    var token = _prefs.getString('access_token');
     HttpProvider _httpProvider = HttpProvider();
     DateTime now = DateTime.now();
     DateTime thirtyDaysAgo = now.subtract(const Duration(days: 30));
     String startDate = DateFormat('yyyy-MM-ddTHH:mm:ss').format(thirtyDaysAgo);
     String endDate = DateFormat('yyyy-MM-ddTHH:mm:ss').format(now);
-    // EstimatedGlucoseValueRequest request = EstimatedGlucoseValueRequest(
-    //   startDate: startDate,
-    //   endDate: endDate,
-    //   accessToken: token,
-    // );
-    // EstimatedGlucoseValue response = await _impl.evgs(request);
-    var response = await _httpProvider.getEGVs(
-      token!,
-      url: '/v3/users/self/egvs',
-      startDate: startDate.toString(),
-      endDate: endDate.toString(),
-    );
-    EstimatedGlucoseValue resultedData =
-        EstimatedGlucoseValue.fromJson(response);
 
-    return resultedData;
+    while (true) {
+      var token = _prefs.getString('access_token'); // Retrieve the current access token
 
-    // return response;
+      print('new token $token');
+      var response = await _httpProvider.getEGVs(
+        token!,
+        url: '/v3/users/self/egvs',
+        startDate: startDate.toString(),
+        endDate: endDate.toString(),
+      );
+      print('the response=$response');
+      if (response == '401') {
+        print('refresh token section');
+        await refreshToken(); // Refresh the token
+        continue; // Continue the loop to retry the API call with the new token
+      }
+
+      EstimatedGlucoseValue resultedData = EstimatedGlucoseValue.fromJson(response);
+
+      return resultedData;
+    }
   }
+
+
 }
