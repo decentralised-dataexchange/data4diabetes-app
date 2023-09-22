@@ -1,5 +1,6 @@
 package io.igrant.data4diabetes
 
+import com.github.privacyDashboard.PrivacyDashboard
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -9,7 +10,6 @@ import io.igrant.data_wallet.utils.DataWalletConfigurations
 import io.igrant.data_wallet.utils.InitializeWalletCallback
 import io.igrant.data_wallet.utils.InitializeWalletState
 import io.igrant.data_wallet.utils.dataAgreement.DataAgreementUtils
-import io.igrant.igrant_org_sdk.utils.IgrantSdk
 
 class MainActivity : FlutterActivity() {
 
@@ -60,9 +60,10 @@ class MainActivity : FlutterActivity() {
                     DataWallet.openShareData(this)
                 }
                 "Preferences" -> {
-                    IgrantSdk().withApiKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDVhNDE0YmI5YjA1NTAwMDE1MGIyNDciLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcxNDc0MDg4Nn0.u6pBpv12ZfdHYMPoQHYR-oBR9ZOZVeHiChaQ8yiEMxE")
-                        .withUserId("5d8db1428e252f000180b5a6")
-                        .withOrgId("645a4172b9b055000150b248").start(this)
+                    PrivacyDashboard.showPrivacyDashboard().withApiKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGYwYTYxZThlNWYzODAwMDE0YTg3YTYiLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcyNDU5Njk2MX0.M3I6hJWtOyqbZXQwEGCK43AvROaoR_zncItmULpbFYE")
+                        .withUserId("64f0a61e8e5f3800014a87a6")
+                        .withOrgId("64f09f778e5f3800014a879a")
+                        .withBaseUrl("https://demo-consent-bb-api.igrant.io/").start(this)
                 }
                 "DataAgreementPolicy" -> {
                     val apiKey: String? = call.argument("ApiKey")
