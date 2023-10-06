@@ -37,7 +37,7 @@ target 'Runner' do
 #  use_frameworks!
   use_modular_headers!
 
-  pod 'iGrantioSDK', '~> 0.9.1'
+  pod 'PrivacyDashboardiOS','0.1.11'
   pod 'ama-ios-sdk'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
