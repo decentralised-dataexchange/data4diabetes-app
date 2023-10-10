@@ -1,6 +1,6 @@
 import UIKit
 import Flutter
-import iGrantioSDK
+import PrivacyDashboardiOS
 import ama_ios_sdk
 import SwiftMessages
 
