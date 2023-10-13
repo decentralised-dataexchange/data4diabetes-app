@@ -1,7 +1,7 @@
 name: Data4Diabetes
 description: Data4Diabetes App
 publish_to: none
-version: 2023.10.1+16
+version: 2023.10.2+17
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
