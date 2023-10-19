@@ -26,8 +26,8 @@ import SwiftMessages
             switch call.method{
             case "Preferences":
                 BBConsentPrivacyDashboardiOS.shared.show(organisationId: "64f09f778e5f3800014a879a", apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGYwYTYxZThlNWYzODAwMDE0YTg3YTYiLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcyNDU5Njk2MX0.M3I6hJWtOyqbZXQwEGCK43AvROaoR_zncItmULpbFYE", userId: "64f0a61e8e5f3800014a87a6")
-                BBConsentPrivacyDashboardiOS.shared.turnOnUserRequests = true
-                BBConsentPrivacyDashboardiOS.shared.turnOnAskMeSection = true
+                BBConsentPrivacyDashboardiOS.shared.turnOnUserRequests = false
+                BBConsentPrivacyDashboardiOS.shared.turnOnAskMeSection = false
                 break
             case "Wallet":
                 AriesMobileAgent.shared.showDataWalletHomeViewController(showBackButton: true)
