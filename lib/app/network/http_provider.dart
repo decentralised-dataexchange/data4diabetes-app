@@ -6,6 +6,7 @@ import '../../flavors/build_config.dart';
 
 const int statusCodeValue = 200;
 const int invalidAccessToken = 401;
+const int internalServerError=500;
 
 class HttpProvider {
   static final String? baseUrl = BuildConfig.instance.config.dexComBaseUrl;
@@ -51,7 +52,12 @@ class HttpProvider {
     } else if (response.statusCode == invalidAccessToken) {
 
       return '401';
-    } else {
+    }
+    else if (response.statusCode==internalServerError){
+
+      return '500';
+    }
+    else {
       throw Exception('Failed to retrieve glucose values.');
     }
   }
