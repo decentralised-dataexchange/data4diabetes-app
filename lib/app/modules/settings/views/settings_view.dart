@@ -24,7 +24,6 @@ class SettingsView extends BaseView<SettingsController> {
   static const double switchScaleSize = 0.9;
   static const double imagelogoHeight = 100;
   var switchValue = false.obs;
-  final InsightsController _insightsController = Get.find();
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return AppBar(
@@ -33,19 +32,7 @@ class SettingsView extends BaseView<SettingsController> {
       elevation: 0,
       automaticallyImplyLeading: true,
       leading: IconButton(
-        onPressed: () async {
-          SharedPreferences _prefs = await SharedPreferences.getInstance();
-          var token = _prefs.getString('access_token');
-          if (token != null) {
-            _insightsController.estimatedGlucoseValues();
-            _insightsController.gMICalculator(
-                _insightsController.selectedValue.value = 'TODAY');
-            _insightsController.tIRCalculator(
-                _insightsController.selectedValue.value = 'TODAY');
-            _insightsController.addChartDataValues(
-                _insightsController.selectedValue.value = 'TODAY');
-          }
-
+        onPressed: (){
           Get.back();
         },
         icon: const Icon(Icons.arrow_back_ios),

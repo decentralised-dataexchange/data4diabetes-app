@@ -25,6 +25,7 @@ class InsightsView extends BaseView<InsightsController> {
   PreferredSizeWidget? appBar(BuildContext context) {
     return AppBarWithLogo(
       title: controller.appLocalization.homeYourVirtualPancreas,
+        isInsight:true,
     );
   }
 
