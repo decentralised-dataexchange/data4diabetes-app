@@ -152,7 +152,7 @@ class DexcomController extends BaseController {
     startTimer();
   }
 
-  Future<EstimatedGlucoseValue> getEgvs() async {
+  Future<EstimatedGlucoseValue?> getEgvs() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     HttpProvider _httpProvider = HttpProvider();
     DateTime now = DateTime.now();
@@ -171,6 +171,14 @@ class DexcomController extends BaseController {
       if (response == '401') {
         await refreshToken(); // Refresh the token
         continue; // Continue the loop to retry the API call with the new token
+      }
+      if (response == '500') {
+        Get.rawSnackbar(
+            message: "internal server error",
+            backgroundColor: Colors.red,
+            snackPosition: SnackPosition.BOTTOM);
+
+        return null;
       }
 
       EstimatedGlucoseValue resultedData = EstimatedGlucoseValue.fromJson(response);

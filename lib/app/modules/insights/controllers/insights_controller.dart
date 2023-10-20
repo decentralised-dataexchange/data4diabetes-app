@@ -144,6 +144,9 @@ class InsightsController extends BaseController {
         }
         hideLoading();
       }
+      else{
+        hideLoading();
+      }
     }
     else{
       hideLoading();
