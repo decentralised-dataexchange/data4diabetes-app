@@ -1,15 +1,18 @@
+import 'package:Data4Diabetes/app/modules/insights/controllers/insights_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Constants/Palette.dart';
 import '../../modules/settings/views/settings_view.dart';
 class AppBarWithLogo extends StatelessWidget  implements PreferredSizeWidget {
   var title;
-  AppBarWithLogo({Key? key,this.title}) : super(key: key);
+  bool? isInsight;
+  AppBarWithLogo({Key? key,this.title,this.isInsight}) : super(key: key);
   static const double toolbarHeight = 80;
   static const double circleContainerWidth = 50;
   static const double circleContainerHeight = 50;
-
+  final InsightsController _insightsController = Get.find();
   @override
   Size get preferredSize => AppBar().preferredSize;
   @override
@@ -68,11 +71,23 @@ class AppBarWithLogo extends StatelessWidget  implements PreferredSizeWidget {
           size: 30,
         ),
         onPressed: () {
-          Get.to(SettingsView());
+          Get.to(SettingsView())?.then((value) async {
+            if(isInsight==true){
+              SharedPreferences _prefs = await SharedPreferences.getInstance();
+              var token = _prefs.getString('access_token');
+              if (token != null) {
+                _insightsController.estimatedGlucoseValues();
+                _insightsController.gMICalculator(
+                    _insightsController.selectedValue.value = 'TODAY');
+                _insightsController.tIRCalculator(
+                    _insightsController.selectedValue.value = 'TODAY');
+                _insightsController.addChartDataValues(
+                    _insightsController.selectedValue.value = 'TODAY');
+              }
+            }
+          });
         },
       ),
     );
   }
-
-
 }
