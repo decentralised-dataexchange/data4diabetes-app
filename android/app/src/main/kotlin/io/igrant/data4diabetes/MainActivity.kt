@@ -64,8 +64,9 @@ class MainActivity : FlutterActivity() {
                         .withUserId("64f0a61e8e5f3800014a87a6")
                         .withOrgId("64f09f778e5f3800014a879a")
                         .withBaseUrl("https://demo-consent-bb-api.igrant.io/")
-                        .enableUserRequest()
-                        .enableAskMe().start(this)
+//                        .enableUserRequest()
+//                        .enableAskMe()
+                        .start(this)
                 }
                 "DataAgreementPolicy" -> {
                     val apiKey: String? = call.argument("ApiKey")
