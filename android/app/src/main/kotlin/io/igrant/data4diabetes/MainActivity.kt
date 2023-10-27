@@ -60,10 +60,10 @@ class MainActivity : FlutterActivity() {
                     DataWallet.openShareData(this)
                 }
                 "Preferences" -> {
-                    PrivacyDashboard.showPrivacyDashboard().withApiKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGYwYTYxZThlNWYzODAwMDE0YTg3YTYiLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcyNDU5Njk2MX0.M3I6hJWtOyqbZXQwEGCK43AvROaoR_zncItmULpbFYE")
-                        .withUserId("64f0a61e8e5f3800014a87a6")
+                    PrivacyDashboard.showPrivacyDashboard().withApiKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY1MjY1Nzk2OTM4MGYzNWZhMWMzMDI0NSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTI2NTc5NjkzODBmMzVmYTFjMzAyNDMiLCJleHAiOjE3MDA2NTYxMzJ9.BIfpLGSQTr4IQW1OMuIelS5TnOhvPiz3umtnSKaVpeo")
+                        .withUserId("65366979db611cb1948aca50")
                         .withOrgId("64f09f778e5f3800014a879a")
-                        .withBaseUrl("https://demo-consent-bb-api.igrant.io/")
+                        .withBaseUrl("https://staging-consent-bb-api.igrant.io/")
 //                        .enableUserRequest()
 //                        .enableAskMe()
                         .start(this)
