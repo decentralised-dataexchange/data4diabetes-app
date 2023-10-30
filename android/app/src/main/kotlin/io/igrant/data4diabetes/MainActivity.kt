@@ -60,10 +60,10 @@ class MainActivity : FlutterActivity() {
                     DataWallet.openShareData(this)
                 }
                 "Preferences" -> {
-                    PrivacyDashboard.showPrivacyDashboard().withApiKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY1MjY1Nzk2OTM4MGYzNWZhMWMzMDI0NSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTI2NTc5NjkzODBmMzVmYTFjMzAyNDMiLCJleHAiOjE3MDA2NTYxMzJ9.BIfpLGSQTr4IQW1OMuIelS5TnOhvPiz3umtnSKaVpeo")
-                        .withUserId("65366979db611cb1948aca50")
+                    PrivacyDashboard.showPrivacyDashboard().withApiKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3MzAyMjMyODh9.DlU8DjykYr3eBmbgsKLR4dnaChiRqXdxofKOuk4LiRM")
+                        .withUserId("653fe90efec9f34efed23619")
                         .withOrgId("64f09f778e5f3800014a879a")
-                        .withBaseUrl("https://staging-consent-bb-api.igrant.io/")
+                        .withBaseUrl("https://demo-consent-bb-api.igrant.io/")
 //                        .enableUserRequest()
 //                        .enableAskMe()
                         .start(this)
