@@ -6,6 +6,9 @@ import 'package:Data4Diabetes/app/modules/termsOfService/controllers/termsOfServ
 import 'package:get/get.dart';
 import '../../Otp/controllers/otp_controller.dart';
 import '../../Register/controllers/register_controller.dart';
+import '../../developerOptions/controllers/credentials_controller.dart';
+import '../../developerOptions/controllers/dexcom_credential_controller.dart';
+import '../../developerOptions/controllers/privacy_dashboard_credential_controller.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../language/controllers/language_controller.dart';
 import '../../login/controllers/login_controller.dart';
@@ -56,7 +59,6 @@ class LauncherBinding extends Bindings {
       () => PrivacyPolicyController(),
       fenix: true,
     );
-
     Get.lazyPut<InsightsController>(
       () => InsightsController(),
       fenix: true,
@@ -67,6 +69,18 @@ class LauncherBinding extends Bindings {
     );
     Get.lazyPut<DexcomController>(
       () => DexcomController(),
+      fenix: true,
+    );
+    Get.lazyPut<CredentialsController>(
+          () => CredentialsController(),
+      fenix: true,
+    );
+    Get.lazyPut<PrivacyDashboardCredentialController>(
+          () => PrivacyDashboardCredentialController(),
+      fenix: true,
+    );
+    Get.lazyPut<DexcomCredentailController>(
+          () => DexcomCredentailController(),
       fenix: true,
     );
   }

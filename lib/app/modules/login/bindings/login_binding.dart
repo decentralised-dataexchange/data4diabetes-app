@@ -7,6 +7,9 @@ import 'package:Data4Diabetes/app/modules/privacyPolicy/controllers/privacyPolic
 import 'package:get/get.dart';
 
 import '../../../bindings/initial_binding.dart';
+import '../../developerOptions/controllers/credentials_controller.dart';
+import '../../developerOptions/controllers/dexcom_credential_controller.dart';
+import '../../developerOptions/controllers/privacy_dashboard_credential_controller.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../language/controllers/language_controller.dart';
 import '../../main/controllers/main_controller.dart';
@@ -60,6 +63,18 @@ class LoginBinding extends Bindings {
     );
     Get.lazyPut<TermsOfServiceController>(
           () => TermsOfServiceController(),
+      fenix: true,
+    );
+    Get.lazyPut<CredentialsController>(
+          () => CredentialsController(),
+      fenix: true,
+    );
+    Get.lazyPut<PrivacyDashboardCredentialController>(
+          () => PrivacyDashboardCredentialController(),
+      fenix: true,
+    );
+    Get.lazyPut<DexcomCredentailController>(
+          () => DexcomCredentailController(),
       fenix: true,
     );
   }

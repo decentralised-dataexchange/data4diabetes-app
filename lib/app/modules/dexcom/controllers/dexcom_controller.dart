@@ -31,9 +31,10 @@ class DexcomController extends BaseController {
   Timer? timer;
   final UserRepositoryImpl _impl = UserRepositoryImpl();
   @override
-  void onInit() {
-    
-    dexComBaseUrl.value = BuildConfig.instance.config.dexComBaseUrl!;
+  Future<void> onInit() async {
+    final prefs = await SharedPreferences.getInstance();
+    var dexcomBaseURL=prefs.getString('dexcomStoredBaseUrl');
+    dexComBaseUrl.value =dexcomBaseURL?? BuildConfig.instance.config.dexComBaseUrl!;
     clientID = _dexcomValues.clientID;
     clientSecret = _dexcomValues.clientSecret;
     redirectUri = _dexcomValues.redirectUri;

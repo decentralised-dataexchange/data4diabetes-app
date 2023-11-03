@@ -16,6 +16,9 @@ abstract class Routes {
   static const PRIVACYPOLICY = _Paths.PRIVACYPOLICY;
   static const INSIGHTS = _Paths.INSIGHTS;
   static const TERMSOFSERVICE = _Paths.TERMSOFSERVICE;
+  static const CREDENTIALSPANEL = _Paths.CREDENTIALSPANEL;
+  static const PRIVACYDASHBOARDCREDENTIAL = _Paths.PRIVACYDASHBOARDCREDENTIAL;
+  static const DEXCOMCREDENTIAL = _Paths.DEXCOMCREDENTIAL;
 }
 
 abstract class _Paths {
@@ -32,4 +35,7 @@ abstract class _Paths {
   static const PRIVACYPOLICY = '/privacyPolicy';
   static const INSIGHTS = '/insights';
   static const TERMSOFSERVICE = '/termsOfService';
+  static const CREDENTIALSPANEL = '/credentialsPanel';
+  static const PRIVACYDASHBOARDCREDENTIAL = '/credentialsPanel';
+  static const DEXCOMCREDENTIAL = '/credentialsPanel';
 }
