@@ -96,7 +96,8 @@ abstract class BaseView<Controller extends BaseController>
   }
 
   Color statusBarColor() {
-    return AppColors.pageBackground;
+    //return AppColors.pageBackground;
+    return Colors.transparent;
   }
 
   Widget? floatingActionButton() {

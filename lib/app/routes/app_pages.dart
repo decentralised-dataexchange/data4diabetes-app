@@ -23,6 +23,12 @@ import 'package:Data4Diabetes/app/modules/termsOfService/views/termsOfService_vi
 import 'package:get/get.dart';
 
 import '../data/local/preference/preference_manager_impl.dart';
+import '../modules/developerOptions/bindings/credentials_binding.dart';
+import '../modules/developerOptions/bindings/dexcom_credential_bindings.dart';
+import '../modules/developerOptions/bindings/privacy_dashboard_credential_bindings.dart';
+import '../modules/developerOptions/views/credentials_view.dart';
+import '../modules/developerOptions/views/dexcom_credential_view.dart';
+import '../modules/developerOptions/views/privacy_dashboard_credential_view.dart';
 import '/app/modules/home/bindings/home_binding.dart';
 import '/app/modules/home/views/home_view.dart';
 import '/app/modules/main/bindings/main_binding.dart';
@@ -99,6 +105,21 @@ class AppPages {
       name: _Paths.TERMSOFSERVICE,
       page: () => TermsOfServiceView(),
       binding: TermsOfServiceBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREDENTIALSPANEL,
+      page: () => CredentailsView(),
+      binding: CredentialsBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRIVACYDASHBOARDCREDENTIAL,
+      page: () => PrivacyDashboardCredentialView(),
+      binding: PrivacyDashboardCredentialsBinding(),
+    ),
+    GetPage(
+      name: _Paths.DEXCOMCREDENTIAL,
+      page: () => DexcomCredentialView(),
+      binding: DexcomCredentialsBinding(),
     ),
   ];
 }
