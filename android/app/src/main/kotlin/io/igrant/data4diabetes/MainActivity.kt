@@ -64,7 +64,6 @@ class MainActivity : FlutterActivity() {
                     val orgId: String? = call.argument("orgId")
                     val baseUrl: String?= call.argument("baseUrl")
                     val userId: String?= call.argument("userId")
-                    println("lijo $apiKey,$orgId,$baseUrl,$userId")
                     PrivacyDashboard.showPrivacyDashboard().withApiKey(apiKey ?: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3MzAyMjMyODh9.DlU8DjykYr3eBmbgsKLR4dnaChiRqXdxofKOuk4LiRM")
                         .withUserId(userId ?: "653fe90efec9f34efed23619")
                         .withOrgId(orgId ?: "64f09f778e5f3800014a879a")
