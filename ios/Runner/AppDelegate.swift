@@ -25,11 +25,17 @@ import SwiftMessages
             (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
             switch call.method{
             case "Preferences":
+                let arguments = call.arguments as? [String: Any]
+                let apiKey = arguments?["ApiKey"] as? String
+                let orgId = arguments?["orgId"] as? String
+                let baseUrl = arguments?["baseUrl"] as? String
+                let userId = arguments?["userId"] as? String
+
                 BBConsentPrivacyDashboardiOS.shared.turnOnUserRequests = false
                 BBConsentPrivacyDashboardiOS.shared.turnOnAskMeSection = false
                 BBConsentPrivacyDashboardiOS.shared.turnOnAttributeDetailScreen = false
-                BBConsentPrivacyDashboardiOS.shared.baseUrl = "https://demo-consent-bb-api.igrant.io/v2"
-                BBConsentPrivacyDashboardiOS.shared.show(organisationId: "64f09f778e5f3800014a879a", apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3MzAyNjczNDV9.hNCwZjcObSCVA_O5B-yq0EVhJlxtO2uR75ThIriq2Jk", userId: "6540952ffec9f34efed236c9")
+                BBConsentPrivacyDashboardiOS.shared.baseUrl = baseUrl ?? "https://demo-consent-bb-api.igrant.io/v2"
+                BBConsentPrivacyDashboardiOS.shared.show(organisationId: orgId ?? "64f09f778e5f3800014a879a", apiKey: apiKey ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3MzAyNjczNDV9.hNCwZjcObSCVA_O5B-yq0EVhJlxtO2uR75ThIriq2Jk", userId: userId ?? "6540952ffec9f34efed236c9")
                 break
             case "Wallet":
                 AriesMobileAgent.shared.showDataWalletHomeViewController(showBackButton: true)
