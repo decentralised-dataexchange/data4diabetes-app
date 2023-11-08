@@ -31,11 +31,11 @@ import SwiftMessages
                 let baseUrl = arguments?["baseUrl"] as? String
                 let userId = arguments?["userId"] as? String
 
-                BBConsentPrivacyDashboardiOS.shared.turnOnUserRequests = false
-                BBConsentPrivacyDashboardiOS.shared.turnOnAskMeSection = false
-                BBConsentPrivacyDashboardiOS.shared.turnOnAttributeDetailScreen = false
-                BBConsentPrivacyDashboardiOS.shared.baseUrl = baseUrl ?? "https://demo-consent-bb-api.igrant.io/v2"
-                BBConsentPrivacyDashboardiOS.shared.show(organisationId: orgId ?? "64f09f778e5f3800014a879a", apiKey: apiKey ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3MzAyNjczNDV9.hNCwZjcObSCVA_O5B-yq0EVhJlxtO2uR75ThIriq2Jk", userId: userId ?? "6540952ffec9f34efed236c9")
+                PrivacyDashboard.showPrivacyDashboard(withApiKey: apiKey ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3MzAyNjczNDV9.hNCwZjcObSCVA_O5B-yq0EVhJlxtO2uR75ThIriq2Jk",
+                                           withUserId: userId ?? "6540952ffec9f34efed236c9",
+                                           withOrgId: orgId ?? "64f09f778e5f3800014a879a",
+                                           withBaseUrl: baseUrl ?? "https://demo-consent-bb-api.igrant.io/v2",
+                                           turnOnAske: false, turnOnUserRequest: false, turnOnAttributeDetail: false)
                 break
             case "Wallet":
                 AriesMobileAgent.shared.showDataWalletHomeViewController(showBackButton: true)
