@@ -55,7 +55,7 @@ class PrivacyDashboardCredentialController extends BaseController {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     _prefs.setString('privacyDashboardApiKey', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3MzAyMjMyODh9.DlU8DjykYr3eBmbgsKLR4dnaChiRqXdxofKOuk4LiRM");
     _prefs.setString('privacyDashboardorgId', "64f09f778e5f3800014a879a");
-    _prefs.setString('privacyDashboardbaseUrl', "https://demo-consent-bb-api.igrant.io/");
+    _prefs.setString('privacyDashboardbaseUrl', "https://demo-consent-bb-api.igrant.io/v2");
     _prefs.setString('privacyDashboarduserId', "653fe90efec9f34efed23619");
     privacyDashboardCredentials();
     Get.rawSnackbar(
