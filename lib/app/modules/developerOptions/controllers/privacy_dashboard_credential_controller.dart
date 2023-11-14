@@ -1,3 +1,4 @@
+import 'package:Data4Diabetes/app/Constants/privacy_dashboard.dart';
 import 'package:Data4Diabetes/app/core/base/base_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,16 +28,16 @@ class PrivacyDashboardCredentialController extends BaseController {
     apiKey != null
         ? apiKeyController.text = apiKey
         : apiKeyController.text =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3MzAyMjMyODh9.DlU8DjykYr3eBmbgsKLR4dnaChiRqXdxofKOuk4LiRM";
+            PrivacyDashboard().apiKey;
     orgId != null
         ? orgIdController.text = orgId
         : orgIdController.text = "64f09f778e5f3800014a879a";
     baseUrl != null
         ? baseUrlController.text = baseUrl
-        : baseUrlController.text = "https://demo-consent-bb-api.igrant.io/v2";
+        : baseUrlController.text = PrivacyDashboard().baseUrl;
     userId != null
         ? userIdController.text = userId
-        : userIdController.text = "653fe90efec9f34efed23619";
+        : userIdController.text = PrivacyDashboard().userId;
     print('apiKeyController.text${apiKeyController.text}');
   }
 
@@ -51,12 +52,13 @@ class PrivacyDashboardCredentialController extends BaseController {
         backgroundColor: Colors.green);
     privacyDashboardCredentials();
   }
+
   resetButtonAction() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    _prefs.setString('privacyDashboardApiKey', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3MzAyMjMyODh9.DlU8DjykYr3eBmbgsKLR4dnaChiRqXdxofKOuk4LiRM");
+    _prefs.setString('privacyDashboardApiKey', PrivacyDashboard().apiKey);
     _prefs.setString('privacyDashboardorgId', "64f09f778e5f3800014a879a");
-    _prefs.setString('privacyDashboardbaseUrl', "https://demo-consent-bb-api.igrant.io/v2");
-    _prefs.setString('privacyDashboarduserId', "653fe90efec9f34efed23619");
+    _prefs.setString('privacyDashboardbaseUrl', PrivacyDashboard().baseUrl);
+    _prefs.setString('privacyDashboarduserId', PrivacyDashboard().userId);
     privacyDashboardCredentials();
     Get.rawSnackbar(
         message: 'Reset to default credentials',

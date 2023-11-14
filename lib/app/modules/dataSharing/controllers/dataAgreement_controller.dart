@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:Data4Diabetes/app/Constants/privacy_dashboard.dart';
 import 'package:Data4Diabetes/app/core/base/base_controller.dart';
 import 'package:Data4Diabetes/app/modules/Register/controllers/register_controller.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,6 @@ class DataAgreementContoller extends BaseController {
   final RegisterController _registerController = Get.find();
   WebViewController? controller;
   var platform = const MethodChannel('io.igrant.data4diabetes.channel');
-  var dataAgreementId = "654cf0db9684ed907ce07c5";
 
   var thirdPartyOrgName = "Data4Diabetes";
   String? accessToken;
@@ -72,13 +72,14 @@ class DataAgreementContoller extends BaseController {
                 await _prefs.setString('dataSharingAccessToken', accessToken!);
                 try {
                   var response = await platform.invokeMethod('DataSharing', {
-                    "accessToken": accessToken,
-                    "dataAgreementID": "65534a579a6116c5c2b98cf1",
-                    "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
+                    "apiKey": PrivacyDashboard().apiKey,
+                    "userId": PrivacyDashboard().userId,
+                    "dataAgreementID": PrivacyDashboard().registrationDataAgreementId,
+                    "baseUrl": PrivacyDashboard().baseUrl
                   });
                   Map<String, dynamic> responseMap = json.decode(response);
                   if (responseMap['optIn'] == true) {
-                   _registerController.getDataAgreement(sharingtoken:accessToken,sharingDataAgreementID:"65534a579a6116c5c2b98cf1",isFlag:true);
+                   _registerController.getDataAgreement(sharingtoken:accessToken,sharingDataAgreementID: PrivacyDashboard().registrationDataAgreementId,isFlag:true);
                     Get.back();
                     int index = _registerController.selectedPage.value + 1;
                     _registerController.pageController.animateToPage(index,

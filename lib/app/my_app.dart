@@ -12,6 +12,7 @@ import '/app/core/values/app_colors.dart';
 import '/app/routes/app_pages.dart';
 import '/flavors/build_config.dart';
 import '/flavors/env_config.dart';
+import 'Constants/privacy_dashboard.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -29,18 +30,19 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     _initLocale();
+    _initPrivacyDashboard();
   }
 
   Future<void> _initLocale() async {
     String langCode;
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    String? lang= _prefs.getString('languageCode');
-    if(lang==null){
+    String? lang = _prefs.getString('languageCode');
+    if (lang == null) {
       Locale deviceLocale = window.locale;
       langCode = deviceLocale.languageCode;
-       setLocale(langCode);
-    }else{
-      langCode=lang;
+      setLocale(langCode);
+    } else {
+      langCode = lang;
     }
     List<Locale> supportedLanguages = _getSupportedLocal();
     if (supportedLanguages.contains(Locale(langCode))) {
@@ -98,5 +100,15 @@ class _MyAppState extends State<MyApp> {
       const Locale('en', ''),
       const Locale('sv', ''),
     ];
+  }
+
+  void _initPrivacyDashboard() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    if (_prefs.getString('privacyDashboardApiKey') == null) {
+      _prefs.setString('privacyDashboardApiKey', PrivacyDashboard().apiKey);
+      _prefs.setString('privacyDashboardorgId', "64f09f778e5f3800014a879a");
+      _prefs.setString('privacyDashboardbaseUrl', PrivacyDashboard().baseUrl);
+      _prefs.setString('privacyDashboarduserId', PrivacyDashboard().userId);
+    }
   }
 }
