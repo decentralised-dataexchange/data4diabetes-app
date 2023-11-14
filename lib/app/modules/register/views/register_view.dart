@@ -596,10 +596,7 @@ class RegisterView extends BaseView<RegisterController> {
                 ),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
-                    int index = _registerController.selectedPage.value + 1;
-                    _registerController.pageController.animateToPage(index,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.ease);
+                  _registerController.onSkipTap();
                   },
               ),
             ],
