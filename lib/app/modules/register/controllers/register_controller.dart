@@ -172,6 +172,23 @@ class RegisterController extends BaseController {
       hideLoading();
     }
   }
+  onSkipTap()async{
+
+      try {
+        getDataAgreement(sharingtoken:accessToken,sharingDataAgreementID:"65534a939a6116c5c2b98d51",isFlag:true);
+        // Handle success
+        int index = selectedPage.value + 1;
+        pageController.animateToPage(
+          index,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.ease,
+        );
+
+      } catch (e) {
+        GetSnackToast(message: e.toString());
+      }
+    }
+
 
   Future<void> onNextButtonTap() async {
     String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
