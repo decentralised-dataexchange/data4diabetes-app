@@ -1,6 +1,7 @@
 import 'package:Data4Diabetes/app/Constants/Palette.dart';
 import 'package:Data4Diabetes/app/modules/Dexcom/views/dexcom_view.dart';
 import 'package:Data4Diabetes/app/modules/insights/controllers/insights_controller.dart';
+import 'package:Data4Diabetes/app/modules/language/controllers/language_controller.dart';
 import 'package:Data4Diabetes/app/modules/language/views/language_view.dart';
 import 'package:Data4Diabetes/app/modules/launcher/views/launcher_view.dart';
 import 'package:Data4Diabetes/app/modules/login/views/login_view.dart';
@@ -42,6 +43,7 @@ class SettingsView extends BaseView<SettingsController> {
   }
 
   final SettingsController _settingsController = Get.find();
+  final LanguageController _languageController= Get.find();
 
   @override
   Widget body(BuildContext context) {
@@ -257,14 +259,14 @@ class SettingsView extends BaseView<SettingsController> {
       onTap: () async {
         SharedPreferences _prefs = await SharedPreferences.getInstance();
         var apiKey=_prefs.getString('privacyDashboardApiKey');
-        var orgId=_prefs.getString('privacyDashboardorgId');
         var baseUrl=_prefs.getString('privacyDashboardbaseUrl');
         var userId=_prefs.getString('privacyDashboarduserId');
+        var languageCode = _languageController.languageCode.value;
         _settingsController.platform.invokeMethod('Preferences', {
             "ApiKey": apiKey,
-            "orgId": orgId,
             "baseUrl": baseUrl,
-            "userId":userId
+            "userId":userId,
+          "languageCode":languageCode,
           });
       },
     );
