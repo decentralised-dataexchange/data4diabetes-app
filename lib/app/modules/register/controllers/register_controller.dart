@@ -175,7 +175,7 @@ class RegisterController extends BaseController {
   onSkipTap()async{
 
       try {
-        getDataAgreement(sharingtoken:accessToken,sharingDataAgreementID:"65534a939a6116c5c2b98d51",isFlag:true);
+        getDataAgreement(sharingtoken:accessToken,sharingDataAgreementID:PrivacyDashboard().backupAndRestoreDataAgreementId,isFlag:true);
         // Handle success
         int index = selectedPage.value + 1;
         pageController.animateToPage(
