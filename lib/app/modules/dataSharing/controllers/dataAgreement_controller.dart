@@ -176,13 +176,14 @@ class DataAgreementContoller extends BaseController {
                 SharedPreferences _prefs =
                     await SharedPreferences.getInstance();
                 await _prefs.setString('dataSharingAccessToken', accessToken!);
+
                 var response = await platform.invokeMethod('DataSharing', {
-                  "accessToken": token,
+                  "accessToken": accessToken,
                   "dataAgreementID": "65530f3507a0b7e06bdd9383",
                   "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
                 });
                 Map<String, dynamic> responseMap = json.decode(response);
-                if (responseMap['optIn'] == true) {
+                if (responseMap['optIn'] == false) {
                   Get.back();
                   int index = _registerController.selectedPage.value + 1;
                   _registerController.pageController.animateToPage(index,
