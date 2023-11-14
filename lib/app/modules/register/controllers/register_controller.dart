@@ -66,7 +66,7 @@ class RegisterController extends BaseController {
         "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
       });
       Map<String, dynamic> responseMap = json.decode(response);
-     if (responseMap['optIn'] == true) {
+     if (responseMap['optIn'] == false) {
         // Handle success
         showLoading();
         shareFirstName.value = firstNameController.text;
@@ -190,11 +190,6 @@ class RegisterController extends BaseController {
       );
     } else {
       Get.to(DataAgreementView());
-      //   int index = selectedPage.value + 1;
-      //   pageController.animateToPage(index,
-      //       duration: const Duration(milliseconds: 500),
-      //       curve: Curves.ease);
-      //}
     }
   }
 
@@ -330,7 +325,7 @@ class RegisterController extends BaseController {
         "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
       });
       Map<String, dynamic> responseMap = json.decode(response);
-      if (responseMap['optIn'] == true) {
+      if (responseMap['optIn'] == false) {
         // Handle success
         int index = selectedPage.value + 1;
         pageController.animateToPage(
@@ -345,4 +340,5 @@ class RegisterController extends BaseController {
       GetSnackToast(message: e.toString());
     }
   }
+
 }
