@@ -68,7 +68,6 @@ class MainActivity : FlutterActivity() {
                     val userId: String?= call.argument("userId")
                     PrivacyDashboard.showPrivacyDashboard().withApiKey(apiKey ?: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3MzAyMjMyODh9.DlU8DjykYr3eBmbgsKLR4dnaChiRqXdxofKOuk4LiRM")
                         .withUserId(userId ?: "653fe90efec9f34efed23619")
-                       // .withOrgId(orgId ?: "64f09f778e5f3800014a879a")
                         .withBaseUrl(baseUrl ?: "https://demo-consent-bb-api.igrant.io/v2")
 //                        .enableUserRequest()
 //                        .enableAskMe()

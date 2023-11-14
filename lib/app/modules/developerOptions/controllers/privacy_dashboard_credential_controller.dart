@@ -33,7 +33,7 @@ class PrivacyDashboardCredentialController extends BaseController {
         : orgIdController.text = "64f09f778e5f3800014a879a";
     baseUrl != null
         ? baseUrlController.text = baseUrl
-        : baseUrlController.text = "https://demo-consent-bb-api.igrant.io/";
+        : baseUrlController.text = "https://demo-consent-bb-api.igrant.io/v2";
     userId != null
         ? userIdController.text = userId
         : userIdController.text = "653fe90efec9f34efed23619";
