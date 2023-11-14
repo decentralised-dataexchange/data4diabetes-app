@@ -134,6 +134,28 @@ class MainActivity : FlutterActivity() {
 
                     }
                 }
+                "GetDataAgreementWithApiKey" -> {
+                    val apiKey: String? = call.argument("apiKey")
+                    val userId: String? = call.argument("userId")
+                    val dataAgreementID: String? = call.argument("dataAgreementID")
+                    val baseUrl: String? = call.argument("baseUrl")
+                    var data:String? = null
+                    GlobalScope.launch {
+                        data =  PrivacyDashboard.getDataAgreement(
+                            dataAgreementId = dataAgreementID ?:"",
+                            baseUrl = baseUrl ?: "",
+                            apiKey = apiKey ?: "",
+                            userId = userId ?: ""
+                        )
+                        if(data !=null){
+                            result.success(data)
+                        }
+                        else{
+                            result.error("GetDataAgreement error", "Error occurred. Data: $data", null)
+                        }
+
+                    }
+                }
                 "ShowDataAgreementPolicy" -> {
                     val dataAgreementResponse: String? = call.argument("dataAgreementResponse")
                     PrivacyDashboard.showDataAgreementPolicy().withDataAgreement(dataAgreementResponse ?: "").withLocale("sv").start(this)
