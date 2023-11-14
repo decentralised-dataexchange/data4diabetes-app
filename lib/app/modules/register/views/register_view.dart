@@ -570,6 +570,7 @@ class RegisterView extends BaseView<RegisterController> {
                 textAlign: TextAlign.justify,
               ),
             ),
+            getDataAgreement(context),
             _bottomContentWidget(),
           ],
         ),

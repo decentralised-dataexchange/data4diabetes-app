@@ -69,9 +69,10 @@ class MainActivity : FlutterActivity() {
                     PrivacyDashboard.showPrivacyDashboard().withApiKey(apiKey ?: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3MzAyMjMyODh9.DlU8DjykYr3eBmbgsKLR4dnaChiRqXdxofKOuk4LiRM")
                         .withUserId(userId ?: "653fe90efec9f34efed23619")
                        // .withOrgId(orgId ?: "64f09f778e5f3800014a879a")
-                        .withBaseUrl(baseUrl ?: "https://demo-consent-bb-api.igrant.io/")
+                        .withBaseUrl(baseUrl ?: "https://demo-consent-bb-api.igrant.io/v2")
 //                        .enableUserRequest()
 //                        .enableAskMe()
+                        .withLocale("sv")
                         .start(this)
                 }
                 "DataAgreementPolicy" -> {
@@ -99,14 +100,12 @@ class MainActivity : FlutterActivity() {
                     val dataAgreementID: String? = call.argument("dataAgreementID")
                     val baseUrl: String? = call.argument("baseUrl")
                     var data:String? = null
-                    print("access token passes as :$accessToken")
                    GlobalScope.launch {
                       data =  PrivacyDashboard.optInToDataAgreement(
                             dataAgreementId = dataAgreementID ?:"",
                             baseUrl = baseUrl ?: "",
                             accessToken = accessToken ?: ""
                         )
-                       print("received data as :$data");
                        if(data !=null){
                            result.success(data)
                        }
@@ -121,15 +120,12 @@ class MainActivity : FlutterActivity() {
                     val dataAgreementID: String? = call.argument("dataAgreementID")
                     val baseUrl: String? = call.argument("baseUrl")
                     var data:String? = null
-                    print("access token recieved for passing:$accessToken");
-                    print("dataagreement ID received for passing:$dataAgreementID");
                     GlobalScope.launch {
                         data =  PrivacyDashboard.getDataAgreement(
                             dataAgreementId = dataAgreementID ?:"",
                             baseUrl = baseUrl ?: "",
                             accessToken = accessToken ?: ""
                         )
-                        println("response received1:$data");
                         if(data !=null){
                             result.success(data)
                         }
@@ -138,6 +134,10 @@ class MainActivity : FlutterActivity() {
                         }
 
                     }
+                }
+                "ShowDataAgreementPolicy" -> {
+                    val dataAgreementResponse: String? = call.argument("dataAgreementResponse")
+                    PrivacyDashboard.showDataAgreementPolicy().withDataAgreement(dataAgreementResponse ?: "").withLocale("sv").start(this)
                 }
             }
         }
