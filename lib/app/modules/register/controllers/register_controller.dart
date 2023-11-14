@@ -111,11 +111,12 @@ class RegisterController extends BaseController {
       case 0:
 
         {
-          print('update soon');
-        //   SharedPreferences _prefs =
-        //       await SharedPreferences.getInstance();
-        // var token= _prefs.getString('dataSharingAccessToken');
-        //  getDataAgreement(sharingtoken:token,sharingDataAgreementID:"655349949a6116c5c2b98c97");
+
+          // SharedPreferences _prefs =
+          //     await SharedPreferences.getInstance();
+        //var token= _prefs.getString('dataSharingAccessToken');
+        // getDataAgreement(sharingtoken:token,sharingDataAgreementID:"655349949a6116c5c2b98c97");
+          getDataAgreementWithApiKey(sharingDataAgreementID:"655349949a6116c5c2b98c97");
           // platform.invokeMethod('DataAgreementPolicy', {
           //   "ApiKey":
           //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDVhNDE0YmI5YjA1NTAwMDE1MGIyNDciLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcxNDc0MDg4Nn0.u6pBpv12ZfdHYMPoQHYR-oBR9ZOZVeHiChaQ8yiEMxE',
@@ -397,6 +398,50 @@ class RegisterController extends BaseController {
           print('dataAttributes values ${dataAttributes[0]}');
         }
       }
+    } catch (e) {
+      GetSnackToast(message: e.toString());
+    }
+  }
+  getDataAgreementWithApiKey({required String? sharingDataAgreementID}) async {
+    try {
+      var response = await platform.invokeMethod('GetDataAgreementWithApiKey', {
+        "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsiU2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY1MjY1Nzk2OTM4MGYzNWZhMWMzMDI0NSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTI2NTc5NjkzODBmMzVmYTFjMzAyNDMiLCJleHAiOjE3MDE4NzYwNjB9.itlQ2UZittVW87BNk9FyIw6qHF0nKVlci9NQ1-CE9sQ",
+        "userId": "65366979db611cb1948aca50",
+        "dataAgreementID": sharingDataAgreementID,
+        "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
+      });
+
+      Map<String, dynamic> responseMap = json.decode(response);
+      print('response map: $responseMap');
+
+      // call ShowDataAgreementPolicy
+
+        await platform.invokeMethod('ShowDataAgreementPolicy', {
+          "dataAgreementResponse": response,
+        });
+
+
+
+      // // Check if "dataAttributes" is not empty
+      // if (responseMap.containsKey("dataAttributes") &&
+      //     responseMap["dataAttributes"] is List &&
+      //     responseMap["dataAttributes"].isNotEmpty) {
+      //
+      //   // Clear the existing dataAttributes list
+      //   dataAttributes.clear();
+      //
+      //   // Iterate through the response dataAttributes and add them to the list
+      //   for (var attribute in responseMap["dataAttributes"]) {
+      //     String nameValue = attribute["name"];
+      //     dataAttributes.add(nameValue);
+      //
+      //   }
+      //
+      //   // Print the first item in the dataAttributes list
+      //   if (dataAttributes.isNotEmpty) {
+      //     print('dataAttributes values ${dataAttributes[0]}');
+      //   }
+      // }
     } catch (e) {
       GetSnackToast(message: e.toString());
     }
