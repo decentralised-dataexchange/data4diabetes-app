@@ -19,6 +19,7 @@ abstract class Routes {
   static const CREDENTIALSPANEL = _Paths.CREDENTIALSPANEL;
   static const PRIVACYDASHBOARDCREDENTIAL = _Paths.PRIVACYDASHBOARDCREDENTIAL;
   static const DEXCOMCREDENTIAL = _Paths.DEXCOMCREDENTIAL;
+  static const DATAAGREEMENT = _Paths.DATAAGREEMENT;
 }
 
 abstract class _Paths {
@@ -38,4 +39,5 @@ abstract class _Paths {
   static const CREDENTIALSPANEL = '/credentialsPanel';
   static const PRIVACYDASHBOARDCREDENTIAL = '/credentialsPanel';
   static const DEXCOMCREDENTIAL = '/credentialsPanel';
+  static const DATAAGREEMENT = '/dataAgreement';
 }

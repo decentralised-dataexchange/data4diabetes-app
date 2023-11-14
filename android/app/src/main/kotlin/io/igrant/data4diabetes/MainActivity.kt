@@ -10,6 +10,8 @@ import io.igrant.data_wallet.utils.DataWalletConfigurations
 import io.igrant.data_wallet.utils.InitializeWalletCallback
 import io.igrant.data_wallet.utils.InitializeWalletState
 import io.igrant.data_wallet.utils.dataAgreement.DataAgreementUtils
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : FlutterActivity() {
 
@@ -66,7 +68,7 @@ class MainActivity : FlutterActivity() {
                     val userId: String?= call.argument("userId")
                     PrivacyDashboard.showPrivacyDashboard().withApiKey(apiKey ?: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3MzAyMjMyODh9.DlU8DjykYr3eBmbgsKLR4dnaChiRqXdxofKOuk4LiRM")
                         .withUserId(userId ?: "653fe90efec9f34efed23619")
-                        .withOrgId(orgId ?: "64f09f778e5f3800014a879a")
+                       // .withOrgId(orgId ?: "64f09f778e5f3800014a879a")
                         .withBaseUrl(baseUrl ?: "https://demo-consent-bb-api.igrant.io/")
 //                        .enableUserRequest()
 //                        .enableAskMe()
@@ -91,6 +93,28 @@ class MainActivity : FlutterActivity() {
 
                     val data = DataWallet.queryCredentials(credDefId, schemaId)
                     result.success(data)
+                }
+                "DataSharing" -> {
+                    val accessToken: String? = call.argument("accessToken")
+                    val dataAgreementID: String? = call.argument("dataAgreementID")
+                    val baseUrl: String? = call.argument("baseUrl")
+                    var data:String? = null
+                    print("access token passes as :$accessToken")
+                   GlobalScope.launch {
+                      data =  PrivacyDashboard.optInToDataAgreement(
+                            dataAgreementId = dataAgreementID ?:"",
+                            baseUrl = baseUrl ?: "",
+                            accessToken = accessToken ?: ""
+                        )
+                       println("response received1:$data");
+                       if(data !=null){
+                           result.success(data)
+                       }
+                       else{
+                           result.error("CUSTOM_ERROR_CODE", "Error occurred. Data: $data", null)
+                       }
+
+                    }
                 }
             }
         }
