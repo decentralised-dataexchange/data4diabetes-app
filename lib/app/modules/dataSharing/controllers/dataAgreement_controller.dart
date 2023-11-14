@@ -77,7 +77,7 @@ class DataAgreementContoller extends BaseController {
                     "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
                   });
                   Map<String, dynamic> responseMap = json.decode(response);
-                  if (responseMap['optIn'] == false) {
+                  if (responseMap['optIn'] == true) {
                    _registerController.getDataAgreement(sharingtoken:accessToken,sharingDataAgreementID:"65534a579a6116c5c2b98cf1",isFlag:true);
                     Get.back();
                     int index = _registerController.selectedPage.value + 1;

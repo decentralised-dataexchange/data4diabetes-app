@@ -67,7 +67,7 @@ class RegisterController extends BaseController {
         "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
       });
       Map<String, dynamic> responseMap = json.decode(response);
-     if (responseMap['optIn'] == false) {
+     if (responseMap['optIn'] == true) {
         // Handle success
         showLoading();
         shareFirstName.value = firstNameController.text;
@@ -341,7 +341,7 @@ class RegisterController extends BaseController {
         "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
       });
       Map<String, dynamic> responseMap = json.decode(response);
-      if (responseMap['optIn'] == false) {
+      if (responseMap['optIn'] == true) {
         getDataAgreement(sharingtoken:accessToken,sharingDataAgreementID:"65534a939a6116c5c2b98d51",isFlag:true);
         // Handle success
         int index = selectedPage.value + 1;
