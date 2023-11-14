@@ -106,13 +106,36 @@ class MainActivity : FlutterActivity() {
                             baseUrl = baseUrl ?: "",
                             accessToken = accessToken ?: ""
                         )
-                       println("response received1:$data");
+                       print("received data as :$data");
                        if(data !=null){
                            result.success(data)
                        }
                        else{
-                           result.error("CUSTOM_ERROR_CODE", "Error occurred. Data: $data", null)
+                           result.error("DataSharing error", "Error occurred. Data: $data", null)
                        }
+
+                    }
+                }
+                "GetDataAgreement" -> {
+                    val accessToken: String? = call.argument("accessToken")
+                    val dataAgreementID: String? = call.argument("dataAgreementID")
+                    val baseUrl: String? = call.argument("baseUrl")
+                    var data:String? = null
+                    print("access token recieved for passing:$accessToken");
+                    print("dataagreement ID received for passing:$dataAgreementID");
+                    GlobalScope.launch {
+                        data =  PrivacyDashboard.getDataAgreement(
+                            dataAgreementId = dataAgreementID ?:"",
+                            baseUrl = baseUrl ?: "",
+                            accessToken = accessToken ?: ""
+                        )
+                        println("response received1:$data");
+                        if(data !=null){
+                            result.success(data)
+                        }
+                        else{
+                            result.error("GetDataAgreement error", "Error occurred. Data: $data", null)
+                        }
 
                     }
                 }

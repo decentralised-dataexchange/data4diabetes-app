@@ -449,20 +449,8 @@ class RegisterView extends BaseView<RegisterController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // _ageWidget(context),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 10.0),
-                    child: Text(
-                      appLocalization.registerAge,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  const Divider(),
+                  getDataAgreement(context),
+
                   // _cgmWidget(context),
                   // const Divider(),
                   // _insightsWidget(context),
@@ -476,6 +464,35 @@ class RegisterView extends BaseView<RegisterController> {
         ),
       ),
     );
+  }
+
+  Widget getDataAgreement(BuildContext context) {
+    return Obx(
+          () => ListView.builder(
+        shrinkWrap: true,
+        itemCount: _registerController.dataAttributes.length,
+        itemBuilder: (BuildContext context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _registerController.dataAttributes[index],
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
+                const Divider(),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+
   }
 
   Widget _ageWidget(BuildContext context) {

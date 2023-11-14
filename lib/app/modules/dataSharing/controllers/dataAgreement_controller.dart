@@ -176,25 +176,30 @@ class DataAgreementContoller extends BaseController {
                 SharedPreferences _prefs =
                     await SharedPreferences.getInstance();
                 await _prefs.setString('dataSharingAccessToken', accessToken!);
-
-                var response = await platform.invokeMethod('DataSharing', {
-                  "accessToken": accessToken,
-                  "dataAgreementID": "65530f3507a0b7e06bdd9383",
-                  "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
-                });
-                Map<String, dynamic> responseMap = json.decode(response);
-                if (responseMap['optIn'] == false) {
-                  Get.back();
-                  int index = _registerController.selectedPage.value + 1;
-                  _registerController.pageController.animateToPage(index,
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.ease);
-                } else {
-                  GetSnackToast(message: 'something went wrong');
+               // await _registerController.getDataAgreement(sharingtoken:accessToken);
+                try {
+                  var response = await platform.invokeMethod('DataSharing', {
+                    "accessToken": accessToken,
+                    "dataAgreementID": "65534a579a6116c5c2b98cf1",
+                    "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
+                  });
+                  Map<String, dynamic> responseMap = json.decode(response);
+                  if (responseMap['optIn'] == false) {
+                   _registerController.getDataAgreement(sharingtoken:accessToken,sharingDataAgreementID:"65534a579a6116c5c2b98cf1");
+                    Get.back();
+                    int index = _registerController.selectedPage.value + 1;
+                    _registerController.pageController.animateToPage(index,
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.ease);
+                  } else {
+                    GetSnackToast(message: 'something went wrong');
+                  }
+                } catch (e) {
+                  GetSnackToast(message: e.toString());
                 }
               }
 
-              return NavigationDecision.navigate;
+              return NavigationDecision.prevent;
             }
 
             return NavigationDecision.navigate;

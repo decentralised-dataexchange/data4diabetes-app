@@ -50,6 +50,7 @@ class RegisterController extends BaseController {
   var thirdPartyOrgName = "Data4Diabetes";
   String? accessToken;
   var redirectUrl = "https://www.govstack.global/";
+  List dataAttributes=[].obs;
   @override
   void onInit() {
     pageController = PageController(initialPage: selectedPage.value);
@@ -62,7 +63,7 @@ class RegisterController extends BaseController {
     try {
       var response = await platform.invokeMethod('DataSharing', {
         "accessToken": token,
-        "dataAgreementID": "65530f3507a0b7e06bdd9383",
+        "dataAgreementID": "65534a939a6116c5c2b98d51",
         "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
       });
       Map<String, dynamic> responseMap = json.decode(response);
@@ -104,38 +105,51 @@ class RegisterController extends BaseController {
     }
   }
 
-  void showDataAgreement() {
+  Future<void> showDataAgreement() async {
     // if (Platform.isAndroid) {
     switch (selectedIndex.value) {
       case 0:
+
         {
-          platform.invokeMethod('DataAgreementPolicy', {
-            "ApiKey":
-                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDVhNDE0YmI5YjA1NTAwMDE1MGIyNDciLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcxNDc0MDg4Nn0.u6pBpv12ZfdHYMPoQHYR-oBR9ZOZVeHiChaQ8yiEMxE',
-            "orgId": '645a4172b9b055000150b248',
-            "dataAgreementId": '0900ccb0-73d5-4175-ae79-a3fc14a14e9e'
-          });
+          SharedPreferences _prefs =
+              await SharedPreferences.getInstance();
+        var token= _prefs.getString('dataSharingAccessToken');
+          getDataAgreement(sharingtoken:token,sharingDataAgreementID:"655349949a6116c5c2b98c97");
+          // platform.invokeMethod('DataAgreementPolicy', {
+          //   "ApiKey":
+          //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDVhNDE0YmI5YjA1NTAwMDE1MGIyNDciLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcxNDc0MDg4Nn0.u6pBpv12ZfdHYMPoQHYR-oBR9ZOZVeHiChaQ8yiEMxE',
+          //   "orgId": '645a4172b9b055000150b248',
+          //   "dataAgreementId": '0900ccb0-73d5-4175-ae79-a3fc14a14e9e'
+          // });
         }
         break;
 
       case 1:
         {
-          platform.invokeMethod('DataAgreementPolicy', {
-            "ApiKey":
-                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDVhNDE0YmI5YjA1NTAwMDE1MGIyNDciLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcxNDc0MDg4Nn0.u6pBpv12ZfdHYMPoQHYR-oBR9ZOZVeHiChaQ8yiEMxE',
-            "orgId": '645a4172b9b055000150b248',
-            "dataAgreementId": '43bbd177-a6bf-4e97-a771-4f77fca4960e'
-          });
+          SharedPreferences _prefs =
+          await SharedPreferences.getInstance();
+          var token= _prefs.getString('dataSharingAccessToken');
+          getDataAgreement(sharingtoken:token,sharingDataAgreementID:"65534a579a6116c5c2b98cf1");
+          // platform.invokeMethod('DataAgreementPolicy', {
+          //   "ApiKey":
+          //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDVhNDE0YmI5YjA1NTAwMDE1MGIyNDciLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcxNDc0MDg4Nn0.u6pBpv12ZfdHYMPoQHYR-oBR9ZOZVeHiChaQ8yiEMxE',
+          //   "orgId": '645a4172b9b055000150b248',
+          //   "dataAgreementId": '43bbd177-a6bf-4e97-a771-4f77fca4960e'
+          // });
         }
         break;
       case 2:
         {
-          platform.invokeMethod('DataAgreementPolicy', {
-            "ApiKey":
-                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDVhNDE0YmI5YjA1NTAwMDE1MGIyNDciLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcxNDc0MDg4Nn0.u6pBpv12ZfdHYMPoQHYR-oBR9ZOZVeHiChaQ8yiEMxE',
-            "orgId": '645a4172b9b055000150b248',
-            "dataAgreementId": '6759b7ba-e12e-4ff8-915b-598a759c77d0'
-          });
+          SharedPreferences _prefs =
+          await SharedPreferences.getInstance();
+          var token= _prefs.getString('dataSharingAccessToken');
+          getDataAgreement(sharingtoken:token,sharingDataAgreementID:"65534a939a6116c5c2b98d51");
+          // platform.invokeMethod('DataAgreementPolicy', {
+          //   "ApiKey":
+          //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDVhNDE0YmI5YjA1NTAwMDE1MGIyNDciLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcxNDc0MDg4Nn0.u6pBpv12ZfdHYMPoQHYR-oBR9ZOZVeHiChaQ8yiEMxE',
+          //   "orgId": '645a4172b9b055000150b248',
+          //   "dataAgreementId": '6759b7ba-e12e-4ff8-915b-598a759c77d0'
+          // });
         }
         break;
       default:
@@ -321,7 +335,7 @@ class RegisterController extends BaseController {
     try {
       var response = await platform.invokeMethod('DataSharing', {
         "accessToken": token,
-        "dataAgreementID": "65530f3507a0b7e06bdd9383",
+        "dataAgreementID": "65534a579a6116c5c2b98cf1",
         "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
       });
       Map<String, dynamic> responseMap = json.decode(response);
@@ -335,6 +349,41 @@ class RegisterController extends BaseController {
         );
       } else {
         GetSnackToast(message: 'Something went wrong');
+      }
+    } catch (e) {
+      GetSnackToast(message: e.toString());
+    }
+  }
+  getDataAgreement({required String? sharingtoken, required String? sharingDataAgreementID}) async {
+
+    try {
+      var response = await platform.invokeMethod('GetDataAgreement', {
+        "accessToken": sharingtoken,
+        "dataAgreementID": sharingDataAgreementID,
+        "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
+      });
+
+      Map<String, dynamic> responseMap = json.decode(response);
+      print('response map: $responseMap');
+
+      // Check if "dataAttributes" is not empty
+      if (responseMap.containsKey("dataAttributes") &&
+          responseMap["dataAttributes"] is List &&
+          responseMap["dataAttributes"].isNotEmpty) {
+
+        // Clear the existing dataAttributes list
+        dataAttributes.clear();
+
+        // Iterate through the response dataAttributes and add them to the list
+        for (var attribute in responseMap["dataAttributes"]) {
+          String nameValue = attribute["name"];
+          dataAttributes.add(nameValue);
+        }
+
+        // Print the first item in the dataAttributes list
+        if (dataAttributes.isNotEmpty) {
+          print('dataAttributes values ${dataAttributes[0]}');
+        }
       }
     } catch (e) {
       GetSnackToast(message: e.toString());
