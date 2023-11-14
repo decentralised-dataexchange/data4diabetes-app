@@ -63,10 +63,13 @@ class MainActivity : FlutterActivity() {
                 }
                 "Preferences" -> {
                     val apiKey: String? = call.argument("ApiKey")
-                    val baseUrl: String?= call.argument("baseUrl")
-                    val userId: String?= call.argument("userId")
-                    val languageCode: String?= call.argument("languageCode")
-                    PrivacyDashboard.showPrivacyDashboard().withApiKey(apiKey ?: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3MzAyMjMyODh9.DlU8DjykYr3eBmbgsKLR4dnaChiRqXdxofKOuk4LiRM")
+                    val baseUrl: String? = call.argument("baseUrl")
+                    val userId: String? = call.argument("userId")
+                    val languageCode: String? = call.argument("languageCode")
+                    PrivacyDashboard.showPrivacyDashboard().withApiKey(
+                        apiKey
+                            ?: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3MzAyMjMyODh9.DlU8DjykYr3eBmbgsKLR4dnaChiRqXdxofKOuk4LiRM"
+                    )
                         .withUserId(userId ?: "653fe90efec9f34efed23619")
                         .withBaseUrl(baseUrl ?: "https://demo-consent-bb-api.igrant.io/v2")
 //                        .enableUserRequest()
@@ -95,41 +98,47 @@ class MainActivity : FlutterActivity() {
                     result.success(data)
                 }
                 "DataSharing" -> {
-                    val accessToken: String? = call.argument("accessToken")
+                    val apiKey: String? = call.argument("apiKey")
+                    val userId: String? = call.argument("userId")
                     val dataAgreementID: String? = call.argument("dataAgreementID")
                     val baseUrl: String? = call.argument("baseUrl")
-                    var data:String? = null
-                   GlobalScope.launch {
-                      data =  PrivacyDashboard.optInToDataAgreement(
-                            dataAgreementId = dataAgreementID ?:"",
+                    var data: String? = null
+                    GlobalScope.launch {
+                        data = PrivacyDashboard.optInToDataAgreement(
+                            dataAgreementId = dataAgreementID ?: "",
                             baseUrl = baseUrl ?: "",
-                            accessToken = accessToken ?: ""
+                            apiKey = apiKey ?: "",
+                            userId = userId
                         )
-                       if(data !=null){
-                           result.success(data)
-                       }
-                       else{
-                           result.error("DataSharing error", "Error occurred. Data: $data", null)
-                       }
+                        if (data != null) {
+                            result.success(data)
+                        } else {
+                            result.error("DataSharing error", "Error occurred. Data: $data", null)
+                        }
 
                     }
                 }
                 "GetDataAgreement" -> {
-                    val accessToken: String? = call.argument("accessToken")
+                    val apiKey: String? = call.argument("apiKey")
+                    val userId: String? = call.argument("userId")
                     val dataAgreementID: String? = call.argument("dataAgreementID")
                     val baseUrl: String? = call.argument("baseUrl")
-                    var data:String? = null
+                    var data: String? = null
                     GlobalScope.launch {
-                        data =  PrivacyDashboard.getDataAgreement(
-                            dataAgreementId = dataAgreementID ?:"",
+                        data = PrivacyDashboard.getDataAgreement(
+                            dataAgreementId = dataAgreementID ?: "",
                             baseUrl = baseUrl ?: "",
-                            accessToken = accessToken ?: ""
+                            apiKey = apiKey ?: "",
+                            userId = userId ?: ""
                         )
-                        if(data !=null){
+                        if (data != null) {
                             result.success(data)
-                        }
-                        else{
-                            result.error("GetDataAgreement error", "Error occurred. Data: $data", null)
+                        } else {
+                            result.error(
+                                "GetDataAgreement error",
+                                "Error occurred. Data: $data",
+                                null
+                            )
                         }
 
                     }
@@ -139,26 +148,30 @@ class MainActivity : FlutterActivity() {
                     val userId: String? = call.argument("userId")
                     val dataAgreementID: String? = call.argument("dataAgreementID")
                     val baseUrl: String? = call.argument("baseUrl")
-                    var data:String? = null
+                    var data: String? = null
                     GlobalScope.launch {
-                        data =  PrivacyDashboard.getDataAgreement(
-                            dataAgreementId = dataAgreementID ?:"",
+                        data = PrivacyDashboard.getDataAgreement(
+                            dataAgreementId = dataAgreementID ?: "",
                             baseUrl = baseUrl ?: "",
                             apiKey = apiKey ?: "",
                             userId = userId ?: ""
                         )
-                        if(data !=null){
+                        if (data != null) {
                             result.success(data)
-                        }
-                        else{
-                            result.error("GetDataAgreement error", "Error occurred. Data: $data", null)
+                        } else {
+                            result.error(
+                                "GetDataAgreement error",
+                                "Error occurred. Data: $data",
+                                null
+                            )
                         }
 
                     }
                 }
                 "ShowDataAgreementPolicy" -> {
                     val dataAgreementResponse: String? = call.argument("dataAgreementResponse")
-                    PrivacyDashboard.showDataAgreementPolicy().withDataAgreement(dataAgreementResponse ?: "").withLocale("sv").start(this)
+                    PrivacyDashboard.showDataAgreementPolicy()
+                        .withDataAgreement(dataAgreementResponse ?: "").withLocale("en").start(this)
                 }
             }
         }

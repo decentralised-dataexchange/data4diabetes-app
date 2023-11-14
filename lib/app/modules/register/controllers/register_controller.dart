@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:Data4Diabetes/app/Constants/privacy_dashboard.dart';
 import 'package:Data4Diabetes/app/data/model/register/RegisterRequest.dart';
 import 'package:Data4Diabetes/app/data/model/register/RegisterResponse.dart';
 import 'package:Data4Diabetes/app/data/model/validateMobileNumber/ValidateMobileNumberRequest.dart';
@@ -50,7 +51,8 @@ class RegisterController extends BaseController {
   var thirdPartyOrgName = "Data4Diabetes";
   String? accessToken;
   var redirectUrl = "https://www.govstack.global/";
-  List dataAttributes=[].obs;
+  List dataAttributes = [].obs;
+
   @override
   void onInit() {
     pageController = PageController(initialPage: selectedPage.value);
@@ -58,16 +60,15 @@ class RegisterController extends BaseController {
   }
 
   void registerUser() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    var token = _prefs.getString('dataSharingAccessToken');
     try {
       var response = await platform.invokeMethod('DataSharing', {
-        "accessToken": token,
-        "dataAgreementID": "65534a939a6116c5c2b98d51",
-        "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
+        "apiKey": PrivacyDashboard().apiKey,
+        "userId": PrivacyDashboard().userId,
+        "dataAgreementID": PrivacyDashboard().backupAndRestoreDataAgreementId,
+        "baseUrl": PrivacyDashboard().baseUrl
       });
       Map<String, dynamic> responseMap = json.decode(response);
-     if (responseMap['optIn'] == true) {
+      if (responseMap['optIn'] == true) {
         // Handle success
         showLoading();
         shareFirstName.value = firstNameController.text;
@@ -109,49 +110,31 @@ class RegisterController extends BaseController {
     // if (Platform.isAndroid) {
     switch (selectedIndex.value) {
       case 0:
-
         {
-
-          // SharedPreferences _prefs =
-          //     await SharedPreferences.getInstance();
-        //var token= _prefs.getString('dataSharingAccessToken');
-        // getDataAgreement(sharingtoken:token,sharingDataAgreementID:"655349949a6116c5c2b98c97");
-          getDataAgreementWithApiKey(sharingDataAgreementID:"655349949a6116c5c2b98c97");
-          // platform.invokeMethod('DataAgreementPolicy', {
-          //   "ApiKey":
-          //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDVhNDE0YmI5YjA1NTAwMDE1MGIyNDciLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcxNDc0MDg4Nn0.u6pBpv12ZfdHYMPoQHYR-oBR9ZOZVeHiChaQ8yiEMxE',
-          //   "orgId": '645a4172b9b055000150b248',
-          //   "dataAgreementId": '0900ccb0-73d5-4175-ae79-a3fc14a14e9e'
-          // });
+          getDataAgreementWithApiKey(
+              sharingDataAgreementID:
+                  PrivacyDashboard().registrationDataAgreementId);
         }
         break;
 
       case 1:
         {
-          SharedPreferences _prefs =
-          await SharedPreferences.getInstance();
-          var token= _prefs.getString('dataSharingAccessToken');
-          getDataAgreement(sharingtoken:token,sharingDataAgreementID:"65534a579a6116c5c2b98cf1");
-          // platform.invokeMethod('DataAgreementPolicy', {
-          //   "ApiKey":
-          //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDVhNDE0YmI5YjA1NTAwMDE1MGIyNDciLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcxNDc0MDg4Nn0.u6pBpv12ZfdHYMPoQHYR-oBR9ZOZVeHiChaQ8yiEMxE',
-          //   "orgId": '645a4172b9b055000150b248',
-          //   "dataAgreementId": '43bbd177-a6bf-4e97-a771-4f77fca4960e'
-          // });
+          SharedPreferences _prefs = await SharedPreferences.getInstance();
+          var token = _prefs.getString('dataSharingAccessToken');
+          getDataAgreement(
+              sharingtoken: token,
+              sharingDataAgreementID:
+                  PrivacyDashboard().donateYourDataDataAgreementId);
         }
         break;
       case 2:
         {
-          SharedPreferences _prefs =
-          await SharedPreferences.getInstance();
-          var token= _prefs.getString('dataSharingAccessToken');
-          getDataAgreement(sharingtoken:token,sharingDataAgreementID:"65534a939a6116c5c2b98d51");
-          // platform.invokeMethod('DataAgreementPolicy', {
-          //   "ApiKey":
-          //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDVhNDE0YmI5YjA1NTAwMDE1MGIyNDciLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcxNDc0MDg4Nn0.u6pBpv12ZfdHYMPoQHYR-oBR9ZOZVeHiChaQ8yiEMxE',
-          //   "orgId": '645a4172b9b055000150b248',
-          //   "dataAgreementId": '6759b7ba-e12e-4ff8-915b-598a759c77d0'
-          // });
+          SharedPreferences _prefs = await SharedPreferences.getInstance();
+          var token = _prefs.getString('dataSharingAccessToken');
+          getDataAgreement(
+              sharingtoken: token,
+              sharingDataAgreementID:
+                  PrivacyDashboard().backupAndRestoreDataAgreementId);
         }
         break;
       default:
@@ -332,17 +315,19 @@ class RegisterController extends BaseController {
   //
   // }
   onAgreeButtonTap() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    var token = _prefs.getString('dataSharingAccessToken');
-    try {
+     try {
       var response = await platform.invokeMethod('DataSharing', {
-        "accessToken": token,
-        "dataAgreementID": "65534a579a6116c5c2b98cf1",
-        "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
+        "apiKey": PrivacyDashboard().apiKey,
+        "userId": PrivacyDashboard().userId,
+        "dataAgreementID": PrivacyDashboard().donateYourDataDataAgreementId,
+        "baseUrl": PrivacyDashboard().baseUrl
       });
       Map<String, dynamic> responseMap = json.decode(response);
       if (responseMap['optIn'] == true) {
-        getDataAgreement(sharingtoken:accessToken,sharingDataAgreementID:"65534a939a6116c5c2b98d51",isFlag:true);
+        getDataAgreement(
+            sharingtoken: accessToken,
+            sharingDataAgreementID: PrivacyDashboard().backupAndRestoreDataAgreementId,
+            isFlag: true);
         // Handle success
         int index = selectedPage.value + 1;
         pageController.animateToPage(
@@ -357,32 +342,33 @@ class RegisterController extends BaseController {
       GetSnackToast(message: e.toString());
     }
   }
-  getDataAgreement({required String? sharingtoken, required String? sharingDataAgreementID, bool? isFlag}) async {
 
+  getDataAgreement(
+      {required String? sharingtoken,
+      required String? sharingDataAgreementID,
+      bool? isFlag}) async {
     try {
       var response = await platform.invokeMethod('GetDataAgreement', {
-        "accessToken": sharingtoken,
+        "apiKey": PrivacyDashboard().apiKey,
+        "userId": PrivacyDashboard().userId,
         "dataAgreementID": sharingDataAgreementID,
-        "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
+        "baseUrl": PrivacyDashboard().baseUrl
       });
 
       Map<String, dynamic> responseMap = json.decode(response);
       print('response map: $responseMap');
 
       // call ShowDataAgreementPolicy
-     if(isFlag!=true)
-       {
-         await platform.invokeMethod('ShowDataAgreementPolicy', {
-           "dataAgreementResponse": response,
-         });
-
-       }
+      if (isFlag != true) {
+        await platform.invokeMethod('ShowDataAgreementPolicy', {
+          "dataAgreementResponse": response,
+        });
+      }
 
       // Check if "dataAttributes" is not empty
       if (responseMap.containsKey("dataAttributes") &&
           responseMap["dataAttributes"] is List &&
           responseMap["dataAttributes"].isNotEmpty) {
-
         // Clear the existing dataAttributes list
         dataAttributes.clear();
 
@@ -390,7 +376,6 @@ class RegisterController extends BaseController {
         for (var attribute in responseMap["dataAttributes"]) {
           String nameValue = attribute["name"];
           dataAttributes.add(nameValue);
-
         }
 
         // Print the first item in the dataAttributes list
@@ -402,13 +387,14 @@ class RegisterController extends BaseController {
       GetSnackToast(message: e.toString());
     }
   }
+
   getDataAgreementWithApiKey({required String? sharingDataAgreementID}) async {
     try {
       var response = await platform.invokeMethod('GetDataAgreementWithApiKey', {
-        "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsiU2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY1MjY1Nzk2OTM4MGYzNWZhMWMzMDI0NSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTI2NTc5NjkzODBmMzVmYTFjMzAyNDMiLCJleHAiOjE3MDE4NzYwNjB9.itlQ2UZittVW87BNk9FyIw6qHF0nKVlci9NQ1-CE9sQ",
-        "userId": "65366979db611cb1948aca50",
+        "apiKey": PrivacyDashboard().apiKey,
+        "userId": PrivacyDashboard().userId,
         "dataAgreementID": sharingDataAgreementID,
-        "baseUrl": "https://staging-consent-bb-api.igrant.io/v2/"
+        "baseUrl": PrivacyDashboard().baseUrl
       });
 
       Map<String, dynamic> responseMap = json.decode(response);
@@ -416,11 +402,9 @@ class RegisterController extends BaseController {
 
       // call ShowDataAgreementPolicy
 
-        await platform.invokeMethod('ShowDataAgreementPolicy', {
-          "dataAgreementResponse": response,
-        });
-
-
+      await platform.invokeMethod('ShowDataAgreementPolicy', {
+        "dataAgreementResponse": response,
+      });
 
       // // Check if "dataAttributes" is not empty
       // if (responseMap.containsKey("dataAttributes") &&
@@ -446,5 +430,4 @@ class RegisterController extends BaseController {
       GetSnackToast(message: e.toString());
     }
   }
-
 }
