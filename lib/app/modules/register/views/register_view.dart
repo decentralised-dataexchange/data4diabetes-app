@@ -255,7 +255,7 @@ class RegisterView extends BaseView<RegisterController> {
             ),
           ),
           TextSpan(
-            text: appLocalization.registerDataAgreementDetails + ' ',
+            text: appLocalization.registerDataAgreementDetails,
             style: const TextStyle(
               color: Colors.blue,
               decoration: TextDecoration.underline,
@@ -267,7 +267,7 @@ class RegisterView extends BaseView<RegisterController> {
               },
           ),
           TextSpan(
-            text: appLocalization.registerAnd + ' ',
+            text: ' '+ appLocalization.registerAnd + ' ',
             style: const TextStyle(
               fontSize: 15,
               color: Colors.black,
@@ -472,12 +472,13 @@ class RegisterView extends BaseView<RegisterController> {
         shrinkWrap: true,
         itemCount: _registerController.dataAttributes.length,
         itemBuilder: (BuildContext context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical:10.0),
+                child: Text(
                   _registerController.dataAttributes[index],
                   style: const TextStyle(
                     fontSize: 16,
@@ -485,13 +486,15 @@ class RegisterView extends BaseView<RegisterController> {
                     color: Colors.black,
                   ),
                 ),
-                const Divider(),
-              ],
-            ),
+              ),
+              if (index < _registerController.dataAttributes.length - 1) const Divider(),
+            ],
           );
         },
       ),
     );
+
+
 
   }
 
@@ -570,7 +573,14 @@ class RegisterView extends BaseView<RegisterController> {
                 textAlign: TextAlign.justify,
               ),
             ),
-            getDataAgreement(context),
+            Card(
+                elevation: 0,
+                margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+                color: AppColors.pageBackground,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(cardRadius),
+                ),
+                child: getDataAgreement(context)),
             _bottomContentWidget(),
           ],
         ),
