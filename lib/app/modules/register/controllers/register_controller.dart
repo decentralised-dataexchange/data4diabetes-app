@@ -111,10 +111,11 @@ class RegisterController extends BaseController {
       case 0:
 
         {
-          SharedPreferences _prefs =
-              await SharedPreferences.getInstance();
-        var token= _prefs.getString('dataSharingAccessToken');
-          getDataAgreement(sharingtoken:token,sharingDataAgreementID:"655349949a6116c5c2b98c97");
+          print('update soon');
+        //   SharedPreferences _prefs =
+        //       await SharedPreferences.getInstance();
+        // var token= _prefs.getString('dataSharingAccessToken');
+        //  getDataAgreement(sharingtoken:token,sharingDataAgreementID:"655349949a6116c5c2b98c97");
           // platform.invokeMethod('DataAgreementPolicy', {
           //   "ApiKey":
           //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDVhNDE0YmI5YjA1NTAwMDE1MGIyNDciLCJvcmdpZCI6IiIsImVudiI6IiIsImV4cCI6MTcxNDc0MDg4Nn0.u6pBpv12ZfdHYMPoQHYR-oBR9ZOZVeHiChaQ8yiEMxE',
@@ -340,6 +341,7 @@ class RegisterController extends BaseController {
       });
       Map<String, dynamic> responseMap = json.decode(response);
       if (responseMap['optIn'] == false) {
+        getDataAgreement(sharingtoken:accessToken,sharingDataAgreementID:"65534a939a6116c5c2b98d51",isFlag:true);
         // Handle success
         int index = selectedPage.value + 1;
         pageController.animateToPage(
@@ -354,7 +356,7 @@ class RegisterController extends BaseController {
       GetSnackToast(message: e.toString());
     }
   }
-  getDataAgreement({required String? sharingtoken, required String? sharingDataAgreementID}) async {
+  getDataAgreement({required String? sharingtoken, required String? sharingDataAgreementID, bool? isFlag}) async {
 
     try {
       var response = await platform.invokeMethod('GetDataAgreement', {
@@ -365,6 +367,15 @@ class RegisterController extends BaseController {
 
       Map<String, dynamic> responseMap = json.decode(response);
       print('response map: $responseMap');
+
+      // call ShowDataAgreementPolicy
+     if(isFlag!=true)
+       {
+         await platform.invokeMethod('ShowDataAgreementPolicy', {
+           "dataAgreementResponse": response,
+         });
+
+       }
 
       // Check if "dataAttributes" is not empty
       if (responseMap.containsKey("dataAttributes") &&
@@ -378,6 +389,7 @@ class RegisterController extends BaseController {
         for (var attribute in responseMap["dataAttributes"]) {
           String nameValue = attribute["name"];
           dataAttributes.add(nameValue);
+
         }
 
         // Print the first item in the dataAttributes list

@@ -176,7 +176,6 @@ class DataAgreementContoller extends BaseController {
                 SharedPreferences _prefs =
                     await SharedPreferences.getInstance();
                 await _prefs.setString('dataSharingAccessToken', accessToken!);
-               // await _registerController.getDataAgreement(sharingtoken:accessToken);
                 try {
                   var response = await platform.invokeMethod('DataSharing', {
                     "accessToken": accessToken,
@@ -185,7 +184,7 @@ class DataAgreementContoller extends BaseController {
                   });
                   Map<String, dynamic> responseMap = json.decode(response);
                   if (responseMap['optIn'] == false) {
-                   _registerController.getDataAgreement(sharingtoken:accessToken,sharingDataAgreementID:"65534a579a6116c5c2b98cf1");
+                   _registerController.getDataAgreement(sharingtoken:accessToken,sharingDataAgreementID:"65534a579a6116c5c2b98cf1",isFlag:true);
                     Get.back();
                     int index = _registerController.selectedPage.value + 1;
                     _registerController.pageController.animateToPage(index,
