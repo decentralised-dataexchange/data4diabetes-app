@@ -323,6 +323,7 @@ class RegisterView extends BaseView<RegisterController> {
           ),
         ),
         onPressed: () {
+          FocusScope.of(context).unfocus();
           _registerController.onNextButtonTap();
         },
         child: Padding(
@@ -364,9 +365,7 @@ class RegisterView extends BaseView<RegisterController> {
           ),
         ),
         onPressed: () {
-          int index = _registerController.selectedPage.value + 1;
-          _registerController.pageController.animateToPage(index,
-              duration: const Duration(milliseconds: 500), curve: Curves.ease);
+      _registerController.onAgreeButtonTap();
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

@@ -4,6 +4,8 @@ import 'package:Data4Diabetes/app/modules/Otp/bindings/otp_binding.dart';
 import 'package:Data4Diabetes/app/modules/Otp/views/otp_view.dart';
 import 'package:Data4Diabetes/app/modules/Register/bindings/register_binding.dart';
 import 'package:Data4Diabetes/app/modules/Register/views/register_view.dart';
+import 'package:Data4Diabetes/app/modules/dataSharing/binding/dataAgreement_binding.dart';
+import 'package:Data4Diabetes/app/modules/dataSharing/views/dataAgreement_view.dart';
 import 'package:Data4Diabetes/app/modules/insights/bindings/insights_binding.dart';
 import 'package:Data4Diabetes/app/modules/insights/views/insights_view.dart';
 import 'package:Data4Diabetes/app/modules/language/bindings/language_binding.dart';
@@ -120,6 +122,11 @@ class AppPages {
       name: _Paths.DEXCOMCREDENTIAL,
       page: () => DexcomCredentialView(),
       binding: DexcomCredentialsBinding(),
+    ),
+    GetPage(
+      name: _Paths.DATAAGREEMENT,
+      page: () => DataAgreementView(),
+      binding: DataAgreementBinding(),
     ),
   ];
 }
