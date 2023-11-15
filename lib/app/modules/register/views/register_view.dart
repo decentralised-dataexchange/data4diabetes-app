@@ -443,14 +443,15 @@ class RegisterView extends BaseView<RegisterController> {
               elevation: 0,
               margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
               color: AppColors.pageBackground,
+
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(cardRadius),
+
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  getDataAgreement(context),
-
+                  getDataAgreement(context)
                   // _cgmWidget(context),
                   // const Divider(),
                   // _insightsWidget(context),
@@ -468,30 +469,38 @@ class RegisterView extends BaseView<RegisterController> {
 
   Widget getDataAgreement(BuildContext context) {
     return Obx(
-          () => ListView.builder(
-        shrinkWrap: true,
-        itemCount: _registerController.dataAttributes.length,
-        itemBuilder: (BuildContext context, index) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          () {
+            if(_registerController.dataAttributes.isNotEmpty){
+              return   ListView.builder(
+                shrinkWrap: true,
+                itemCount: _registerController.dataAttributes.length,
+                itemBuilder: (BuildContext context, index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
 
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical:10.0),
-                child: Text(
-                  _registerController.dataAttributes[index],
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              if (index < _registerController.dataAttributes.length - 1) const Divider(),
-            ],
-          );
-        },
-      ),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical:12.0),
+                        child: Text(
+                          _registerController.dataAttributes[index],
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      if (index < _registerController.dataAttributes.length - 1) const Divider(),
+                    ],
+                  );
+                },
+              );
+            }
+            else{
+              return const SizedBox();
+            }
+
+          }
     );
 
 
