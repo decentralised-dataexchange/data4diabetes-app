@@ -84,7 +84,7 @@ class DataAgreementContoller extends BaseController {
                   });
                   Map<String, dynamic> responseMap = json.decode(response);
                   if (responseMap['optIn'] == true) {
-                   _registerController.getDataAgreement(sharingtoken:accessToken,sharingDataAgreementID: PrivacyDashboard().registrationDataAgreementId,isFlag:true);
+                   _registerController.getDataAgreement(sharingtoken:accessToken,sharingDataAgreementID: PrivacyDashboard().donateYourDataDataAgreementId,isFlag:true);
                     Get.back();
                     int index = _registerController.selectedPage.value + 1;
                     _registerController.pageController.animateToPage(index,
