@@ -12,6 +12,7 @@ class PrivacyDashboardCredentialController extends BaseController {
   final TextEditingController baseUrlController = TextEditingController();
   final TextEditingController orgIdController = TextEditingController();
   final TextEditingController userIdController = TextEditingController();
+
   @override
   void onInit() {
     super.onInit();
@@ -27,8 +28,7 @@ class PrivacyDashboardCredentialController extends BaseController {
     print('apikey now:$apiKey');
     apiKey != null
         ? apiKeyController.text = apiKey
-        : apiKeyController.text =
-            PrivacyDashboard().apiKey;
+        : apiKeyController.text = PrivacyDashboard().apiKey;
     orgId != null
         ? orgIdController.text = orgId
         : orgIdController.text = "64f09f778e5f3800014a879a";
@@ -61,7 +61,8 @@ class PrivacyDashboardCredentialController extends BaseController {
     _prefs.setString('privacyDashboarduserId', PrivacyDashboard().userId);
     privacyDashboardCredentials();
     Get.rawSnackbar(
-        message: 'Reset to default credentials',
+        message:
+            'Success : Please logout and login, also reopen the app to reflect the changes',
         backgroundColor: Colors.green);
     privacyDashboardCredentials();
   }
