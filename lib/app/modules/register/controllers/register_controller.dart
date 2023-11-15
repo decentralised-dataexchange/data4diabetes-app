@@ -58,7 +58,7 @@ class RegisterController extends BaseController {
     pageController = PageController(initialPage: selectedPage.value);
     super.onInit();
   }
-
+ 
   void registerUser() async {
     try {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
@@ -177,11 +177,13 @@ class RegisterController extends BaseController {
 
   onSkipTap() async {
     try {
+      showLoading();
       getDataAgreement(
           sharingtoken: accessToken,
           sharingDataAgreementID:
               PrivacyDashboard().backupAndRestoreDataAgreementId,
           isFlag: true);
+      hideLoading();
       // Handle success
       int index = selectedPage.value + 1;
       pageController.animateToPage(
@@ -190,6 +192,7 @@ class RegisterController extends BaseController {
         curve: Curves.ease,
       );
     } catch (e) {
+      hideLoading();
       GetSnackToast(message: e.toString());
     }
   }
@@ -348,6 +351,7 @@ class RegisterController extends BaseController {
   // }
   onAgreeButtonTap() async {
     try {
+      showLoading();
       SharedPreferences _prefs = await SharedPreferences.getInstance();
       var userId = _prefs.getString('privacyDashboarduserId');
       var response = await platform.invokeMethod('DataSharing', {
@@ -373,7 +377,9 @@ class RegisterController extends BaseController {
       } else {
         GetSnackToast(message: 'Something went wrong');
       }
+      hideLoading();
     } catch (e) {
+      hideLoading();
       GetSnackToast(message: e.toString());
     }
   }
@@ -383,6 +389,7 @@ class RegisterController extends BaseController {
       required String? sharingDataAgreementID,
       bool? isFlag}) async {
     try {
+      showLoading();
       SharedPreferences _prefs = await SharedPreferences.getInstance();
       var userId = _prefs.getString('privacyDashboarduserId');
       var response = await platform.invokeMethod('GetDataAgreement', {
@@ -394,7 +401,7 @@ class RegisterController extends BaseController {
 
       Map<String, dynamic> responseMap = json.decode(response);
       print('response map: $responseMap');
-
+      hideLoading();
       // call ShowDataAgreementPolicy
       if (isFlag != true) {
         await platform.invokeMethod('ShowDataAgreementPolicy', {
@@ -420,13 +427,16 @@ class RegisterController extends BaseController {
           print('dataAttributes values ${dataAttributes[0]}');
         }
       }
+
     } catch (e) {
+      hideLoading();
       GetSnackToast(message: e.toString());
     }
   }
 
   getDataAgreementWithApiKey({required String? sharingDataAgreementID}) async {
     try {
+     showLoading();
       SharedPreferences _prefs = await SharedPreferences.getInstance();
       var userId = _prefs.getString('privacyDashboarduserId');
       var response = await platform.invokeMethod('GetDataAgreementWithApiKey', {
@@ -438,34 +448,15 @@ class RegisterController extends BaseController {
 
       Map<String, dynamic> responseMap = json.decode(response);
       print('response map: $responseMap');
-
+     hideLoading();
       // call ShowDataAgreementPolicy
 
       await platform.invokeMethod('ShowDataAgreementPolicy', {
         "dataAgreementResponse": response,
       });
-
-      // // Check if "dataAttributes" is not empty
-      // if (responseMap.containsKey("dataAttributes") &&
-      //     responseMap["dataAttributes"] is List &&
-      //     responseMap["dataAttributes"].isNotEmpty) {
-      //
-      //   // Clear the existing dataAttributes list
-      //   dataAttributes.clear();
-      //
-      //   // Iterate through the response dataAttributes and add them to the list
-      //   for (var attribute in responseMap["dataAttributes"]) {
-      //     String nameValue = attribute["name"];
-      //     dataAttributes.add(nameValue);
-      //
-      //   }
-      //
-      //   // Print the first item in the dataAttributes list
-      //   if (dataAttributes.isNotEmpty) {
-      //     print('dataAttributes values ${dataAttributes[0]}');
-      //   }
-      // }
+ //  hideLoading();
     } catch (e) {
+      hideLoading();
       GetSnackToast(message: e.toString());
     }
   }
