@@ -20,7 +20,6 @@ class DataAgreementContoller extends BaseController {
   var thirdPartyOrgName = "Data4Diabetes";
   String? accessToken;
   var redirectUrl = "https://www.govstack.global/";
-
   invokeDataAgreement() {
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -32,10 +31,14 @@ class DataAgreementContoller extends BaseController {
           },
           onPageStarted: (String url) {
             /// show progress on loading
+            showLoading();
+
             return;
           },
           onPageFinished: (String url) {
             /// stop progress after loading
+            hideLoading();
+
             return;
           },
           onWebResourceError: (WebResourceError error) {
@@ -72,6 +75,7 @@ class DataAgreementContoller extends BaseController {
                 await _prefs.setString('dataSharingAccessToken', accessToken!);
                 var userId = _prefs.getString('privacyDashboarduserId');
                 try {
+                  showLoading();
                   var response = await platform.invokeMethod('DataSharing', {
                     "apiKey": PrivacyDashboard().apiKey,
                     "userId": userId??PrivacyDashboard().userId,
@@ -89,7 +93,9 @@ class DataAgreementContoller extends BaseController {
                   } else {
                     GetSnackToast(message: 'something went wrong');
                   }
+                  hideLoading();
                 } catch (e) {
+                  hideLoading();
                   GetSnackToast(message: e.toString());
                 }
               }
