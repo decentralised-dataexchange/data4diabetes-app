@@ -70,10 +70,11 @@ class DataAgreementContoller extends BaseController {
                 SharedPreferences _prefs =
                     await SharedPreferences.getInstance();
                 await _prefs.setString('dataSharingAccessToken', accessToken!);
+                var userId = _prefs.getString('privacyDashboarduserId');
                 try {
                   var response = await platform.invokeMethod('DataSharing', {
                     "apiKey": PrivacyDashboard().apiKey,
-                    "userId": PrivacyDashboard().userId,
+                    "userId": userId??PrivacyDashboard().userId,
                     "dataAgreementID": PrivacyDashboard().registrationDataAgreementId,
                     "baseUrl": PrivacyDashboard().baseUrl
                   });
