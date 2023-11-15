@@ -1,6 +1,9 @@
 <h1 align="center">
-    Data4Diabetes App- Reference implementation of digital wallet and solid pod based decentralised applications.
+    Data4Diabetes App- Reference implementation
 </h1>
+<h2>
+    For digital wallet, privacy dashboard and solid pod based decentralised applications.
+</h2>
 
 <p align="center">
     <a href="/../../commits/" title="Last Commit"><img src="https://img.shields.io/github/last-commit/decentralised-dataexchange/data4diabetes-app?style=flat"></a>
@@ -20,7 +23,7 @@
 
 This repository contains a reference implementation of a diabetes application integrated with digital wallet agents and solid pods. This is part of Swedish Innovation Agency Vinnova funded project [Data4Diabetes - Swedish Health Data Space pilot with diabetes data using a MyData Operator infrastructure](https://www.vinnova.se/p/data4diabetes---swedish-health-data-space-pilot-with-diabetes-data-using-a-mydata-operator-infrastructure/). 
 
-The app is written in Flutter and is released towards android and iOS and will be used as reference app towards demonstrating digital wallet and privacy dashboard integrations. 
+The app is written in Flutter and is released towards android and iOS and will be used as reference app towards demonstrating digital wallet, privacy dashboard and solid pod integrations to any third party app within a health dataspace. 
 
 ## Release status 
 
