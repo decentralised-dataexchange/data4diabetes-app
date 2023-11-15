@@ -18,11 +18,13 @@
 
 ## About
 
-This repository contains a reference implementation of a diabetes application integrated with digital wallet agents and solid pods. This is part of Swedish Innovation Agency Vinnova funded project [Data4Diabetes - Swedish Health Data Space pilot with diabetes data using a MyData Operator infrastructure](https://www.vinnova.se/p/data4diabetes---swedish-health-data-space-pilot-with-diabetes-data-using-a-mydata-operator-infrastructure/). The app is written in Flutter and is released towards android and iOS. 
+This repository contains a reference implementation of a diabetes application integrated with digital wallet agents and solid pods. This is part of Swedish Innovation Agency Vinnova funded project [Data4Diabetes - Swedish Health Data Space pilot with diabetes data using a MyData Operator infrastructure](https://www.vinnova.se/p/data4diabetes---swedish-health-data-space-pilot-with-diabetes-data-using-a-mydata-operator-infrastructure/). 
+
+The app is written in Flutter and is released towards android and iOS and will be used as reference app towards demonstrating digital wallet and privacy dashboard integrations. 
 
 ## Release status 
 
-Work in progress. 
+First releas completed (15-Nov-2023)
 
 ## Contributing
 
