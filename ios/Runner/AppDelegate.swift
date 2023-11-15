@@ -76,12 +76,13 @@ import SwiftMessages
                 AriesMobileAgent.shared.showDataWalletScannerViewController()
             case "DataSharing":
                     let arguments = call.arguments as? [String: Any]
-                    let accessToken = arguments?["accessToken"] as? String
+                    let apiKey = arguments?["apiKey"] as? String
+                    let userId = arguments?["userId"] as? String
                     let dataAgreementID = arguments?["dataAgreementID"] as? String
                     let baseUrl = arguments?["baseUrl"] as? String
                     var data: String? = nil
 
-                    PrivacyDashboard.configure(withApiKey: "", withUserId: "", withOrgId: "", withBaseUrl: String(baseUrl?.dropLast() ?? ""), accessToken: accessToken ?? "")
+                    PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), accessToken: "")
                     PrivacyDashboard.updateDataAgreementStatus(dataAgreementId: dataAgreementID ?? "", status: true)
                     PrivacyDashboard.receiveDataBackFromPrivacyDashboard = { dataReceived in
                       let dict = dataReceived["consentRecord"] as? [String: Any]
