@@ -106,9 +106,7 @@ class _MyAppState extends State<MyApp> {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     if (_prefs.getString('privacyDashboardApiKey') == null) {
       _prefs.setString('privacyDashboardApiKey', PrivacyDashboard().apiKey);
-      _prefs.setString('privacyDashboardorgId', "64f09f778e5f3800014a879a");
       _prefs.setString('privacyDashboardbaseUrl', PrivacyDashboard().baseUrl);
-      _prefs.setString('privacyDashboarduserId', PrivacyDashboard().userId);
     }
   }
 }

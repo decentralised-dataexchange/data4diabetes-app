@@ -6,6 +6,7 @@ import 'package:Data4Diabetes/app/modules/login/controllers/login_controller.dar
 import 'package:Data4Diabetes/app/network/exceptions/api_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../data/model/login/LoginRequest.dart';
 import '../../../data/model/login/LoginResponse.dart';
@@ -22,6 +23,7 @@ class OtpController extends BaseController {
   final UserRepositoryImpl _impl = UserRepositoryImpl();
   final PreferenceManagerImpl _preferenceManagerImpl = PreferenceManagerImpl();
   final int statusCode = 200;
+
   void verifyOTP() async {
     showLoading();
     VerifyOtpRequest request = VerifyOtpRequest(
@@ -31,6 +33,8 @@ class OtpController extends BaseController {
       VerifyOtpResponse response = await _impl.verifyOTP(request);
       if (response.token != null) {
         _preferenceManagerImpl.setString('token', response.token);
+        SharedPreferences _prefs = await SharedPreferences.getInstance();
+        _prefs.setString('privacyDashboarduserId', response.lastname);
         hideLoading();
         verifyOtpController.clear();
         Get.offAll(MainView());
@@ -74,9 +78,11 @@ class OtpController extends BaseController {
         "shared Register firstname:" + registerController.shareFirstName.value);
     debugPrint(
         "shared Register lastname:" + registerController.shareLastName.value);
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    var userId = _prefs.getString('privacyDashboarduserId');
     RegisterRequest request = RegisterRequest(
         firstname: registerController.shareFirstName.value,
-        lastname: registerController.shareLastName.value,
+        lastname: userId,
         mobile_number: registerController.sharePhoneNumber.value);
     try {
       RegisterResponse response = await _impl.register(request);

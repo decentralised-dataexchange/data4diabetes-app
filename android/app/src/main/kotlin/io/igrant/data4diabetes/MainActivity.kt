@@ -173,6 +173,27 @@ class MainActivity : FlutterActivity() {
                     PrivacyDashboard.showDataAgreementPolicy()
                         .withDataAgreement(dataAgreementResponse ?: "").withLocale("en").start(this)
                 }
+                "CreateIndividual" -> {
+                    val apiKey: String? = call.argument("apiKey")
+                    val baseUrl: String? = call.argument("baseUrl")
+                    var data: String? = null
+                    GlobalScope.launch {
+                        data = PrivacyDashboard.createAnIndividual(
+                            baseUrl = baseUrl ?: "",
+                            apiKey = apiKey ?: "",
+                        )
+                        if (data != null) {
+                            result.success(data)
+                        } else {
+                            result.error(
+                                "GetDataAgreement error",
+                                "Error occurred. Data: $data",
+                                null
+                            )
+                        }
+
+                    }
+                }
             }
         }
 
