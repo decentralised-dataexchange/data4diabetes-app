@@ -27,7 +27,7 @@ The app is written in Flutter and is released towards android and iOS and will b
 
 ## Release status 
 
-First releas completed (15-Nov-2023)
+First release done (15-Nov-2023). All subsequent releases can be found [here](https://github.com/decentralised-dataexchange/data4diabetes-app/releases).
 
 ## Contributing
 
