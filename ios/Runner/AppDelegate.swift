@@ -15,7 +15,7 @@ import SwiftMessages
 //        let navigationController = UINavigationController(rootViewController: flutterViewController)
 //        window.rootViewController = navigationController
 //        navigationController.delegate = self
-        
+
         let flutterChannel = FlutterMethodChannel(name: "io.igrant.data4diabetes.channel",
                                                    binaryMessenger: flutterViewController.binaryMessenger)
         AriesMobileAgent.shared.configureWallet(delegate: self) { success in
@@ -80,9 +80,10 @@ import SwiftMessages
                     let userId = arguments?["userId"] as? String
                     let dataAgreementID = arguments?["dataAgreementID"] as? String
                     let baseUrl = arguments?["baseUrl"] as? String
+                    let accessToken = arguments?["accessToken"] as? String
                     var data: String? = nil
 
-                    PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), accessToken: "")
+                    PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), accessToken: accessToken ?? "")
                     PrivacyDashboard.updateDataAgreementStatus(dataAgreementId: dataAgreementID ?? "", status: true)
                     PrivacyDashboard.receiveDataBackFromPrivacyDashboard = { dataReceived in
                       let dict = dataReceived["consentRecord"] as? [String: Any]
@@ -104,9 +105,10 @@ import SwiftMessages
                     let userId = arguments?["userId"] as? String
                     let dataAgreementID = arguments?["dataAgreementID"] as? String
                     let baseUrl = arguments?["baseUrl"] as? String
+                    let accessToken = arguments?["accessToken"] as? String
                     var data: String? = nil
 
-                    PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl?.dropLast() ?? ""), accessToken: "")
+                    PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), accessToken: accessToken ?? "")
                     PrivacyDashboard.readDataAgreementApi(dataAgreementId: dataAgreementID ?? "") { success, resultVal in
                       debugPrint("Data receieved here:\(resultVal)")
                       let dict = resultVal["dataAgreement"] as? [String: Any]
@@ -128,9 +130,10 @@ import SwiftMessages
                     let userId = arguments?["userId"] as? String
                     let dataAgreementID = arguments?["dataAgreementID"] as? String
                     let baseUrl = arguments?["baseUrl"] as? String
+                    let accessToken = arguments?["accessToken"] as? String
                     var data: String? = nil
 
-                    PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl?.dropLast() ?? ""), accessToken: "")
+                    PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), accessToken: accessToken ?? "")
                     PrivacyDashboard.readDataAgreementApi(dataAgreementId: dataAgreementID ?? "") { success, resultVal in
                       debugPrint("Data receieved here:\(resultVal)")
                       let dict = resultVal["dataAgreement"] as? [String: Any]
@@ -148,17 +151,36 @@ import SwiftMessages
                     }
             case "CreateIndividual":
                     var data: String? = nil
-                    let dict = ["id":"6553af58ec660dae93f6e254", "externalId": "","externalIdType":"", "identityProviderId":"", "name": "Flutter app", "iamId": "a2bd807c-fde4-40e8-8bfd-ff715d596492", "email":"flutterapp@yupmail.com", "phone": "9876987698"]
-                    let individualDict = ["individual": dict]
-                    if let jsonData = try? JSONSerialization.data(withJSONObject: individualDict, options: .prettyPrinted),
-                      let theJSONText = String(data: jsonData, encoding: String.Encoding.ascii) {
-                       debugPrint("JSON string = \n\(theJSONText)")
-                       data = theJSONText
+                    let arguments = call.arguments as? [String: Any]
+                    let apiKey = arguments?["apiKey"] as? String
+                    let userId = arguments?["userId"] as? String
+                    let accessToken = arguments?["accessToken"] as? String
+                    let baseUrl = arguments?["baseUrl"] as? String
+
+                    PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), accessToken: accessToken ?? "")
+                    PrivacyDashboard.createAnIndividual(name: "", email: "", phone: "") { success, resultVal in
+                      if success {
+                        if let jsonData = try? JSONSerialization.data(withJSONObject: resultVal, options: .prettyPrinted),
+                          let theJSONText = String(data: jsonData, encoding: String.Encoding.ascii) {
+                          debugPrint("JSON string = \n\(theJSONText)")
+                          data = theJSONText
+                        }
+
+                        if data != nil {
+                          result(data)
+                        } else {
+                          result(FlutterError(code: "DataSharing error", message: "Error occurred. Data: \(data ?? "")", details: nil))
+                        }
+                      }
                     }
-                    if data != nil {
-                      result(data)
-                    } else {
-                      result(FlutterError(code: "DataSharing error", message: "Error occurred. Data: \(data ?? "")", details: nil))
+            case "ShowDataAgreementPolicy":
+                    let arguments = call.arguments as? [String: Any]
+                    do {
+                      let agreement = arguments?["dataAgreementResponse"] as! String
+                      let dict = try JSONSerialization.jsonObject(with: agreement.data(using: .utf8)!, options: []) as! [String:Any]
+                      PrivacyDashboard.showDataAgreementPolicy(dataAgreementDic: dict)
+                    } catch {
+                      debugPrint(error)
                     }
             default: break
             }
@@ -166,7 +188,7 @@ import SwiftMessages
 
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
-    
+
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return true
     }
@@ -187,7 +209,7 @@ extension AppDelegate: AriesMobileAgentDelegate{
         debugPrint("Notification recieved --- \(message)")
         showSuccessSnackbar(message: message,navToNotifScreen: true)
     }
-    
+
     func showSuccessSnackbar(withTitle: String? = "", message: String,navToNotifScreen: Bool = false) {
         DispatchQueue.main.async {
             let success = MessageView.viewFromNib(layout: .messageView)
