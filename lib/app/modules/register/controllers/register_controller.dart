@@ -214,7 +214,7 @@ class RegisterController extends BaseController {
     } else {
       var response = await platform.invokeMethod('CreateIndividual', {
         "apiKey": PrivacyDashboard().apiKey,
-        "baseUrl": "${PrivacyDashboard().baseUrl}/"
+        "baseUrl": PrivacyDashboard().baseUrl
       });
 
       Map<String, dynamic> responseMap = json.decode(response);
