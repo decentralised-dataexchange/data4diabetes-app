@@ -58,14 +58,14 @@ class RegisterController extends BaseController {
     pageController = PageController(initialPage: selectedPage.value);
     super.onInit();
   }
- 
+
   void registerUser() async {
     try {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
       var userId = _prefs.getString('privacyDashboarduserId');
       var response = await platform.invokeMethod('DataSharing', {
         "apiKey": PrivacyDashboard().apiKey,
-        "userId": userId??PrivacyDashboard().userId,
+        "userId": userId ?? PrivacyDashboard().userId,
         "dataAgreementID": PrivacyDashboard().backupAndRestoreDataAgreementId,
         "baseUrl": PrivacyDashboard().baseUrl
       });
@@ -198,7 +198,10 @@ class RegisterController extends BaseController {
   }
 
   Future<void> onNextButtonTap() async {
-    String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+    String pattern = "";
+    isdCode == "+91"
+        ? pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)'
+        : pattern = r'(^(?:[+0]9)?[0-9]{9,11}$)';
     RegExp regExp = RegExp(pattern);
     if (firstNameController.text == "") {
       GetSnackToast(message: appLocalization.registerFirstNameValidationText);
@@ -356,7 +359,7 @@ class RegisterController extends BaseController {
       var userId = _prefs.getString('privacyDashboarduserId');
       var response = await platform.invokeMethod('DataSharing', {
         "apiKey": PrivacyDashboard().apiKey,
-        "userId": userId??PrivacyDashboard().userId,
+        "userId": userId ?? PrivacyDashboard().userId,
         "dataAgreementID": PrivacyDashboard().donateYourDataDataAgreementId,
         "baseUrl": PrivacyDashboard().baseUrl
       });
@@ -394,7 +397,7 @@ class RegisterController extends BaseController {
       var userId = _prefs.getString('privacyDashboarduserId');
       var response = await platform.invokeMethod('GetDataAgreement', {
         "apiKey": PrivacyDashboard().apiKey,
-        "userId": userId??PrivacyDashboard().userId,
+        "userId": userId ?? PrivacyDashboard().userId,
         "dataAgreementID": sharingDataAgreementID,
         "baseUrl": PrivacyDashboard().baseUrl
       });
@@ -427,7 +430,6 @@ class RegisterController extends BaseController {
           print('dataAttributes values ${dataAttributes[0]}');
         }
       }
-
     } catch (e) {
       hideLoading();
       GetSnackToast(message: e.toString());
@@ -436,25 +438,25 @@ class RegisterController extends BaseController {
 
   getDataAgreementWithApiKey({required String? sharingDataAgreementID}) async {
     try {
-     showLoading();
+      showLoading();
       SharedPreferences _prefs = await SharedPreferences.getInstance();
       var userId = _prefs.getString('privacyDashboarduserId');
       var response = await platform.invokeMethod('GetDataAgreementWithApiKey', {
         "apiKey": PrivacyDashboard().apiKey,
-        "userId": userId??PrivacyDashboard().userId,
+        "userId": userId ?? PrivacyDashboard().userId,
         "dataAgreementID": sharingDataAgreementID,
         "baseUrl": PrivacyDashboard().baseUrl
       });
 
       Map<String, dynamic> responseMap = json.decode(response);
       print('response map: $responseMap');
-     hideLoading();
+      hideLoading();
       // call ShowDataAgreementPolicy
 
       await platform.invokeMethod('ShowDataAgreementPolicy', {
         "dataAgreementResponse": response,
       });
- //  hideLoading();
+      //  hideLoading();
     } catch (e) {
       hideLoading();
       GetSnackToast(message: e.toString());

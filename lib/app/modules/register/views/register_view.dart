@@ -129,7 +129,11 @@ class RegisterView extends BaseView<RegisterController> {
   }
 
   Widget _internationalPhoneNumberInputWidget() {
-    String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+    String pattern = "";
+    _registerController.isdCode == "+91"
+        ? pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)'
+        : pattern = r'(^(?:[+0]9)?[0-9]{9,11}$)';
+
     RegExp regExp = RegExp(pattern);
 
     return Padding(
@@ -267,7 +271,7 @@ class RegisterView extends BaseView<RegisterController> {
               },
           ),
           TextSpan(
-            text: ' '+ appLocalization.registerAnd + ' ',
+            text: ' ' + appLocalization.registerAnd + ' ',
             style: const TextStyle(
               fontSize: 15,
               color: Colors.black,
@@ -443,10 +447,8 @@ class RegisterView extends BaseView<RegisterController> {
               elevation: 0,
               margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
               color: AppColors.pageBackground,
-
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(cardRadius),
-
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -468,43 +470,37 @@ class RegisterView extends BaseView<RegisterController> {
   }
 
   Widget getDataAgreement(BuildContext context) {
-    return Obx(
-          () {
-            if(_registerController.dataAttributes.isNotEmpty){
-              return   ListView.builder(
-                shrinkWrap: true,
-                itemCount: _registerController.dataAttributes.length,
-                itemBuilder: (BuildContext context, index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical:12.0),
-                        child: Text(
-                          _registerController.dataAttributes[index],
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      if (index < _registerController.dataAttributes.length - 1) const Divider(),
-                    ],
-                  );
-                },
-              );
-            }
-            else{
-              return const SizedBox();
-            }
-
-          }
-    );
-
-
-
+    return Obx(() {
+      if (_registerController.dataAttributes.isNotEmpty) {
+        return ListView.builder(
+          shrinkWrap: true,
+          itemCount: _registerController.dataAttributes.length,
+          itemBuilder: (BuildContext context, index) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 12.0),
+                  child: Text(
+                    _registerController.dataAttributes[index],
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                if (index < _registerController.dataAttributes.length - 1)
+                  const Divider(),
+              ],
+            );
+          },
+        );
+      } else {
+        return const SizedBox();
+      }
+    });
   }
 
   Widget _ageWidget(BuildContext context) {
@@ -615,7 +611,7 @@ class RegisterView extends BaseView<RegisterController> {
                 ),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
-                  _registerController.onSkipTap();
+                    _registerController.onSkipTap();
                   },
               ),
             ],
