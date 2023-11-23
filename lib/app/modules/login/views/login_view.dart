@@ -25,23 +25,28 @@ class LoginView extends BaseView<LoginController> {
   final LoginController _loginController = Get.find();
   @override
   Widget body(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      body: Center(
-        child: SingleChildScrollView(
-          child: Form(
-            key: _loginFormKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Logo(),
-                const SizedBox(height: 22),
-                _mobileNumberWidget(),
-                const SizedBox(height: 30),
-                _loginButtonWidget(context),
-                _RegisterWidget(),
-              ],
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
+        body: Center(
+          child: SingleChildScrollView(
+            child: Form(
+              key: _loginFormKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Logo(),
+                  const SizedBox(height: 22),
+                  _mobileNumberWidget(),
+                  const SizedBox(height: 30),
+                  _loginButtonWidget(context),
+                  _RegisterWidget(),
+                ],
+              ),
             ),
           ),
         ),

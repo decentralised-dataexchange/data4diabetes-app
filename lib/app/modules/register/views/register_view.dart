@@ -53,45 +53,50 @@ class RegisterView extends BaseView<RegisterController> {
 
         return true;
       },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
-        body: Column(
-          children: [
-            Expanded(
-              child: PageView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: _registerController.pageController,
-                onPageChanged: (page) {
-                  _registerController.selectedPage.value = page;
-                  _registerController.selectedIndex.value = page;
-                },
-                children: [
-                  _firstPage(context),
-                  _secondPage(context),
-                  _thirdPage(context),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Obx(
-                () => PageViewDotIndicator(
-                  currentItem: _registerController.selectedPage.value,
-                  count: _registerController.pageCount,
-                  unselectedColor: Colors.black26,
-                  selectedColor: Colors.black,
-                  duration: const Duration(milliseconds: 200),
-                  boxShape: BoxShape.circle,
+      child: GestureDetector(
+        onTap:(){
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.white,
+          body: Column(
+            children: [
+              Expanded(
+                child: PageView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: _registerController.pageController,
+                  onPageChanged: (page) {
+                    _registerController.selectedPage.value = page;
+                    _registerController.selectedIndex.value = page;
+                  },
+                  children: [
+                    _firstPage(context),
+                    _secondPage(context),
+                    _thirdPage(context),
+                  ],
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Obx(
+                  () => PageViewDotIndicator(
+                    currentItem: _registerController.selectedPage.value,
+                    count: _registerController.pageCount,
+                    unselectedColor: Colors.black26,
+                    selectedColor: Colors.black,
+                    duration: const Duration(milliseconds: 200),
+                    boxShape: BoxShape.circle,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+            ],
+          ),
+          bottomNavigationBar: _bottomNavigationBar(context),
         ),
-        bottomNavigationBar: _bottomNavigationBar(context),
       ),
     );
   }
