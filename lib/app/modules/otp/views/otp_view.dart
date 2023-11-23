@@ -24,22 +24,27 @@ class OtpView extends BaseView<OtpController> {
 
   @override
   Widget body(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const SizedBox(height: 22),
-              _otpTextFormWidget(),
-              const SizedBox(height: 15),
-              _resendOtpWidget(),
-              const SizedBox(height: 15),
-              _confirmButtonWidget(context),
-              _cancelButtonWidget(),
-            ],
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const SizedBox(height: 22),
+                _otpTextFormWidget(),
+                const SizedBox(height: 15),
+                _resendOtpWidget(),
+                const SizedBox(height: 15),
+                _confirmButtonWidget(context),
+                _cancelButtonWidget(),
+              ],
+            ),
           ),
         ),
       ),
