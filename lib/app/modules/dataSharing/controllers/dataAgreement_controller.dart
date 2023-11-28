@@ -58,21 +58,8 @@ class DataAgreementContoller extends BaseController {
                 _registerController.firstNameController.clear();
                 _registerController.mobileNumberController.clear();
               } else if (uri.queryParameters.containsKey('credentials')) {
-                // Decode the base64-encoded credentials
-                String? credentialsBase64 = uri.queryParameters['credentials'];
-                // Ensure that the base64 string has the correct length and padding
-                String paddedCredentialsBase64 = credentialsBase64! +
-                    '=' * (4 - credentialsBase64.length % 4);
-                // Decode the padded base64 string
-                List<int> bytes = base64.decode(paddedCredentialsBase64);
-                String decodedCredentialsJson = utf8.decode(bytes);
-                Map<String, dynamic> decodedCredentials =
-                    json.decode(decodedCredentialsJson);
-                Map<String, dynamic> token = decodedCredentials['token'];
-                accessToken = token['accessToken'];
                 SharedPreferences _prefs =
                     await SharedPreferences.getInstance();
-                await _prefs.setString('dataSharingAccessToken', accessToken!);
                 var userId = _prefs.getString('privacyDashboarduserId');
                 try {
                   showLoading();
@@ -84,7 +71,7 @@ class DataAgreementContoller extends BaseController {
                   });
                   Map<String, dynamic> responseMap = json.decode(response);
                   if (responseMap['optIn'] == true) {
-                   _registerController.getDataAgreement(sharingtoken:accessToken,sharingDataAgreementID: PrivacyDashboard().donateYourDataDataAgreementId,isFlag:true);
+                   _registerController.getDataAgreement(sharingDataAgreementID: PrivacyDashboard().donateYourDataDataAgreementId,isFlag:true);
                     Get.back();
                     int index = _registerController.selectedPage.value + 1;
                     _registerController.pageController.animateToPage(index,
