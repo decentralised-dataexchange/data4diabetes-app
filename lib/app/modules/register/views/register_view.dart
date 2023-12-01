@@ -454,17 +454,24 @@ class RegisterView extends BaseView<RegisterController> {
               color: AppColors.pageBackground,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(cardRadius),
+
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  getDataAgreement(context)
-                  // _cgmWidget(context),
-                  // const Divider(),
-                  // _insightsWidget(context),
-                  // const Divider(),
-                  // _scannedImagesWidget(context),
-                ],
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.veryLightGreyColor),
+                  borderRadius: BorderRadius.all(Radius.circular(cardRadius)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    getDataAgreement(context)
+                    // _cgmWidget(context),
+                    // const Divider(),
+                    // _insightsWidget(context),
+                    // const Divider(),
+                    // _scannedImagesWidget(context),
+                  ],
+                ),
               ),
             ),
             _bottomContentWidget(),
@@ -590,7 +597,12 @@ class RegisterView extends BaseView<RegisterController> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(cardRadius),
                 ),
-                child: getDataAgreement(context)),
+                child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.veryLightGreyColor),
+                      borderRadius: BorderRadius.all(Radius.circular(cardRadius)),
+                    ),
+                    child: getDataAgreement(context))),
             _bottomContentWidget(),
           ],
         ),
