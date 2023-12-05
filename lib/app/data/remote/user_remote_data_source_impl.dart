@@ -1,3 +1,4 @@
+import 'package:Data4Diabetes/app/data/model/deleteAccount/deleteAccountRequest.dart';
 import 'package:Data4Diabetes/app/data/model/deleteAccount/deleteAccountResponse.dart';
 import 'package:Data4Diabetes/app/data/model/dexcom/AccessTokenRequest.dart';
 import 'package:Data4Diabetes/app/data/model/dexcom/EstimatedGlucoseValue.dart';
@@ -81,10 +82,10 @@ class UserRemoteDataSourceImpl extends BaseRemoteSource
   }
   /// delete user account
   @override
-  Future<dynamic> deleteUserAccount() {
+  Future<dynamic> deleteUserAccount(DeleteAccountRequest request) {
     var endpoint = "${DioProvider.baseUrl}${ApiEndPoints.deleteAccount}";
 
-    var dioCall = postWithJson(endpoint,isAuthNeeded: true);
+    var dioCall = postWithJson(endpoint,data: request, isAuthNeeded: true);
 
     try {
       return callApiWithErrorParser(dioCall)
