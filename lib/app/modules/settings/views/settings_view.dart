@@ -359,7 +359,7 @@ class SettingsView extends BaseView<SettingsController> {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(appLocalization.settingsDeleteAccount),
+              title: Text(appLocalization.settingsAlert),
               content: Text(appLocalization.settingsDeleteAccountContent),
               actions: [
                 CupertinoDialogAction(
