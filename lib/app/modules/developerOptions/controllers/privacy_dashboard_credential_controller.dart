@@ -48,7 +48,7 @@ class PrivacyDashboardCredentialController extends BaseController {
     _prefs.setString('privacyDashboardbaseUrl', baseUrlController.text);
     _prefs.setString('privacyDashboarduserId', userIdController.text);
     Get.rawSnackbar(
-        message: 'updated credentials successfully',
+        message: 'Updated : Close and Reopen the app to reflect the changes',
         backgroundColor: Colors.green);
     privacyDashboardCredentials();
   }
