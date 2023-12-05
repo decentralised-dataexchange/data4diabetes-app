@@ -35,8 +35,15 @@ class OtpController extends BaseController {
         _preferenceManagerImpl.setString('token', response.token);
         SharedPreferences _prefs = await SharedPreferences.getInstance();
         _prefs.setString('privacyDashboarduserId', response.lastname);
+        if(loginController.sharePhoneNumber.value!=""){
+          _prefs.setString('userMobileNumber', loginController.sharePhoneNumber.value);
+        }else if(registerController.sharePhoneNumber.value!=""){
+          _prefs.setString('userMobileNumber', registerController.sharePhoneNumber.value);
+        }
+
         hideLoading();
         verifyOtpController.clear();
+
         Get.offAll(MainView());
       }
     } catch (e) {

@@ -1,3 +1,4 @@
+import 'package:Data4Diabetes/app/data/model/deleteAccount/deleteAccountRequest.dart';
 import 'package:Data4Diabetes/app/data/model/deleteAccount/deleteAccountResponse.dart';
 import 'package:Data4Diabetes/app/data/model/dexcom/AccessTokenRequest.dart';
 import 'package:Data4Diabetes/app/data/model/dexcom/AccessTokenResponse.dart';
@@ -41,8 +42,8 @@ class UserRepositoryImpl implements UserRepository {
   }
   /// delete user account
   @override
-  Future<dynamic> deleteUserAccount() {
-    return _remoteSource.deleteUserAccount();
+  Future<dynamic> deleteUserAccount(DeleteAccountRequest request) {
+    return _remoteSource.deleteUserAccount(request);
   }
   /// obtain dexcom access token
   @override

@@ -1,3 +1,4 @@
+import 'package:Data4Diabetes/app/data/model/deleteAccount/deleteAccountRequest.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:Data4Diabetes/app/modules/Dexcom/controllers/dexcom_controller.dart';
@@ -56,7 +57,12 @@ class SettingsController extends BaseController {
   }
 
   void deleteAccount() async {
-    int response = await _impl.deleteUserAccount();
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    var mobileNumber= _prefs.getString('userMobileNumber');
+    print("user mobile number with code is :$mobileNumber");
+    DeleteAccountRequest request =
+    DeleteAccountRequest(mobile_number: mobileNumber);
+    int response = await _impl.deleteUserAccount(request);
     debugPrint('this is the response:$response');
     if (response == successWithoutContent) {
       GetSnackToast(

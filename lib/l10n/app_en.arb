@@ -26,7 +26,7 @@
   "settingsDexcomLoginNo":"No",
   "settingsLogout":"Logout",
   "settingsSettings":"Settings",
-  "settingsDeleteAccount":"Delete Account",
+  "settingsDeleteAccount":"Remove My Account",
   "settingsPrivacyPolicy":"Privacy Policy",
   "settingsDeleteAccountSuccess":"User account deleted successfully",
   "settingsDeleteAccountFail":"User does not exist",
