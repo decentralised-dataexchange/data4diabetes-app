@@ -65,7 +65,7 @@ class RegisterController extends BaseController {
       var userId = _prefs.getString('privacyDashboarduserId');
       var response = await platform.invokeMethod('DataSharing', {
         "apiKey": PrivacyDashboard().apiKey,
-        "userId": userId ?? PrivacyDashboard().userId,
+        "userId": userId,
         "dataAgreementID": PrivacyDashboard().backupAndRestoreDataAgreementId,
         "baseUrl": PrivacyDashboard().baseUrl
       });
@@ -236,7 +236,7 @@ class RegisterController extends BaseController {
       var userId = _prefs.getString('privacyDashboarduserId');
       var response = await platform.invokeMethod('DataSharing', {
         "apiKey": PrivacyDashboard().apiKey,
-        "userId": userId ?? PrivacyDashboard().userId,
+        "userId": userId ,
         "dataAgreementID": PrivacyDashboard().donateYourDataDataAgreementId,
         "baseUrl": PrivacyDashboard().baseUrl
       });
@@ -274,7 +274,7 @@ class RegisterController extends BaseController {
       var userId = _prefs.getString('privacyDashboarduserId');
       var response = await platform.invokeMethod('GetDataAgreement', {
         "apiKey": PrivacyDashboard().apiKey,
-        "userId": userId ?? PrivacyDashboard().userId,
+        "userId": userId ,
         "dataAgreementID": sharingDataAgreementID,
         "baseUrl": PrivacyDashboard().baseUrl
       });
@@ -320,7 +320,7 @@ class RegisterController extends BaseController {
       var userId = _prefs.getString('privacyDashboarduserId');
       var response = await platform.invokeMethod('GetDataAgreementWithApiKey', {
         "apiKey": PrivacyDashboard().apiKey,
-        "userId": userId ?? PrivacyDashboard().userId,
+        "userId": userId ,
         "dataAgreementID": sharingDataAgreementID,
         "baseUrl": PrivacyDashboard().baseUrl
       });

@@ -65,7 +65,7 @@ class DataAgreementContoller extends BaseController {
                   showLoading();
                   var response = await platform.invokeMethod('DataSharing', {
                     "apiKey": PrivacyDashboard().apiKey,
-                    "userId": userId??PrivacyDashboard().userId,
+                    "userId": userId,
                     "dataAgreementID": PrivacyDashboard().registrationDataAgreementId,
                     "baseUrl": PrivacyDashboard().baseUrl
                   });
