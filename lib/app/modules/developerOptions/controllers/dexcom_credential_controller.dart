@@ -39,7 +39,7 @@ class DexcomCredentailController extends BaseController{
     prefs.setString('dexcomStoredBaseUrl', BuildConfig.instance.config.dexComBaseUrl!);
     _dexcomController.dexComBaseUrl.value =
     BuildConfig.instance.config.dexComBaseUrl!;
-    Get.rawSnackbar(message: 'Changed url successfully',backgroundColor: Colors.green);
+    Get.rawSnackbar(message: 'Dexcom environment has been changed successfully',backgroundColor: Colors.green);
   }
 
   Future<void> limitedDexcomEnvironment() async {
@@ -48,6 +48,6 @@ class DexcomCredentailController extends BaseController{
     _dexcomController.dexComBaseUrl.value = 'https://api.dexcom.com';
 
    print('changed url${_dexcomController.dexComBaseUrl.value}');
-    Get.rawSnackbar(message: 'Changed url successfully',backgroundColor: Colors.green);
+    Get.rawSnackbar(message: 'Dexcom environment has been changed successfully',backgroundColor: Colors.green);
   }
 }
