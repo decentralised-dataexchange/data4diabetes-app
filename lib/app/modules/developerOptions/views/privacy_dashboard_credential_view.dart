@@ -1,3 +1,5 @@
+
+
 import 'package:Data4Diabetes/app/core/base/base_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -16,7 +18,7 @@ class PrivacyDashboardCredentialView
   final double radiusConst = 18.0;
   final double fontSize = 16;
   final PrivacyDashboardCredentialController
-      _privacyDashboardCredentialController = Get.find();
+  _privacyDashboardCredentialController = Get.find();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _validate = false.obs;
   @override
@@ -63,7 +65,6 @@ class PrivacyDashboardCredentialView
                       const Divider(),
                       // _orgIdWidget(),
                       // const Divider(),
-                      _userIdWidget(),
                     ],
                   ),
                 ),
@@ -71,7 +72,7 @@ class PrivacyDashboardCredentialView
               const SizedBox(
                 height: 20,
               ),
-              _buttonSet(),
+              _buttonSet(context),
             ],
           ),
         ),
@@ -175,48 +176,16 @@ class PrivacyDashboardCredentialView
     );
   }
 
-  _userIdWidget() {
-    return TextFormField(
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Please enter a user Id';
-        }
-
-        return null;
-      },
-      autofocus: false,
-      controller: _privacyDashboardCredentialController.userIdController,
-      decoration: const InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(16, 10, 0, 10),
-        label: Text('User ID'),
-        fillColor: Colors.transparent,
-        filled: true,
-        errorStyle: TextStyle(height: 0, color: Colors.red),
-        labelStyle: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w400,
-          color: AppColors.silverAppBarOverlayColor,
-          fontStyle: FontStyle.italic,
-        ),
-        border: InputBorder.none,
-        focusedBorder: InputBorder.none,
-        enabledBorder: InputBorder.none,
-        errorBorder: InputBorder.none,
-        disabledBorder: InputBorder.none,
-        isDense: true,
-      ),
-    );
-  }
 
   _submitButton() {
     return ElevatedButton(
         style: ButtonStyle(
             backgroundColor:
-                MaterialStateProperty.all<Color>(AppColors.colorAccent),
+            MaterialStateProperty.all<Color>(AppColors.colorAccent),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(radiusConst),
-            ))),
+                  borderRadius: BorderRadius.circular(radiusConst),
+                ))),
         onPressed: () async {
           _validate.value = _privacyDashboardCredentialController
               .apiKeyController.text.isEmpty;
@@ -236,17 +205,17 @@ class PrivacyDashboardCredentialView
         ));
   }
 
-  _resetButton() {
+  _resetButton(BuildContext context) {
     return ElevatedButton(
         style: ButtonStyle(
             backgroundColor:
-                MaterialStateProperty.all<Color>(AppColors.colorAccent),
+            MaterialStateProperty.all<Color>(AppColors.colorAccent),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(radiusConst),
-            ))),
+                  borderRadius: BorderRadius.circular(radiusConst),
+                ))),
         onPressed: () async {
-          _privacyDashboardCredentialController.resetButtonAction();
+          _privacyDashboardCredentialController.resetButtonAction(context);
         },
         child: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -258,11 +227,11 @@ class PrivacyDashboardCredentialView
         ));
   }
 
-  _buttonSet() {
+  _buttonSet(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _resetButton(),
+        _resetButton(context),
         _submitButton(),
       ],
     );
