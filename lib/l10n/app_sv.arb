@@ -94,5 +94,6 @@
   "insightsDexcomTitle":"Dexcom inloggning",
   "insightsDexcomContent":"Logga in på Dexcom för att få dina uppskattade glukosvärden",
   "insightsOk":"Okej",
-  "insightsCancel":"Annullera"
+  "insightsCancel":"Annullera",
+  "otpLimitExceeded":"Gränsen för OTP-begäran har överskridits. Försök igen efter en stund."
 }

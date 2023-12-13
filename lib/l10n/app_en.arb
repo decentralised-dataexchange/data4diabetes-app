@@ -94,6 +94,7 @@
   "insightsDexcomTitle":"Dexcom Login",
   "insightsDexcomContent":"Please login to Dexcom to get your estimated glucose values",
   "insightsOk":"Ok",
-  "insightsCancel":"Cancel"
+  "insightsCancel":"Cancel",
+  "otpLimitExceeded":"OTP request limit exceeded. Please try again after sometime."
 
 }
