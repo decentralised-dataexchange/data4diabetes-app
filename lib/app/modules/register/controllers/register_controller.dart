@@ -16,6 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../login/controllers/login_controller.dart';
 import '/app/core/base/base_controller.dart';
@@ -73,32 +74,56 @@ class RegisterController extends BaseController {
       if (responseMap['optIn'] == true) {
         // Handle success
         showLoading();
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        final int currentTime = DateTime.now().millisecondsSinceEpoch;
         shareFirstName.value = firstNameController.text;
         //shareLastName.value = lastNameController.text;
         shareLastName.value = "";
         sharePhoneNumber.value = isdCode! + mobileNumberController.text;
-        RegisterRequest request = RegisterRequest(
-            firstname: firstNameController.text,
-            lastname: userId,
-            mobile_number: isdCode! + mobileNumberController.text);
-        try {
-          RegisterResponse response = await _impl.register(request);
+        sessionToken = generateSessionToken(sharePhoneNumber.value);
+        int lastMessageTime = prefs.getInt('last_message_time_$sessionToken') ?? 0;
+        int messageCount = prefs.getInt('message_count_$sessionToken') ?? 0;
+        if (currentTime - lastMessageTime >= timeWindow) {
+          // Reset the rate limit if the time window has elapsed
+          messageCount = 0;
+          lastMessageTime = currentTime;
+        }
+        if (messageCount >= maxMessagesPerWindow) {
+          // Rate limit exceeded, display an error message or take appropriate action
+          hideLoading();
+          GetSnackToast(
+              message: appLocalization.otpLimitExceeded);
+        }else{
+          // Within the rate limit, proceed with OTP request
+          // Increment message count and update last message time
+          messageCount++;
+          lastMessageTime = currentTime;
 
-          if (response.msg == "OTP sent") {
-            hideLoading();
-            loginController.isControl.value = false;
-            Get.off(OtpView());
+          await prefs.setInt('message_count_$sessionToken', messageCount);
+          await prefs.setInt('last_message_time_$sessionToken', lastMessageTime);
+          RegisterRequest request = RegisterRequest(
+              firstname: firstNameController.text,
+              lastname: userId,
+              mobile_number: isdCode! + mobileNumberController.text);
+          try {
+            RegisterResponse response = await _impl.register(request);
+
+            if (response.msg == "OTP sent") {
+              hideLoading();
+              loginController.isControl.value = false;
+              Get.off(OtpView());
+              firstNameController.clear();
+              mobileNumberController.clear();
+            }
+          } catch (e) {
             firstNameController.clear();
             mobileNumberController.clear();
-          }
-        } catch (e) {
-          firstNameController.clear();
-          mobileNumberController.clear();
-          GetSnackToast(message: (e as ApiException).message);
+            GetSnackToast(message: (e as ApiException).message);
 
-          hideLoading();
-        } finally {
-          hideLoading();
+            hideLoading();
+          } finally {
+            hideLoading();
+          }
         }
       } else {
         GetSnackToast(message: 'Something went wrong');
@@ -108,6 +133,11 @@ class RegisterController extends BaseController {
     }
   }
 
+  String generateSessionToken(String phoneNumber) {
+    return Uuid()
+        .v5(Uuid.NAMESPACE_URL, phoneNumber)
+        .toString(); // Generate session token using UUID v5
+  }
   Future<void> showDataAgreement() async {
     // if (Platform.isAndroid) {
     switch (selectedIndex.value) {
@@ -255,7 +285,7 @@ class RegisterController extends BaseController {
           curve: Curves.ease,
         );
       } else {
-        GetSnackToast(message: 'Something went wrong');
+        GetSnackToast(message: 'Something went wrong.Please try again');
       }
       hideLoading();
     } catch (e) {
