@@ -109,8 +109,10 @@ class RegisterView extends BaseView<RegisterController> {
         controller: _registerController.firstNameController,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+
           hintText: appLocalization.registerFirstName,
-          fillColor: AppColors.pageBackground,
+         fillColor: AppColors.pageBackground,
+
           filled: true,
           errorStyle: const TextStyle(height: 0, color: Colors.red),
           hintStyle: const TextStyle(
@@ -119,11 +121,41 @@ class RegisterView extends BaseView<RegisterController> {
             color: AppColors.silverAppBarOverlayColor,
             fontStyle: FontStyle.italic,
           ),
-          border: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(cardRadius),
+              topRight: Radius.circular(cardRadius),
+            ),
+            borderSide: BorderSide.none,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(cardRadius),
+              topRight: Radius.circular(cardRadius),
+            ),
+            borderSide: BorderSide.none,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(cardRadius),
+              topRight: Radius.circular(cardRadius),
+            ),
+            borderSide: BorderSide.none,
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(cardRadius),
+              topRight: Radius.circular(cardRadius),
+            ),
+            borderSide: BorderSide.none,
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(cardRadius),
+              topRight: Radius.circular(cardRadius),
+            ),
+            borderSide: BorderSide.none,
+          ),
         ),
       ),
     );
@@ -219,12 +251,18 @@ class RegisterView extends BaseView<RegisterController> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(cardRadius),
                 ),
-                child: Column(
-                  children: [
-                    _firstNameWidget(context),
-                    const Divider(),
-                    _mobileNumberWidget(),
-                  ],
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.veryLightGreyColor),
+                    borderRadius: BorderRadius.all(Radius.circular(cardRadius)),
+                  ),
+                  child: Column(
+                    children: [
+                      _firstNameWidget(context),
+                      const Divider(),
+                      _mobileNumberWidget(),
+                    ],
+                  ),
                 ),
               ),
               _validateUserNumber(),
