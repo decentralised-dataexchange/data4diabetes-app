@@ -293,48 +293,40 @@ class RegisterView extends BaseView<RegisterController> {
     return RichText(
       textAlign: TextAlign.justify,
       text: TextSpan(
+        style: labelStyle,
         children: [
           TextSpan(
             text: appLocalization.registerTrustContent + ' ',
-            style: const TextStyle(
-              fontSize: 15,
-              color: Colors.black,
-            ),
           ),
-          TextSpan(
-            text: appLocalization.registerDataAgreementDetails,
-            style: const TextStyle(
-              color: Colors.blue,
-              decoration: TextDecoration.underline,
-              fontSize: 15,
-            ),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
+          WidgetSpan(
+            child: InkWell(
+              onTap: () {
                 _registerController.showDataAgreement();
               },
+              child: Text(
+                appLocalization.registerDataAgreementDetails,
+                style: hyperLinkStyle,
+              ),
+            ),
           ),
           TextSpan(
             text: ' ' + appLocalization.registerAnd + ' ',
-            style: const TextStyle(
-              fontSize: 15,
-              color: Colors.black,
-            ),
           ),
-          TextSpan(
-            text: appLocalization.registerTermsOfService,
-            style: const TextStyle(
-              color: Colors.blue,
-              decoration: TextDecoration.underline,
-              fontSize: 15,
-            ),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
+          WidgetSpan(
+            child: InkWell(
+              onTap: () {
                 _registerController.termsOfServices();
               },
+              child: Text(
+                appLocalization.registerTermsOfService,
+                style: hyperLinkStyle,
+              ),
+            ),
           ),
         ],
       ),
     );
+
   }
 
   Widget _bottomNavigationBar(BuildContext context) {
