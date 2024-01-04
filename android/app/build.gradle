@@ -136,7 +136,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:28.0.1')
     implementation 'com.google.firebase:firebase-dynamic-links-ktx'
 //    implementation 'com.github.L3-iGrant:mobileSDK-android:2.5.2'
-    implementation 'com.github.decentralised-dataexchange:bb-consent-android-privacy-dashboard:2023.11.7'
+    implementation 'com.github.decentralised-dataexchange:bb-consent-android-privacy-dashboard:2024.1.1'
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
     implementation 'com.cocosw:bottomsheet:1.5.0'
     implementation 'com.github.markomilos:paginate:1.0.0'
