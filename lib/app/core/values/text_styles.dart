@@ -64,10 +64,14 @@ const dialogSubtitle = TextStyle(
 );
 
 const labelStyle = TextStyle(
-  fontSize: 18,
-  fontWeight: FontWeight.w400,
-  height: 1.8,
-  color: Color(0xFF323232),
+  fontSize: 15,
+  color: Colors.black,
+);
+const hyperLinkStyle = TextStyle(
+  color: Colors.blue,
+  decoration: TextDecoration.underline,
+  fontSize: 15,
+  height: 1.2,
 );
 
 final labelStylePrimaryTextColor = labelStyle.copyWith(
