@@ -13,11 +13,12 @@ class InsightsView extends BaseView<InsightsController> {
   static const double stackedChartWidth = 60;
   static const double circleContainerWidth = 50;
   static const double cardRadius = 20;
+  static const double cardHeight = 0.8;
   static const double circleContainerHeight = 50;
   static const double buttonStyleHeight = 50;
   static const double buttonStyleRadius = 10;
   static const double dropdownStyleRadius = 14;
-  static const double percentageContainerHeight = 250;
+  static const double percentageContainerVerticalMargin = 25;
   static const double percentageValueWidth = 48;
   static const double percentageColorContainerSize = 10;
 
@@ -141,118 +142,96 @@ class InsightsView extends BaseView<InsightsController> {
   Widget _gloucoseTimeInRange(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Card(
-        elevation: 1,
-        color: AppColors.pageBackground,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(cardRadius),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-             Padding(
-              padding:const EdgeInsets.all(8.0),
-              child: Text(
-               appLocalization.insightsGlucoseTIR,
-                style: descriptionTextStyle,
+      child: Container(
+        height: MediaQuery.of(context).size.height/2*cardHeight,
+        child: Card(
+          elevation: 1,
+          color: AppColors.pageBackground,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(cardRadius),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+               Padding(
+                 padding:const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 2.0),
+                child: Text(
+                 appLocalization.insightsGlucoseTIR,
+                  style: descriptionTextStyle,
+                ),
               ),
-            ),
-            Row(
-              children: [
-                _percentageSection(context),
-                _rangeDetailsSection(),
-              ],
-            )
-          ],
+              Expanded(
+                child: Row(
+                  children: [
+                    _stackedColumnRange(),
+                    _percentageSection(context),
+                    _rangeDetailsSection(),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _percentageSection(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(6, 0, 4, 16),
-      child: Container(
-        height: percentageContainerHeight,
-        padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-        ),
-        child: Row(
-          children: [
-            _stackedColumnRange(),
-            Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox(
-                  height: 25,
-                ),
-                _percentageValue1(),
-                const SizedBox(
-                  height: 25,
-                ),
-                _percentageValue2(),
-                const SizedBox(
-                  height: 25,
-                ),
-                _percentageValue3(),
-                const SizedBox(
-                  height: 25,
-                ),
-                _percentageValue4(),
-                const SizedBox(
-                  height: 25,
-                ),
-                _percentageValue5(),
-              ],
-            ),
-          ],
-        ),
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: percentageContainerVerticalMargin),
+      padding: const EdgeInsets.fromLTRB(0, 0, 16, 20),
+      decoration: const BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ),
+      child: Row(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _percentageValue1(),
+              _percentageValue2(),
+              _percentageValue3(),
+              _percentageValue4(),
+              _percentageValue5(),
+            ],
+          ),
+        ],
       ),
     );
   }
 
   Widget _rangeDetailsSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children:  [
-        Text(
-         appLocalization.insightsVeryHighRange,
-          style: const TextStyle(fontSize: 15),
-        ),
-        const SizedBox(
-          height: 25,
-        ),
-        Text(
-          appLocalization.insightsHighRange,
-          style: const TextStyle(fontSize: 15),
-        ),
-        const SizedBox(
-          height: 25,
-        ),
-        Text(
-          appLocalization.insightsTargetRange,
-          style:const TextStyle(fontSize: 15),
-        ),
-        const SizedBox(
-          height: 25,
-        ),
-        Text(
-          appLocalization.insightsLowRange,
-          style:const TextStyle(fontSize: 15),
-        ),
-       const SizedBox(
-          height: 25,
-        ),
-        Text(
-         appLocalization.insightsVeryLow,
-          style:const TextStyle(fontSize: 15),
-        ),
-        const SizedBox(
-          height: 25,
-        ),
-      ],
+    return Container(
+      color: Colors.transparent,
+      margin: const EdgeInsets.symmetric(vertical: percentageContainerVerticalMargin),
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children:  [
+          Text(
+           appLocalization.insightsVeryHighRange,
+            style: const TextStyle(fontSize: 15),
+          ),
+          Text(
+            appLocalization.insightsHighRange,
+            style: const TextStyle(fontSize: 15),
+          ),
+          Text(
+            appLocalization.insightsTargetRange,
+            style:const TextStyle(fontSize: 15),
+          ),
+          Text(
+            appLocalization.insightsLowRange,
+            style:const TextStyle(fontSize: 15),
+          ),
+          Text(
+           appLocalization.insightsVeryLow,
+            style:const TextStyle(fontSize: 15),
+          ),
+        ],
+      ),
     );
   }
 
@@ -263,16 +242,18 @@ class InsightsView extends BaseView<InsightsController> {
         child: SfCartesianChart(
           margin: EdgeInsets.zero,
           plotAreaBorderWidth: 0,
+
           primaryXAxis: CategoryAxis(
             //Hide the gridlines of x-axis
             majorGridLines: const MajorGridLines(width: 0),
-
+            majorTickLines: const MajorTickLines(width: 0),
             //Hide the axis line of x-axis
             axisLine: const AxisLine(width: 0),
           ),
           primaryYAxis: CategoryAxis(
               //Hide the gridlines of y-axis
               majorGridLines: const MajorGridLines(width: 0),
+              majorTickLines: const MajorTickLines(width: 0),
 
               //Hide the axis line of y-axis
               axisLine: const AxisLine(width: 0)),
