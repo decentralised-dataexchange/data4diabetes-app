@@ -25,7 +25,10 @@ class LoginController extends BaseController {
   int lastMessageTime = 0;
   int messageCount = 0;
   loginUser() async {
-    String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+    String pattern = "";
+    isdCode == "+91"
+        ? pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)'
+        : pattern = r'(^(?:[+0]9)?[0-9]{9,11}$)';
     RegExp regExp = RegExp(pattern);
     showLoading();
     if(phoneNumberController.text==""){
