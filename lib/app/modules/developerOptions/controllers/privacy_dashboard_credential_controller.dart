@@ -8,11 +8,12 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../language/controllers/language_controller.dart';
 import '../../launcher/views/launcher_view.dart';
 
 class PrivacyDashboardCredentialController extends BaseController {
   var platform = const MethodChannel('io.igrant.data4diabetes.channel');
-
+  final LanguageController _languageController= Get.find();
   final TextEditingController apiKeyController = TextEditingController();
   final TextEditingController baseUrlController = TextEditingController();
   final TextEditingController orgIdController = TextEditingController();
@@ -43,9 +44,11 @@ class PrivacyDashboardCredentialController extends BaseController {
   }
 
   submitButtonAction() async {
+    var languageCode = _languageController.languageCode.value;
     var response = await platform.invokeMethod('CreateIndividual', {
       "apiKey": apiKeyController.text,
       "baseUrl": baseUrlController.text,
+      "languageCode": languageCode
     });
     Map<String, dynamic> responseMap = json.decode(response);
     Map<String, dynamic> individual = responseMap['individual'];

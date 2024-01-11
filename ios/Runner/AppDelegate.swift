@@ -83,9 +83,10 @@ import SwiftMessages
                     let dataAgreementID = arguments?["dataAgreementID"] as? String
                     let baseUrl = arguments?["baseUrl"] as? String
                     let accessToken = arguments?["accessToken"] as? String
+                    let languageCode = arguments?["languageCode"] as? String
                     var data: String? = nil
 
-                    PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), accessToken: accessToken ?? "")
+                    PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), withLocale: languageCode ?? "en", accessToken: accessToken ?? "")
                     PrivacyDashboard.updateDataAgreementStatus(dataAgreementId: dataAgreementID ?? "", status: true)
                     PrivacyDashboard.receiveDataBackFromPrivacyDashboard = { dataReceived in
                       let dict = dataReceived["consentRecord"] as? [String: Any]
@@ -108,9 +109,10 @@ import SwiftMessages
                     let dataAgreementID = arguments?["dataAgreementID"] as? String
                     let baseUrl = arguments?["baseUrl"] as? String
                     let accessToken = arguments?["accessToken"] as? String
+                    let languageCode = arguments?["languageCode"] as? String
                     var data: String? = nil
 
-                    PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), accessToken: accessToken ?? "")
+                    PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), withLocale: languageCode ?? "en", accessToken: accessToken ?? "")
                     PrivacyDashboard.readDataAgreementApi(dataAgreementId: dataAgreementID ?? "") { success, resultVal in
                       debugPrint("Data receieved here:\(resultVal)")
                       let dict = resultVal["dataAgreement"] as? [String: Any]
@@ -133,9 +135,10 @@ import SwiftMessages
                     let dataAgreementID = arguments?["dataAgreementID"] as? String
                     let baseUrl = arguments?["baseUrl"] as? String
                     let accessToken = arguments?["accessToken"] as? String
+                    let languageCode = arguments?["languageCode"] as? String
                     var data: String? = nil
 
-                    PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), accessToken: accessToken ?? "")
+                PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), withLocale: languageCode ?? "en", accessToken: accessToken ?? "")
                     PrivacyDashboard.readDataAgreementApi(dataAgreementId: dataAgreementID ?? "") { success, resultVal in
                       debugPrint("Data receieved here:\(resultVal)")
                       let dict = resultVal["dataAgreement"] as? [String: Any]
@@ -158,8 +161,9 @@ import SwiftMessages
                     let userId = arguments?["userId"] as? String
                     let accessToken = arguments?["accessToken"] as? String
                     let baseUrl = arguments?["baseUrl"] as? String
+                    let languageCode = arguments?["languageCode"] as? String
 
-                    PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), accessToken: accessToken ?? "")
+                    PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), withLocale: languageCode ?? "en" , accessToken: accessToken ?? "")
                     PrivacyDashboard.createAnIndividual(name: "", email: "", phone: "") { success, resultVal in
                       if success {
                         if let jsonData = try? JSONSerialization.data(withJSONObject: resultVal, options: .prettyPrinted),

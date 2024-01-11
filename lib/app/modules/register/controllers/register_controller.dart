@@ -18,6 +18,7 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import '../../language/controllers/language_controller.dart';
 import '../../login/controllers/login_controller.dart';
 import '/app/core/base/base_controller.dart';
 
@@ -53,6 +54,7 @@ class RegisterController extends BaseController {
   String? accessToken;
   var redirectUrl = "https://www.govstack.global/";
   List dataAttributes = [].obs;
+  final LanguageController _languageController= Get.find();
 
   @override
   void onInit() {
@@ -61,6 +63,7 @@ class RegisterController extends BaseController {
   }
 
   void registerUser() async {
+    var languageCode = _languageController.languageCode.value;
     try {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
       var userId = _prefs.getString('privacyDashboarduserId');
@@ -68,7 +71,8 @@ class RegisterController extends BaseController {
         "apiKey": PrivacyDashboard().apiKey,
         "userId": userId,
         "dataAgreementID": PrivacyDashboard().backupAndRestoreDataAgreementId,
-        "baseUrl": PrivacyDashboard().baseUrl
+        "baseUrl": PrivacyDashboard().baseUrl,
+        "languageCode": languageCode
       });
       Map<String, dynamic> responseMap = json.decode(response);
       if (responseMap['optIn'] == true) {
@@ -244,9 +248,12 @@ class RegisterController extends BaseController {
         message: appLocalization.registerExistingUser,
       );
     } else {
+      var languageCode = _languageController.languageCode.value;
       var response = await platform.invokeMethod('CreateIndividual', {
         "apiKey": PrivacyDashboard().apiKey,
-        "baseUrl": PrivacyDashboard().baseUrl
+        "baseUrl": PrivacyDashboard().baseUrl,
+        "languageCode": languageCode
+
       });
 
       Map<String, dynamic> responseMap = json.decode(response);
@@ -260,6 +267,7 @@ class RegisterController extends BaseController {
   }
 
   onAgreeButtonTap() async {
+    var languageCode = _languageController.languageCode.value;
     try {
       showLoading();
       SharedPreferences _prefs = await SharedPreferences.getInstance();
@@ -268,7 +276,8 @@ class RegisterController extends BaseController {
         "apiKey": PrivacyDashboard().apiKey,
         "userId": userId ,
         "dataAgreementID": PrivacyDashboard().donateYourDataDataAgreementId,
-        "baseUrl": PrivacyDashboard().baseUrl
+        "baseUrl": PrivacyDashboard().baseUrl,
+        "languageCode": languageCode
       });
       Map<String, dynamic> responseMap = json.decode(response);
       if (responseMap['optIn'] == true) {
@@ -298,6 +307,7 @@ class RegisterController extends BaseController {
       {
       required String? sharingDataAgreementID,
       bool? isFlag}) async {
+    var languageCode = _languageController.languageCode.value;
     try {
       showLoading();
       SharedPreferences _prefs = await SharedPreferences.getInstance();
@@ -306,7 +316,8 @@ class RegisterController extends BaseController {
         "apiKey": PrivacyDashboard().apiKey,
         "userId": userId ,
         "dataAgreementID": sharingDataAgreementID,
-        "baseUrl": PrivacyDashboard().baseUrl
+        "baseUrl": PrivacyDashboard().baseUrl,
+        "languageCode": languageCode
       });
 
       Map<String, dynamic> responseMap = json.decode(response);
@@ -344,6 +355,7 @@ class RegisterController extends BaseController {
   }
 
   getDataAgreementWithApiKey({required String? sharingDataAgreementID}) async {
+    var languageCode = _languageController.languageCode.value;
     try {
       showLoading();
       SharedPreferences _prefs = await SharedPreferences.getInstance();
@@ -352,7 +364,8 @@ class RegisterController extends BaseController {
         "apiKey": PrivacyDashboard().apiKey,
         "userId": userId ,
         "dataAgreementID": sharingDataAgreementID,
-        "baseUrl": PrivacyDashboard().baseUrl
+        "baseUrl": PrivacyDashboard().baseUrl,
+        "languageCode": languageCode
       });
 
       Map<String, dynamic> responseMap = json.decode(response);
