@@ -10,13 +10,14 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../language/controllers/language_controller.dart';
 import '../../login/views/login_view.dart';
 
 class DataAgreementContoller extends BaseController {
   final RegisterController _registerController = Get.find();
   WebViewController? controller;
   var platform = const MethodChannel('io.igrant.data4diabetes.channel');
-
+  final LanguageController _languageController= Get.find();
   var thirdPartyOrgName = "Data4Diabetes";
   String? accessToken;
   var redirectUrl = "https://www.govstack.global/";
@@ -45,6 +46,7 @@ class DataAgreementContoller extends BaseController {
             return;
           },
           onNavigationRequest: (NavigationRequest request) async {
+            var languageCode = _languageController.languageCode.value;
             if (request.url.startsWith(redirectUrl)) {
               final uri = Uri.parse(request.url);
               if (uri.queryParameters.containsKey('error')) {
@@ -67,7 +69,8 @@ class DataAgreementContoller extends BaseController {
                     "apiKey": PrivacyDashboard().apiKey,
                     "userId": userId,
                     "dataAgreementID": PrivacyDashboard().registrationDataAgreementId,
-                    "baseUrl": PrivacyDashboard().baseUrl
+                    "baseUrl": PrivacyDashboard().baseUrl,
+                    "languageCode": languageCode
                   });
                   Map<String, dynamic> responseMap = json.decode(response);
                   if (responseMap['optIn'] == true) {
