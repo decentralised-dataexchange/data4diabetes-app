@@ -231,7 +231,7 @@ extension AppDelegate: AriesMobileAgentDelegate{
                     }
                     SwiftMessages.hide(animated: false)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
-                        AriesMobileAgent.shared.showCertificatePreviewViewController()
+                        AriesMobileAgent.shared.showNotificationDetails()
                     })
                 }
             }
