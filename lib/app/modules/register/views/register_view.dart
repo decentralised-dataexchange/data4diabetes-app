@@ -448,7 +448,7 @@ class RegisterView extends BaseView<RegisterController> {
             _registerController.registerUser();
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12.5),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               appLocalization.registerAgreeFinish,
               style: const TextStyle(fontSize: 16, color: Colors.white),
