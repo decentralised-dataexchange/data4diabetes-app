@@ -37,8 +37,9 @@ target 'Runner' do
 #  use_frameworks!
   use_modular_headers!
 
-  pod 'PrivacyDashboardiOS','2024.1.3'
-  pod 'ama-ios-sdk'
+# pod 'PrivacyDashboardiOS',:path => '/Users/mumthasirmohammed/bb-consent-ios-privacy-dashboard/PrivacyDashboardiOS'
+ pod 'PrivacyDashboardiOS',:git =>'git@github.com:decentralised-dataexchange/bb-consent-ios-privacy-dashboard.git', :tag => '2024.4.2'
+ pod 'ama-ios-sdk', :git => 'git@github.com:L3-iGrant/ama-ios-sdk.git',:tag => '2024.4.1'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end

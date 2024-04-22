@@ -18,12 +18,17 @@ import SwiftMessages
 
         let flutterChannel = FlutterMethodChannel(name: "io.igrant.data4diabetes.channel",
                                                    binaryMessenger: flutterViewController.binaryMessenger)
-        AriesMobileAgent.shared.configureWallet(delegate: self) { success in
-            debugPrint("Wallet configured --- \(success ?? false)")
-        }
         flutterChannel.setMethodCallHandler({
             (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
             switch call.method{
+            case "InitWallet":
+                AriesMobileAgent.shared.configureWallet(delegate: self) { success in
+                    debugPrint("Wallet configured --- \(success ?? false)")
+                }
+            case "DeleteWallet":
+                AriesMobileAgent.shared.deleteWallet(completion: { success in
+                    debugPrint("Wallet deleted --- \(success ?? false)")
+                })
             case "Preferences":
                 let arguments = call.arguments as? [String: Any]
                 let apiKey = arguments?["ApiKey"] as? String
