@@ -31,6 +31,9 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     _initLocale();
     _initPrivacyDashboard();
+    var platform = const MethodChannel('io.igrant.data4diabetes.channel');
+    // initialize wallet
+    platform.invokeMethod('InitWallet');
   }
 
   Future<void> _initLocale() async {

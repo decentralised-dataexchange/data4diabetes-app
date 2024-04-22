@@ -5,6 +5,7 @@ import 'package:Data4Diabetes/app/modules/Register/controllers/register_controll
 import 'package:Data4Diabetes/app/modules/login/controllers/login_controller.dart';
 import 'package:Data4Diabetes/app/network/exceptions/api_exception.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -43,7 +44,9 @@ class OtpController extends BaseController {
 
         hideLoading();
         verifyOtpController.clear();
-
+        var platform = const MethodChannel('io.igrant.data4diabetes.channel');
+        // initialize wallet
+        platform.invokeMethod('InitWallet');
         Get.offAll(MainView());
       }
     } catch (e) {
