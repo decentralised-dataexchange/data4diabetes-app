@@ -24,6 +24,14 @@ allprojects {
         jcenter()
         maven { url "https://jitpack.io" }
         maven { url 'https://repo.sovrin.org/repository/maven-public'}
+        maven {
+            name = "GitHubPackages"
+            url "https://maven.pkg.github.com/L3-iGrant/ama-android-sdk"
+            credentials {
+                username = "L3-iGrant"
+                password = "xxxxxxxxxxxxxxxxx"
+            }
+        }
 
     }
 }

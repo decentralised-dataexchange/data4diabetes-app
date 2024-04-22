@@ -1,5 +1,6 @@
 package io.igrant.data4diabetes
 
+import android.util.Log
 import com.github.privacyDashboard.PrivacyDashboard
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -7,6 +8,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.igrant.data_wallet.indy.LedgerNetworkType
 import io.igrant.data_wallet.utils.DataWallet
 import io.igrant.data_wallet.utils.DataWalletConfigurations
+import io.igrant.data_wallet.utils.DeleteWalletResult
 import io.igrant.data_wallet.utils.InitializeWalletCallback
 import io.igrant.data_wallet.utils.InitializeWalletState
 import io.igrant.data_wallet.utils.dataAgreement.DataAgreementUtils
@@ -20,27 +22,7 @@ class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        DataWallet.initializeSdk(
-            this,
-            object : InitializeWalletCallback {
-                override fun progressUpdate(progress: Int) {
-                    when (progress) {
-                        InitializeWalletState.INITIALIZE_WALLET_STARTED -> {
 
-                        }
-                        InitializeWalletState.INITIALIZE_WALLET_EXTERNAL_FILES_LOADED -> {
-
-                        }
-                        InitializeWalletState.POOL_CREATED -> {
-
-                        }
-                        InitializeWalletState.WALLET_OPENED -> {
-                            DataWalletConfigurations.registerForSubscription(this@MainActivity)
-                        }
-                    }
-                }
-            }, LedgerNetworkType.getSelectedNetwork(this)
-        )
 
 
         methodChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
@@ -194,9 +176,50 @@ class MainActivity : FlutterActivity() {
 
                     }
                 }
+                "InitWallet"->{
+                    initializeWallet()
+                }
+                "DeleteWallet"->{
+                    val response = DataWallet.deleteWallet()
+                    when (response) {
+                        is DeleteWalletResult.Success -> {
+                            // Show success message or perform any other action
+                            DataWallet.releaseSdk()
+                            Log.d("Success","${response.message}")
+                        }
+                        is DeleteWalletResult.Error -> {
+                            // error message
+                            Log.d("Error","${response.errorMessage}")
+                        }
+                    }
+                }
             }
         }
 
 
+    }
+
+    private fun initializeWallet() {
+        DataWallet.initializeSdk(
+            this,
+            object : InitializeWalletCallback {
+                override fun progressUpdate(progress: Int) {
+                    when (progress) {
+                        InitializeWalletState.INITIALIZE_WALLET_STARTED -> {
+
+                        }
+                        InitializeWalletState.INITIALIZE_WALLET_EXTERNAL_FILES_LOADED -> {
+
+                        }
+                        InitializeWalletState.POOL_CREATED -> {
+
+                        }
+                        InitializeWalletState.WALLET_OPENED -> {
+                            DataWalletConfigurations.registerForSubscription(this@MainActivity)
+                        }
+                    }
+                }
+            }, LedgerNetworkType.getSelectedNetwork(this)
+        )
     }
 }
