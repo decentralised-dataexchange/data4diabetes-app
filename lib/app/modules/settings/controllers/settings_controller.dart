@@ -53,8 +53,6 @@ class SettingsController extends BaseController {
         await _prefs.remove(key);
       }
     }
-    //delete wallet
-    platform.invokeMethod('DeleteWallet');
     Get.offAll(const LauncherView());
   }
 
@@ -72,8 +70,6 @@ class SettingsController extends BaseController {
           color: Colors.green);
       SharedPreferences _prefs = await SharedPreferences.getInstance();
       _prefs.clear();
-      // delete wallet
-      platform.invokeMethod('DeleteWallet');
       Get.offAll(const LauncherView());
     } else {
       GetSnackToast(message: appLocalization.settingsDeleteAccountFail);
