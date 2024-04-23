@@ -1,5 +1,7 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/preferred_size.dart';
 import 'package:get/get.dart';
@@ -8,6 +10,7 @@ import '../../../Constants/Palette.dart';
 import '../../../core/base/base_view.dart';
 import '../../../core/values/app_colors.dart';
 import '../../../core/widget/app_bar_title.dart';
+import '../../launcher/views/launcher_view.dart';
 import '../controllers/credentials_controller.dart';
 
 class CredentailsView extends BaseView<CredentialsController> {
@@ -52,6 +55,8 @@ class CredentailsView extends BaseView<CredentialsController> {
                     _privacyDashboardCredWidget(),
                     const Divider(),
                     _dexcomCredWidget(),
+                    const Divider(),
+                    _deleteWallet(context),
                   ],
                 ),
               ),
@@ -111,5 +116,48 @@ class CredentailsView extends BaseView<CredentialsController> {
       },
     );
 
+  }
+
+  _deleteWallet(BuildContext context) {
+    return ListTile(
+      dense: true,
+      visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
+      title: const Text(
+        'Delete Wallet',
+        style: TextStyle(
+          fontSize: 14,
+        ),
+      ),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        size: 15.0,
+      ),
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: const Text("Alert"),
+              content: const Text("Do you want to delete your wallet?"),
+              actions: [
+                CupertinoDialogAction(
+                  child: const Text("Yes"),
+                  onPressed: () {
+                    _credentialsController.deleteWallet();
+
+                  },
+                ),
+                CupertinoDialogAction(
+                  child: const Text("No"),
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 }
