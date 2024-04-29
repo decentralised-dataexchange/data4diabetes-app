@@ -9,7 +9,7 @@ import '/flavors/environment.dart';
 
 void main() async {
   EnvConfig prodConfig = EnvConfig(
-    appName: "Flutter GetX Template Prod",
+    appName: "Data4Diabetes",
     baseUrl: "https://data4diabetes-staging-api.igrant.io/",
     dexComBaseUrl: "https://sandbox-api.dexcom.com",
     shouldCollectCrashLog: true,
