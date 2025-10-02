@@ -6,6 +6,7 @@ import '/app/my_app.dart';
 import '/flavors/build_config.dart';
 import '/flavors/env_config.dart';
 import '/flavors/environment.dart';
+import 'app/pushnotification/push_helper.dart';
 
 void main() async {
   EnvConfig prodConfig = EnvConfig(
@@ -24,5 +25,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  // 🔥 Initialize Push Helper
+  await PushHelper.init();
   runApp(const MyApp());
 }

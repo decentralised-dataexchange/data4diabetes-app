@@ -1,6 +1,6 @@
 class DexcomValues{
-  var clientID = 'Gf2kuGsl8xsvP2Ijdpywdwttto3Dzkrz';
-  var clientSecret = 'O6LmdamG9cIiU4rV';
+  var clientID = 'rkwPCsWu2mNM73MwxEbhTb0saqJrwwcA';
+  var clientSecret = '8ywN8Q5NUoZ4YmSF';
   var redirectUri = "https://data4diabetes.com/abc";
 
 }

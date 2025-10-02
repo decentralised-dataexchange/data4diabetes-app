@@ -193,6 +193,25 @@ class MainActivity : FlutterActivity() {
                         }
                     }
                 }
+                // METHODS for Push Integration
+                "updateFCMToken" -> {
+                    val token = call.argument<String>("token")
+                    if (token != null) {
+                        DataWallet.updateFCMToken(token)
+                        Log.d("Push", "FCM token updated: $token")
+                    }
+                    result.success(null)
+                }
+
+                "handleNotification" -> {
+                    val data = call.arguments as? Map<String, String>
+                    if (data != null) {
+                        // Call DataWallet directly
+                        DataWallet.handlePushNotification(data.mapValues { it.value as Any })
+                        Log.d("Push", "Notification handled: $data")
+                    }
+                    result.success(null)
+                }
             }
         }
 
@@ -215,7 +234,32 @@ class MainActivity : FlutterActivity() {
 
                         }
                         InitializeWalletState.WALLET_OPENED -> {
-                            DataWalletConfigurations.registerForSubscription(this@MainActivity)
+                          //  DataWalletConfigurations.registerForSubscription(this@MainActivity)
+                            DataWalletConfigurations.registerForSubscription(this@MainActivity,
+                                object : NotificationListener {
+                                    override fun receivedNotification(
+                                        notificationType: String,
+                                        intent: Intent
+                                    ) {
+                                        if (notificationType == MessageTypes.REQUEST_WITH_PIN_ENTRY) {
+                                            startActivity(intent)
+                                        } else if (notificationType == MessageTypes.VERIFY_REQUEST) {
+                                            startActivity(intent)
+                                        }
+
+                                    }
+
+                                    override fun walletReadyToUse() {}
+
+                                    override fun pushNotificationResponse(status: Boolean) {
+                                        if (status){
+                                            Toast.makeText(thisio.igrant.datawallet.MainActivity, "success", Toast.LENGTH_SHORT).show()
+                                        }else{
+                                            Toast.makeText(thisio.igrant.datawallet.MainActivity, "failed", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+
+                                })
                         }
                     }
                 }
