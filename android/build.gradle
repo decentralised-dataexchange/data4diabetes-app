@@ -1,17 +1,26 @@
 buildscript {
-    ext.kotlin_version = '1.8.0'
+    ext.kotlin_version = '2.1.0'
     repositories {
+        maven {
+            name = "GitHubPackages"
+            url "https://maven.pkg.github.com/L3-iGrant/ama-android-sdk"
+            credentials {
+                username = "L3-iGrant"
+                password = "xxxxxxxxxxxxxxxx"
+            }
+        }
         google()
         mavenCentral()
         jcenter()
         maven { url 'https://storage.googleapis.com/download.flutter.io' }
         maven { url "https://jitpack.io" }
-        maven { url 'https://repo.sovrin.org/repository/maven-public'}
+//        maven { uri 'https://repo.danubetech.com/repository/maven-releases'}
+//        maven { url 'https://repo.sovrin.org/repository/maven-public'}
 
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.0'
+        classpath 'com.android.tools.build:gradle:8.9.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.3.15'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.0'
@@ -20,12 +29,6 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
-        mavenCentral()
-        jcenter()
-        maven { url 'https://storage.googleapis.com/download.flutter.io' }
-        maven { url "https://jitpack.io" }
-        maven { url 'https://repo.sovrin.org/repository/maven-public'}
         maven {
             name = "GitHubPackages"
             url "https://maven.pkg.github.com/L3-iGrant/ama-android-sdk"
@@ -34,6 +37,14 @@ allprojects {
                 password = "xxxxxxxxxxxxxxxxx"
             }
         }
+        google()
+        mavenCentral()
+        jcenter()
+        maven { url 'https://igrant.io/java-packages'}
+
+        maven { url 'https://storage.googleapis.com/download.flutter.io' }
+        maven { url "https://jitpack.io" }
+//        maven { uri 'https://repo.danubetech.com/repository/maven-releases'}
 
     }
 }
