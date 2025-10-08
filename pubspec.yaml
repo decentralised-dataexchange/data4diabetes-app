@@ -36,8 +36,11 @@ dependencies:
   dropdown_button2: ^2.1.0
   syncfusion_flutter_charts: ^21.2.4
   firebase_core: ^3.2.0
-  firebase_core_platform_interface: 5.1.0
-  firebase_crashlytics: ^4.0.3
+  firebase_auth: ^5.0.0   # or something in the 5.x series that VERSIONS.md pairs with core v3.x
+  cloud_firestore: ^5.0.0
+  firebase_messaging: ^15.0.0
+  firebase_crashlytics: ^4.0.3  # your existing one
+  firebase_analytics: 11.2.0   # if you use analytics
   uuid: ^3.0.7
 
 dev_dependencies:
