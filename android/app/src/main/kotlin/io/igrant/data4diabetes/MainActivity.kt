@@ -1,21 +1,28 @@
 package io.igrant.data4diabetes
 
+import android.content.Intent
 import android.util.Log
-import com.github.privacyDashboard.PrivacyDashboard
+import android.widget.Toast
+import com.github.privacydashboard.PrivacyDashboard
 import io.flutter.embedding.android.FlutterActivity
+import io.igrant.data_wallet.utils.SelfAttestedCredential
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import com.github.privacydashboard.utils.ViewMode
+import io.flutter.embedding.android.FlutterFragmentActivity
 import io.igrant.data_wallet.indy.LedgerNetworkType
 import io.igrant.data_wallet.utils.DataWallet
 import io.igrant.data_wallet.utils.DataWalletConfigurations
 import io.igrant.data_wallet.utils.DeleteWalletResult
 import io.igrant.data_wallet.utils.InitializeWalletCallback
 import io.igrant.data_wallet.utils.InitializeWalletState
+import io.igrant.data_wallet.utils.MessageTypes
+import io.igrant.data_wallet.utils.NotificationListener
 import io.igrant.data_wallet.utils.dataAgreement.DataAgreementUtils
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class MainActivity : FlutterActivity() {
+class MainActivity : FlutterFragmentActivity() {
 
     private val CHANNEL = "io.igrant.data4diabetes.channel"
     var methodChannel: MethodChannel? = null
@@ -48,15 +55,13 @@ class MainActivity : FlutterActivity() {
                     val baseUrl: String? = call.argument("baseUrl")
                     val userId: String? = call.argument("userId")
                     val languageCode: String? = call.argument("languageCode")
-                    PrivacyDashboard.showPrivacyDashboard().withApiKey(
-                        apiKey
-                            ?: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3MzAyMjMyODh9.DlU8DjykYr3eBmbgsKLR4dnaChiRqXdxofKOuk4LiRM"
-                    )
-                        .withUserId(userId ?: "653fe90efec9f34efed23619")
-                        .withBaseUrl(baseUrl ?: "https://demo-consent-bb-api.igrant.io/v2")
-//                        .enableUserRequest()
-//                        .enableAskMe()
+                    PrivacyDashboard.showPrivacyDashboard()
+                        .withApiKey(apiKey ?: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY4ZGNmYmE1N2RjMDExYmQ0N2I5NTdjNSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2OGRjZmIyMzI1MjJhMDM5NDc0MTU5YTQiLCJEYXRhVmVyaWZpZXJVc2VySWQiOiIiLCJFbnYiOiIiLCJleHAiOjE3NjIwNTgxOTd9.OxBuLi6-gy-ANW28bIHg7CIc5YqTZcPd6HhOR47d3EQ")
+                        .withUserId(userId ?: "68df5f887dc011bd47b95a07")
+                        .withBaseUrl(baseUrl ?: "https://staging-api.igrant.io/v2")
+                        .withOrganisationId("68dcfba57dc011bd47b957c5")
                         .withLocale(languageCode ?: "sv")
+                        .withViewMode(ViewMode.BottomSheet)
                         .start(this)
                 }
                 "DataAgreementPolicy" -> {
@@ -153,16 +158,79 @@ class MainActivity : FlutterActivity() {
                 "ShowDataAgreementPolicy" -> {
                     val dataAgreementResponse: String? = call.argument("dataAgreementResponse")
                     PrivacyDashboard.showDataAgreementPolicy()
-                        .withDataAgreement(dataAgreementResponse ?: "").withLocale("en").start(this)
+                        .withDataAgreement(dataAgreementResponse ?: "").withLocale("sv").start(this)
                 }
                 "CreateIndividual" -> {
                     val apiKey: String? = call.argument("apiKey")
                     val baseUrl: String? = call.argument("baseUrl")
+                    val name: String? = call.argument("name")
+                    val phone: String? = call.argument("phone")
+                    val fcmToken: String? = call.argument("fcmToken")
+                    val deviceType: String? = call.argument("deviceType")
                     var data: String? = null
                     GlobalScope.launch {
                         data = PrivacyDashboard.createAnIndividual(
                             baseUrl = baseUrl ?: "",
                             apiKey = apiKey ?: "",
+                            name = name ?: "",
+                            phone = phone ?: "",
+                            pushNotificationToken = fcmToken,
+                            deviceType = deviceType
+                        )
+                        if (data != null) {
+                            result.success(data)
+                        } else {
+                            result.error(
+                                "GetDataAgreement error",
+                                "Error occurred. Data: $data",
+                                null
+                            )
+                        }
+
+                    }
+                }
+                "GetIndividual" -> {
+                    val apiKey: String? = call.argument("apiKey")
+                    val baseUrl: String? = call.argument("baseUrl")
+                    val individualId: String? = call.argument("individualId")
+                    var data: String? = null
+                    GlobalScope.launch {
+                        data = PrivacyDashboard.fetchTheIndividual(
+                            baseUrl = baseUrl ?: "",
+                            apiKey = apiKey ?: "",
+                            individualId = individualId ?: ""
+                        )
+                        if (data != null) {
+                            result.success(data)
+                        } else {
+                            result.error(
+                                "GetDataAgreement error",
+                                "Error occurred. Data: $data",
+                                null
+                            )
+                        }
+
+                    }
+                }
+                "UpdateIndividual" -> {
+                    val apiKey: String? = call.argument("apiKey")
+                    val baseUrl: String? = call.argument("baseUrl")
+                    val individualId: String? = call.argument("individualId")
+                    val name: String? = call.argument("name")
+                    val phone: String? = call.argument("phone")
+                    val fcmToken: String? = call.argument("fcmToken")
+                    val deviceType: String? = call.argument("deviceType")
+                    var data: String? = null
+                    GlobalScope.launch {
+                        data = PrivacyDashboard.updateTheIndividual(
+                            baseUrl = baseUrl ?: "",
+                            apiKey = apiKey ?: "",
+                            name = name ?: "",
+                            phone = phone ?: "",
+                            pushNotificationToken = fcmToken,
+                            deviceType = deviceType,
+                            individualId = individualId ?:"",
+                            email = ""
                         )
                         if (data != null) {
                             result.success(data)
@@ -180,17 +248,50 @@ class MainActivity : FlutterActivity() {
                     initializeWallet()
                 }
                 "DeleteWallet"->{
-                    val response = DataWallet.deleteWallet()
-                    when (response) {
-                        is DeleteWalletResult.Success -> {
-                            // Show success message or perform any other action
-                            DataWallet.releaseSdk()
-                            Log.d("Success","${response.message}")
+                    DataWallet.deleteWallet(this) { result ->
+                        when (result) {
+                            is DeleteWalletResult.Success -> {
+                                DataWallet.releaseSdk()
+
+                            }
+                            is DeleteWalletResult.Error -> {
+
+                            }
                         }
-                        is DeleteWalletResult.Error -> {
-                            // error message
-                            Log.d("Error","${response.errorMessage}")
-                        }
+                    }
+                }
+                "handleNotification" -> {
+                    val data = call.arguments as? Map<String, String>
+                    if (data != null) {
+                        // Call DataWallet directly
+                        DataWallet.handlePushNotification(data.mapValues { it.value as Any })
+                        Log.d("Push", "Notification handled: $data")
+                    }
+                    result.success(null)
+                }
+                "addSelfAttestedCredential" -> {
+                    val arguments = call.arguments as? Map<String, Any>
+                    if (arguments != null) {
+                        val title = arguments["title"] as? String ?: "Self Attested"
+                        val description = arguments["description"] as? String ?: "Self Attested"
+                        val attributesMap = arguments["attributesMap"] as? Map<String, String> ?: mapOf()
+                        val connectionName = arguments["connectionName"] as? String ?: "Test Connection"
+                        val location = arguments["location"] as? String ?: "Sweden"
+                        val vct = arguments["vct"] as? String ?: "open_id_for_self_attested_credentials"
+                        val issuedDate = arguments["issuedDate"] as? Long ?: System.currentTimeMillis()
+                        val response = SelfAttestedOpenIDCredential().add(
+                            title = title,
+                            description = description,
+                            attributes = attributesMap,
+                            connectionName = connectionName,
+                            location = location,
+                            issuedDate = issuedDate,
+                            vct = vct
+                        )
+                        Log.d("SelfAttested", "Credential added: $response")
+                        result.success(null)
+                    } else {
+                        result.error("INVALID_ARGUMENTS", "Arguments were null or invalid", null)
                     }
                 }
             }
@@ -215,11 +316,37 @@ class MainActivity : FlutterActivity() {
 
                         }
                         InitializeWalletState.WALLET_OPENED -> {
-                            DataWalletConfigurations.registerForSubscription(this@MainActivity)
+                            //  DataWalletConfigurations.registerForSubscription(this@MainActivity)
+                            DataWalletConfigurations.registerForSubscription(this@MainActivity,
+                                object : NotificationListener {
+                                    override fun receivedNotification(
+                                        notificationType: String,
+                                        intent: Intent
+                                    ) {
+                                        if (notificationType == MessageTypes.REQUEST_WITH_PIN_ENTRY) {
+                                            startActivity(intent)
+                                        } else if (notificationType == MessageTypes.VERIFY_REQUEST) {
+                                            startActivity(intent)
+                                        }
+
+                                    }
+
+                                    override fun walletReadyToUse() {}
+
+                                    override fun pushNotificationResponse(status: Boolean) {
+                                        if (status){
+                                            Toast.makeText(this@MainActivity, "success", Toast.LENGTH_SHORT).show()
+                                        }else{
+                                            Toast.makeText(this@MainActivity, "failed", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+
+                                })
                         }
                     }
                 }
-            }, LedgerNetworkType.getSelectedNetwork(this)
+            }, LedgerNetworkType.getSelectedNetwork(this),
+            viewMode = io.igrant.data_wallet.utils.ViewMode.BottomSheet
         )
     }
 }
