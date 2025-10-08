@@ -9,6 +9,7 @@ import '/app/core/base/base_view.dart';
 import '/app/modules/home/controllers/home_controller.dart';
 import 'package:d_chart/d_chart.dart';
 import 'package:flutter/services.dart';
+import 'dart:math';
 
 class HomeView extends BaseView<HomeController> {
   static const int aspectRatioFrom = 16;
@@ -19,19 +20,22 @@ class HomeView extends BaseView<HomeController> {
   static const double containerWidth = 200;
   static const double containerRadius = 25.0;
   static const double mmolFontSize = 40;
-  static const int medicationMeasure =28 ;
-  static const int activitiesMeasure =27 ;
-  static const int foodMeasure =20 ;
-  static const int environmentMeasure =15 ;
-  static const int biologicalMeasure =15 ;
+  static const int medicationMeasure = 28;
+  static const int activitiesMeasure = 27;
+  static const int foodMeasure = 20;
+  static const int environmentMeasure = 15;
+  static const int biologicalMeasure = 15;
   final List<String> icons = ["🧘‍", "🍴", "🫶", "⚕️", "🧬"];
   String barcodeScanRes = "";
   static const double heightValue = 0.1;
+
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-   return AppBarWithLogo(title: controller.appLocalization.homeYourVirtualPancreas,);
+    return AppBarWithLogo(
+      title: controller.appLocalization.homeYourVirtualPancreas,
+    );
   }
-final HomeController _homeController=HomeController();
+
   @override
   Widget body(BuildContext context) {
     return Scaffold(
@@ -41,7 +45,7 @@ final HomeController _homeController=HomeController();
         mainAxisSize: MainAxisSize.max,
         children: [
           _donetChartWidget(),
-          SizedBox(height: MediaQuery.of(context).size.height * heightValue,),
+          SizedBox(height: MediaQuery.of(context).size.height * heightValue),
           SizedBox(
             width: containerWidth,
             child: AppButton(
@@ -55,7 +59,7 @@ final HomeController _homeController=HomeController();
               text: controller.appLocalization.generalShareData,
 
               onPressed: () {
-                _homeController.platform.invokeMethod('SharedData');
+                controller.platform.invokeMethod('SharedData');
               },
             ),
           ),
@@ -115,20 +119,22 @@ final HomeController _homeController=HomeController();
 
   Widget _sugarLevel() {
     return Align(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          '5.6',
-          style: TextStyle(fontSize: mmolFontSize, color: Colors.green[400]),
-        ),
-        Text(
-          'mmol/l',
-          style: TextStyle(color: Colors.blueGrey[400]),
-        )
-      ],
-    ));
+      child: Obx(() => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            controller.glucoseValue.value.toStringAsFixed(1),
+            style: TextStyle(
+              fontSize: mmolFontSize,
+              color: Colors.green[400],
+            ),
+          ),
+          Text(
+            'mmol/L',
+            style: TextStyle(color: Colors.blueGrey[400]),
+          ),
+        ],
+      )),
+    );
   }
-
-
 }
