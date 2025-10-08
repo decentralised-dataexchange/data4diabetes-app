@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:Data4Diabetes/app/data/local/preference/preference_manager_impl.dart';
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpRequest.dart';
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpResponse.dart';
@@ -9,11 +12,14 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../push_helper.dart';
+import '../../../Constants/privacy_dashboard.dart';
 import '../../../data/model/login/LoginRequest.dart';
 import '../../../data/model/login/LoginResponse.dart';
 import '../../../data/model/register/RegisterRequest.dart';
 import '../../../data/model/register/RegisterResponse.dart';
 import '../../../data/repository/user_repository_impl.dart';
+import '../../language/controllers/language_controller.dart';
 import '../../main/views/main_view.dart';
 import '/app/core/base/base_controller.dart';
 
@@ -24,6 +30,7 @@ class OtpController extends BaseController {
   final UserRepositoryImpl _impl = UserRepositoryImpl();
   final PreferenceManagerImpl _preferenceManagerImpl = PreferenceManagerImpl();
   final int statusCode = 200;
+  final LanguageController _languageController= Get.find();
 
   void verifyOTP() async {
     showLoading();
@@ -36,15 +43,43 @@ class OtpController extends BaseController {
         _preferenceManagerImpl.setString('token', response.token);
         SharedPreferences _prefs = await SharedPreferences.getInstance();
         _prefs.setString('privacyDashboarduserId', response.lastname);
+        _prefs.setString('privacyDashboardApiKey', PrivacyDashboard().apiKey);
+        _prefs.setString('privacyDashboardbaseUrl', PrivacyDashboard().baseUrl);
         if(loginController.sharePhoneNumber.value!=""){
           _prefs.setString('userMobileNumber', loginController.sharePhoneNumber.value);
         }else if(registerController.sharePhoneNumber.value!=""){
           _prefs.setString('userMobileNumber', registerController.sharePhoneNumber.value);
         }
 
+        var platform = const MethodChannel('io.igrant.data4diabetes.channel');
+
+        if (loginController.isControl.value){
+          var fetchUserResponse = await platform.invokeMethod('GetIndividual', {
+            "apiKey": PrivacyDashboard().apiKey,
+            "baseUrl": PrivacyDashboard().baseUrl,
+            "individualId":  response.lastname
+          });
+
+          Map<String, dynamic> responseMap = json.decode(fetchUserResponse);
+          Map<String, dynamic> individual = responseMap['individual'];
+          String? id = individual['id'];
+          String? name = individual['name'];
+          String? phone = individual['phone'];
+          var languageCode = _languageController.languageCode.value;
+          var updateResponse = await platform.invokeMethod('UpdateIndividual', {
+            "apiKey": PrivacyDashboard().apiKey,
+            "baseUrl": PrivacyDashboard().baseUrl,
+            "individualId": id,
+            "name": name,
+            "phone":  phone,
+            "languageCode": languageCode,
+            "fcmToken": PushHelper.fcmToken,
+            "deviceType": Platform.isIOS? "ios" : "android"
+          });
+        }
         hideLoading();
         verifyOtpController.clear();
-        var platform = const MethodChannel('io.igrant.data4diabetes.channel');
+
         // initialize wallet
         platform.invokeMethod('InitWallet');
         Get.offAll(MainView());

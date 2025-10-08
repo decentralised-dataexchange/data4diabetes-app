@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:Data4Diabetes/app/Constants/privacy_dashboard.dart';
 import 'package:Data4Diabetes/app/data/model/register/RegisterRequest.dart';
@@ -11,6 +12,7 @@ import 'package:Data4Diabetes/app/modules/dataSharing/views/dataAgreement_view.d
 import 'package:Data4Diabetes/app/modules/login/views/login_view.dart';
 import 'package:Data4Diabetes/app/modules/termsOfService/views/termsOfService_view.dart';
 import 'package:Data4Diabetes/app/network/exceptions/api_exception.dart';
+import 'package:Data4Diabetes/push_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -64,18 +66,18 @@ class RegisterController extends BaseController {
 
   void registerUser() async {
     var languageCode = _languageController.languageCode.value;
-    try {
+    // try {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
       var userId = _prefs.getString('privacyDashboarduserId');
-      var response = await platform.invokeMethod('DataSharing', {
-        "apiKey": PrivacyDashboard().apiKey,
-        "userId": userId,
-        "dataAgreementID": PrivacyDashboard().backupAndRestoreDataAgreementId,
-        "baseUrl": PrivacyDashboard().baseUrl,
-        "languageCode": languageCode
-      });
-      Map<String, dynamic> responseMap = json.decode(response);
-      if (responseMap['optIn'] == true) {
+    //   var response = await platform.invokeMethod('DataSharing', {
+    //     "apiKey": PrivacyDashboard().apiKey,
+    //     "userId": userId,
+    //     "dataAgreementID": PrivacyDashboard().backupAndRestoreDataAgreementId,
+    //     "baseUrl": PrivacyDashboard().baseUrl,
+    //     "languageCode": languageCode
+    //   });
+    //   Map<String, dynamic> responseMap = json.decode(response);
+    //   if (responseMap['optIn'] == true) {
         // Handle success
         showLoading();
         final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -129,12 +131,12 @@ class RegisterController extends BaseController {
             hideLoading();
           }
         }
-      } else {
-        GetSnackToast(message: 'Something went wrong');
-      }
-    } catch (e) {
-      GetSnackToast(message: e.toString());
-    }
+    //   } else {
+    //     GetSnackToast(message: 'Something went wrong');
+    //   }
+    // } catch (e) {
+    //   GetSnackToast(message: e.toString());
+    // }
   }
 
   String generateSessionToken(String phoneNumber) {
@@ -249,10 +251,15 @@ class RegisterController extends BaseController {
       );
     } else {
       var languageCode = _languageController.languageCode.value;
+
       var response = await platform.invokeMethod('CreateIndividual', {
         "apiKey": PrivacyDashboard().apiKey,
         "baseUrl": PrivacyDashboard().baseUrl,
-        "languageCode": languageCode
+        "name": firstNameController.text,
+        "phone": mobileNumberController.text,
+        "languageCode": languageCode,
+        "fcmToken": PushHelper.fcmToken,
+        "deviceType": Platform.isIOS? "ios" : "android"
 
       });
 
@@ -262,7 +269,10 @@ class RegisterController extends BaseController {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
       _prefs.setString('privacyDashboarduserId', id ?? "");
 
-      Get.to(DataAgreementView());
+      int index = selectedPage.value + 1;
+      pageController.animateToPage(index,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.ease);
     }
   }
 

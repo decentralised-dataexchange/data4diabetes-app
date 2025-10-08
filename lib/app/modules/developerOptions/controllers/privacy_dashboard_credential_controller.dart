@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:Data4Diabetes/app/Constants/privacy_dashboard.dart';
 import 'package:Data4Diabetes/app/core/base/base_controller.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../push_helper.dart';
 import '../../language/controllers/language_controller.dart';
 import '../../launcher/views/launcher_view.dart';
 
@@ -48,7 +50,9 @@ class PrivacyDashboardCredentialController extends BaseController {
     var response = await platform.invokeMethod('CreateIndividual', {
       "apiKey": apiKeyController.text,
       "baseUrl": baseUrlController.text,
-      "languageCode": languageCode
+      "languageCode": languageCode,
+      "fcmToken": PushHelper.fcmToken,
+      "deviceType": Platform.isIOS? "ios" : "android"
     });
     Map<String, dynamic> responseMap = json.decode(response);
     Map<String, dynamic> individual = responseMap['individual'];
