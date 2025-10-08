@@ -1,9 +1,9 @@
 class PrivacyDashboard{
-  var apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3Njk0MTI5OTB9.Xqo2LAA2YyWnBBNuiBw1-k7-7qA-c8ct6YsyLJWqgmQ';
-  var baseUrl = 'https://demo-consent-bb-api.igrant.io/v2';
+  var apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY4ZGNmYmE1N2RjMDExYmQ0N2I5NTdjNSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2OGRjZmIyMzI1MjJhMDM5NDc0MTU5YTQiLCJEYXRhVmVyaWZpZXJVc2VySWQiOiIiLCJFbnYiOiIiLCJleHAiOjE3NjIwNTgxOTd9.OxBuLi6-gy-ANW28bIHg7CIc5YqTZcPd6HhOR47d3EQ';
+  var baseUrl = 'https://staging-api.igrant.io/v2';
 
-  var registrationDataAgreementId = '6553a34bec660dae93f6e0f0';
-  var donateYourDataDataAgreementId = '6553a3d2ec660dae93f6e150';
-  var backupAndRestoreDataAgreementId = '6553a38aec660dae93f6e127';
+  var registrationDataAgreementId = '68df84047dc011bd47b95c5a';
+  var donateYourDataDataAgreementId = '68df94247dc011bd47b95e71';
+  var backupAndRestoreDataAgreementId = '68df938a7dc011bd47b95e5e';
 
 }
