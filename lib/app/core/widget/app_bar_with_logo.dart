@@ -86,7 +86,9 @@ class AppBarWithLogo extends StatelessWidget  implements PreferredSizeWidget {
 
               // Build a Map<String, String> for attributes
               final Map<String, String> attributesMap = {
-                "glucoseValue": glucoseValue.toString(),
+                "date": DateTime.now().toIso8601String(),
+                "fasting": glucoseValue.toString(),
+                "post_fasting": (glucoseValue+1).toString(),
               };
 
               // MethodChannel to call Kotlin
@@ -94,11 +96,12 @@ class AppBarWithLogo extends StatelessWidget  implements PreferredSizeWidget {
 
               // Invoke the Kotlin method
               platform.invokeMethod('addSelfAttestedCredential', {
-                "title": "Self Attested",
+                "title": "Blood Sugar",
                 "description": "Self Attested Glucose Value",
                 "attributesMap": attributesMap,
                 "connectionName": "Data4Diabetes",
                 "location": "sweden",
+                "vct": "blood_sugar",
               });
             },
           ),
