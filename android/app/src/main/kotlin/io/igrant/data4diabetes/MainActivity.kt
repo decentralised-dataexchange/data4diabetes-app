@@ -21,16 +21,30 @@ import io.igrant.data_wallet.utils.NotificationListener
 import io.igrant.data_wallet.utils.dataAgreement.DataAgreementUtils
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import io.igrant.data_wallet.utils.SelfAttestedOpenIDCredential
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.os.Build
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import android.Manifest
+import androidx.activity.result.contract.ActivityResultContracts
 
 class MainActivity : FlutterFragmentActivity() {
 
     private val CHANNEL = "io.igrant.data4diabetes.channel"
     var methodChannel: MethodChannel? = null
 
+    private val pushNotificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        }
+
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-
+        pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
 
         methodChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
         methodChannel!!.setMethodCallHandler { call, result ->
@@ -61,7 +75,6 @@ class MainActivity : FlutterFragmentActivity() {
                         .withBaseUrl(baseUrl ?: "https://staging-api.igrant.io/v2")
                         .withOrganisationId("68dcfba57dc011bd47b957c5")
                         .withLocale(languageCode ?: "sv")
-                        .withViewMode(ViewMode.BottomSheet)
                         .start(this)
                 }
                 "DataAgreementPolicy" -> {
@@ -324,9 +337,9 @@ class MainActivity : FlutterFragmentActivity() {
                                         intent: Intent
                                     ) {
                                         if (notificationType == MessageTypes.REQUEST_WITH_PIN_ENTRY) {
-                                            startActivity(intent)
+                                            showLocalNotification(this@MainActivity,intent,"Please enter PIN to proceed")
                                         } else if (notificationType == MessageTypes.VERIFY_REQUEST) {
-                                            startActivity(intent)
+                                            showLocalNotification(this@MainActivity,intent,"Verification request received")
                                         }
 
                                     }
@@ -334,11 +347,11 @@ class MainActivity : FlutterFragmentActivity() {
                                     override fun walletReadyToUse() {}
 
                                     override fun pushNotificationResponse(status: Boolean) {
-                                        if (status){
-                                            Toast.makeText(this@MainActivity, "success", Toast.LENGTH_SHORT).show()
-                                        }else{
-                                            Toast.makeText(this@MainActivity, "failed", Toast.LENGTH_SHORT).show()
-                                        }
+//                                        if (status){
+//                                            Toast.makeText(this@MainActivity, "Da", Toast.LENGTH_SHORT).show()
+//                                        }else{
+//                                            Toast.makeText(this@MainActivity, "failed", Toast.LENGTH_SHORT).show()
+//                                        }
                                     }
 
                                 })
@@ -348,5 +361,44 @@ class MainActivity : FlutterFragmentActivity() {
             }, LedgerNetworkType.getSelectedNetwork(this),
             viewMode = io.igrant.data_wallet.utils.ViewMode.BottomSheet
         )
+    }
+
+    fun showLocalNotification(context: Context, intent: Intent, message: String) {
+        val channelId = "wallet_channel_id"
+        val notificationId = 101
+
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        // Create the Notification Channel (for Android 8.0+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = message
+            val descriptionText = "Click to open"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(channelId, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        // Build the notification
+        val builder = NotificationCompat.Builder(context, channelId)
+            .setSmallIcon(R.mipmap.ic_launcher) // Replace with your app icon
+            .setContentTitle(message)
+            .setContentText("Click to open")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
+        // Show the notification
+        with(NotificationManagerCompat.from(context)) {
+            notify(notificationId, builder.build())
+        }
     }
 }
