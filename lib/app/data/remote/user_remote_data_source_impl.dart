@@ -17,6 +17,8 @@ import '../../../flavors/build_config.dart';
 import '../../network/ApiEndPoints.dart';
 import '../../network/dio_provider.dart';
 import '../model/dexcom/AccessTokenResponse.dart';
+import '../model/services/ServicesRequest.dart';
+import '../model/services/ServicesResponse.dart';
 import '../model/validateMobileNumber/ValidateMobileNumberRequest.dart';
 import '/app/core/base/base_remote_source.dart';
 import '/app/data/remote/user_remote_data_source.dart';
@@ -24,6 +26,7 @@ import '/app/data/remote/user_remote_data_source.dart';
 class UserRemoteDataSourceImpl extends BaseRemoteSource
     implements UserRemoteDataSource {
   static final String? dexComBaseUrl = BuildConfig.instance.config.dexComBaseUrl;
+  static final String? servicesBaseUrl = BuildConfig.instance.config.servicesBaseUrl;
   ///Login
   @override
   Future<LoginResponse> login(LoginRequest request) {
@@ -137,4 +140,31 @@ class UserRemoteDataSourceImpl extends BaseRemoteSource
       rethrow;
     }
   }
+
+  /// Services
+  @override
+  Future<ServicesResponse> services(ServicesRequest request) {
+    // Map your ServicesRequest fields to query parameters
+    final queryParams = <String, dynamic>{
+      "offset": request.offset ?? 0,
+      "limit": request.limit ?? 10,
+      "organisationRole": request.organisationRole ?? "data_using_service",
+      "signStatus": request.signStatus ?? "signed",
+      // add other fields if needed
+    };
+
+    var endpoint = "$servicesBaseUrl${ApiEndPoints.services}";
+
+    var dioCall = getWithJson(endpoint,
+        queryParameters: queryParams,
+        isAuthNeeded: true); // use auth if needed
+
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => ServicesResponse.fromJson(response.data));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 }

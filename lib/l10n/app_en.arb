@@ -19,6 +19,7 @@
   "settingsMySharedData":"My Shared Data",
   "settingsPrivacyDashboard":"My Privacy Dashboard",
   "settingsNotification":"Notifications",
+  "settingsServices":"Services",
   "settingsDexcom":"Dexcom Dashboard",
   "settingsAlert":"Alert",
   "settingsDexcomAlert":"You are already logged in to Dexcom\nDo you want to Logout?",

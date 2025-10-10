@@ -14,6 +14,8 @@ import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpResponse.dart';
 
 import '../model/login/LoginRequest.dart';
 import '../model/login/LoginResponse.dart';
+import '../model/services/ServicesRequest.dart';
+import '../model/services/ServicesResponse.dart';
 
 abstract class UserRepository {
 
@@ -24,4 +26,5 @@ abstract class UserRepository {
   Future<dynamic> deleteUserAccount(DeleteAccountRequest request);
   Future<AccessTokenResponse> obtainAccessToken(AccessTokenRequest request);
   Future<EstimatedGlucoseValue> evgs(EstimatedGlucoseValueRequest request);
+  Future<ServicesResponse> services(ServicesRequest request);
 }

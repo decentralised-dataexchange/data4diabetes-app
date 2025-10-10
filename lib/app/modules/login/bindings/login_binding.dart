@@ -15,6 +15,7 @@ import '../../home/controllers/home_controller.dart';
 import '../../language/controllers/language_controller.dart';
 import '../../main/controllers/main_controller.dart';
 import '../../scan_and_check/controllers/scanAndCheck_controller.dart';
+import '../../services/controllers/services_controller.dart';
 import '../../settings/controllers/settings_controller.dart';
 import '../../termsOfService/controllers/termsOfService_controller.dart';
 
@@ -80,6 +81,10 @@ class LoginBinding extends Bindings {
     );
     Get.lazyPut<DataAgreementContoller>(
           () => DataAgreementContoller(),
+      fenix: true,
+    );
+    Get.lazyPut<ServicesController>(
+          () => ServicesController(),
       fenix: true,
     );
   }

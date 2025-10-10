@@ -8,6 +8,7 @@ class ApiEndPoints {
   static const String dexcomAccessToken = "/v2/oauth2/token";
   static const String dexcomRefreshToken = "/v2/oauth2/token";
   static const String dexcomEVGS = "/v3/users/self/egvs";
+  static const String services = "/v3/config/data-disclosure-agreement/records" ;
 
 
 }

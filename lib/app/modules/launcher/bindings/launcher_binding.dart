@@ -3,6 +3,7 @@ import 'package:Data4Diabetes/app/modules/dataSharing/controllers/dataAgreement_
 import 'package:Data4Diabetes/app/modules/insights/controllers/insights_controller.dart';
 import 'package:Data4Diabetes/app/modules/launcher/controller/launcher_controller.dart';
 import 'package:Data4Diabetes/app/modules/privacyPolicy/controllers/privacyPolicy_controller.dart';
+import 'package:Data4Diabetes/app/modules/services/controllers/services_controller.dart';
 import 'package:Data4Diabetes/app/modules/termsOfService/controllers/termsOfService_controller.dart';
 import 'package:get/get.dart';
 import '../../Otp/controllers/otp_controller.dart';
@@ -86,6 +87,10 @@ class LauncherBinding extends Bindings {
     );
     Get.lazyPut<DataAgreementContoller>(
           () => DataAgreementContoller(),
+      fenix: true,
+    );
+    Get.lazyPut<ServicesController>(
+          () => ServicesController(),
       fenix: true,
     );
   }
