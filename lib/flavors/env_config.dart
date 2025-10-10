@@ -6,6 +6,7 @@ class EnvConfig {
   final String appName;
   final String baseUrl;
   final String? dexComBaseUrl;
+  final String? servicesBaseUrl;
   final bool shouldCollectCrashLog;
 
   late final Logger logger;
@@ -13,7 +14,8 @@ class EnvConfig {
   EnvConfig({
     required this.appName,
     required this.baseUrl,
-   this.dexComBaseUrl,
+    this.dexComBaseUrl,
+    this.servicesBaseUrl,
     this.shouldCollectCrashLog = false,
   }) {
     logger = Logger(

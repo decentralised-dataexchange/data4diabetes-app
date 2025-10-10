@@ -40,4 +40,5 @@ abstract class _Paths {
   static const PRIVACYDASHBOARDCREDENTIAL = '/credentialsPanel';
   static const DEXCOMCREDENTIAL = '/credentialsPanel';
   static const DATAAGREEMENT = '/dataAgreement';
+  static const SERVICES = '/services';
 }

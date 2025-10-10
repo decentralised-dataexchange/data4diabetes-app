@@ -18,6 +18,8 @@ import 'package:Data4Diabetes/app/modules/privacyPolicy/bindings/privacyPolicy_b
 import 'package:Data4Diabetes/app/modules/privacyPolicy/views/privacyPolicy_view.dart';
 import 'package:Data4Diabetes/app/modules/scan_and_check/bindings/scanAndCheck_binding.dart';
 import 'package:Data4Diabetes/app/modules/scan_and_check/views/scanAndCheck_view.dart';
+import 'package:Data4Diabetes/app/modules/services/bindings/services_binding.dart';
+import 'package:Data4Diabetes/app/modules/services/views/services_view.dart';
 import 'package:Data4Diabetes/app/modules/settings/bindings/settings_binding.dart';
 import 'package:Data4Diabetes/app/modules/settings/views/settings_view.dart';
 import 'package:Data4Diabetes/app/modules/termsOfService/bindings/termsOfService_binding.dart';
@@ -127,6 +129,11 @@ class AppPages {
       name: _Paths.DATAAGREEMENT,
       page: () => DataAgreementView(),
       binding: DataAgreementBinding(),
+    ),
+    GetPage(
+      name: _Paths.SERVICES,
+      page: () => ServicesView(),
+      binding: ServicesBinding(),
     ),
   ];
 }

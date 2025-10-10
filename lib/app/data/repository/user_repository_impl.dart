@@ -13,7 +13,10 @@ import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpRequest.dart';
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpResponse.dart';
 import 'package:get/get.dart';
 
+import '../../modules/services/controllers/services_controller.dart';
 import '../model/dexcom/EstimatedGlucoseValueRequest.dart';
+import '../model/services/ServicesRequest.dart';
+import '../model/services/ServicesResponse.dart';
 import '/app/data/remote/user_remote_data_source.dart';
 import '/app/data/repository/user_repository.dart';
 
@@ -54,5 +57,10 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<EstimatedGlucoseValue> evgs(EstimatedGlucoseValueRequest request) {
     return _remoteSource.evgs(request);
+  }
+  /// services
+  @override
+  Future<ServicesResponse> services(ServicesRequest request) {
+    return _remoteSource.services(request);
   }
 }

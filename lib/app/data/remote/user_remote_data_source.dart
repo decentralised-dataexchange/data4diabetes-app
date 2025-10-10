@@ -5,6 +5,8 @@ import 'package:Data4Diabetes/app/data/model/dexcom/EstimatedGlucoseValue.dart';
 import 'package:Data4Diabetes/app/data/model/dexcom/EstimatedGlucoseValueRequest.dart';
 import 'package:Data4Diabetes/app/data/model/register/RegisterRequest.dart';
 import 'package:Data4Diabetes/app/data/model/register/RegisterResponse.dart';
+import 'package:Data4Diabetes/app/data/model/services/ServicesRequest.dart';
+import 'package:Data4Diabetes/app/data/model/services/ServicesResponse.dart';
 import 'package:Data4Diabetes/app/data/model/validateMobileNumber/ValidateMobileNumberRequest.dart';
 import 'package:Data4Diabetes/app/data/model/validateMobileNumber/ValidateMobileNumberResponse.dart';
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpRequest.dart';
@@ -22,4 +24,5 @@ abstract class UserRemoteDataSource {
   Future<dynamic> deleteUserAccount(DeleteAccountRequest request);
   Future<AccessTokenResponse> obtainAccessToken(AccessTokenRequest request);
   Future<EstimatedGlucoseValue> evgs(EstimatedGlucoseValueRequest request);
+  Future<ServicesResponse> services(ServicesRequest request);
 }

@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/values/app_colors.dart';
 import '../../../core/widget/app_bar_title.dart';
 import '../../developerOptions/views/credentials_view.dart';
+import '../../services/views/services_view.dart';
 import '/app/core/base/base_view.dart';
 import '/app/core/widget/custom_app_bar.dart';
 import 'dart:io' show Platform;
@@ -81,6 +82,8 @@ class SettingsView extends BaseView<SettingsController> {
             _preferenceWidget(),
             const Divider(),
             _notifications(),
+            const Divider(),
+            _services()
           ],
         ),
       ),
@@ -323,6 +326,26 @@ class SettingsView extends BaseView<SettingsController> {
       ),
       onTap: () {
         _settingsController.platform.invokeMethod('Notifications');
+      },
+    );
+  }
+  Widget _services() {
+    return ListTile(
+      dense: true,
+      visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
+      title: Text(
+        controller.appLocalization.settingsServices,
+        style: const TextStyle(
+          fontSize: 14,
+        ),
+      ),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        size: 15.0,
+      ),
+      onTap: () {
+       // _settingsController.platform.invokeMethod('Notifications');
+        Get.to(() => ServicesView());
       },
     );
   }

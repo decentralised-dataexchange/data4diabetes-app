@@ -62,6 +62,28 @@ abstract class BaseRemoteSource {
     return dioClient.post(path, data: data, options: Options(headers: headers));
   }
 
+  /// GET request with JSON headers
+  Future<Response<T>> getWithJson<T>(String path,
+      {Map<String, dynamic>? queryParameters, bool isAuthNeeded = false}) async {
+    final Map<String, String> headers = <String, String>{};
+
+    // Add headers
+    if (isAuthNeeded) {
+      //var accessToken = await TokenRepository().getAccessToken();
+      var accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsiY29uZmlnIiwiYXVkaXQiLCJzZXJ2aWNlIiwib25ib2FyZCJdLCJPcmdhbmlzYXRpb25JZCI6IjY4ZGNmYmE1N2RjMDExYmQ0N2I5NTdjNSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2OGRjZmIyMzI1MjJhMDM5NDc0MTU5YTQiLCJEYXRhVmVyaWZpZXJVc2VySWQiOiIiLCJFbnYiOiIiLCJleHAiOjE3NjI2ODk0NzJ9.ShKaOPR-caBQULZz_HNZiGVNvm74U5mar4PRx7qr7ds';
+      headers['Content-Type'] = 'application/json';
+      headers['Authorization'] = 'ApiKey $accessToken';
+    } else {
+      headers['Content-Type'] = 'application/json';
+    }
+
+    // Make GET request
+    return dioClient.get(
+      path,
+      queryParameters: queryParameters,
+      options: Options(headers: headers),
+    );
+  }
 
   Future<Response<T>> postDexcom<T>(String path,
       {data,
