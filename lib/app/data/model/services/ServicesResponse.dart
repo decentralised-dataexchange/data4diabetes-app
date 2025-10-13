@@ -50,9 +50,10 @@ class DataDisclosureAgreementRecord {
       }
     }
 
-    // Extract logoUrl from signatureDecoded if present
-    if (json['signatureDecoded'] != null) {
-      final signatureDecoded = json['signatureDecoded'];
+    // Extract logoUrl from signatureDecoded inside dataSourceSignature
+    if (json['dataSourceSignature'] != null &&
+        json['dataSourceSignature']['signatureDecoded'] != null) {
+      final signatureDecoded = json['dataSourceSignature']['signatureDecoded'];
       if (signatureDecoded is Map<String, dynamic> &&
           signatureDecoded['logo_url'] != null) {
         logoUrl = signatureDecoded['logo_url'];
