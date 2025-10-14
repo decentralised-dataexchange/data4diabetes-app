@@ -100,7 +100,7 @@ class AppBarWithLogo extends StatelessWidget  implements PreferredSizeWidget {
                 "description": "Self Attested Glucose Value",
                 "attributesMap": attributesMap,
                 "connectionName": "Data4Diabetes",
-                "location": "sweden",
+                "location": "Sweden",
                 "vct": "blood_sugar",
               });
             },
