@@ -46,26 +46,33 @@ class PrivacyDashboardCredentialController extends BaseController {
   }
 
   submitButtonAction() async {
-    var languageCode = _languageController.languageCode.value;
-    var response = await platform.invokeMethod('CreateIndividual', {
-      "apiKey": apiKeyController.text,
-      "baseUrl": baseUrlController.text,
-      "languageCode": languageCode,
-      "fcmToken": PushHelper.fcmToken,
-      "deviceType": Platform.isIOS? "ios" : "android"
-    });
-    Map<String, dynamic> responseMap = json.decode(response);
-    Map<String, dynamic> individual = responseMap['individual'];
-    String? id = individual['id'];
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    _prefs.setString('privacyDashboardApiKey', apiKeyController.text);
-    _prefs.setString('privacyDashboardorgId', orgIdController.text);
-    _prefs.setString('privacyDashboardbaseUrl', baseUrlController.text);
-    _prefs.setString('privacyDashboarduserId', id ?? "");
-    Get.rawSnackbar(
-        message: 'Updated : Close and Reopen the app to reflect the changes',
-        backgroundColor: Colors.green);
-    privacyDashboardCredentials();
+    try {
+      var languageCode = _languageController.languageCode.value;
+      var response = await platform.invokeMethod('CreateIndividual', {
+        "apiKey": apiKeyController.text,
+        "baseUrl": baseUrlController.text,
+        "languageCode": languageCode,
+        "fcmToken": PushHelper.fcmToken,
+        "deviceType": Platform.isIOS ? "ios" : "android"
+      });
+      Map<String, dynamic> responseMap = json.decode(response);
+      Map<String, dynamic> individual = responseMap['individual'];
+      String? id = individual['id'];
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      _prefs.setString('privacyDashboardApiKey', apiKeyController.text);
+      _prefs.setString('privacyDashboardorgId', orgIdController.text);
+      _prefs.setString('privacyDashboardbaseUrl', baseUrlController.text);
+      _prefs.setString('privacyDashboarduserId', id ?? "");
+      Get.rawSnackbar(
+          message: 'Updated : Close and Reopen the app to reflect the changes',
+          backgroundColor: Colors.green);
+      privacyDashboardCredentials();
+    }catch(e){
+      Get.rawSnackbar(
+        message: "Unexpected error, please try again",
+        backgroundColor: Colors.red,
+      );
+    }
   }
 
   resetButtonAction(BuildContext context) async {
