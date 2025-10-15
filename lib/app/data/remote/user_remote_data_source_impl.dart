@@ -1,3 +1,4 @@
+import 'package:Data4Diabetes/app/Constants/privacy_dashboard.dart';
 import 'package:Data4Diabetes/app/data/model/deleteAccount/deleteAccountRequest.dart';
 import 'package:Data4Diabetes/app/data/model/deleteAccount/deleteAccountResponse.dart';
 import 'package:Data4Diabetes/app/data/model/dexcom/AccessTokenRequest.dart';
@@ -153,7 +154,7 @@ class UserRemoteDataSourceImpl extends BaseRemoteSource
       // add other fields if needed
     };
 
-    var endpoint = "$servicesBaseUrl${ApiEndPoints.services}";
+    var endpoint = ApiEndPoints.services;
 
     var dioCall = getWithJson(endpoint,
         queryParameters: queryParams,
