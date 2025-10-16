@@ -265,11 +265,13 @@ class SettingsView extends BaseView<SettingsController> {
         var baseUrl=_prefs.getString('privacyDashboardbaseUrl');
         var userId=_prefs.getString('privacyDashboarduserId');
         var languageCode = _languageController.languageCode.value;
+        var organisationId = _prefs.getString('privacyDashboardorgId');
         _settingsController.platform.invokeMethod('Preferences', {
             "ApiKey": apiKey,
             "baseUrl": baseUrl,
             "userId":userId,
           "languageCode":languageCode,
+          "organisationId":organisationId
           });
       },
     );

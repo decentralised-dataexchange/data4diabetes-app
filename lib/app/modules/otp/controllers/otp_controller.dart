@@ -45,6 +45,7 @@ class OtpController extends BaseController {
         _prefs.setString('privacyDashboarduserId', response.lastname);
         _prefs.setString('privacyDashboardApiKey', PrivacyDashboard().apiKey);
         _prefs.setString('privacyDashboardbaseUrl', PrivacyDashboard().baseUrl);
+        _prefs.setString('privacyDashboardorgId', PrivacyDashboard().organisationId);
         if(loginController.sharePhoneNumber.value!=""){
           _prefs.setString('userMobileNumber', loginController.sharePhoneNumber.value);
         }else if(registerController.sharePhoneNumber.value!=""){
