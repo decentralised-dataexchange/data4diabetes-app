@@ -38,7 +38,7 @@ class PrivacyDashboardCredentialController extends BaseController {
         : apiKeyController.text = PrivacyDashboard().apiKey;
     orgId != null
         ? orgIdController.text = orgId
-        : orgIdController.text = "64f09f778e5f3800014a879a";
+        : orgIdController.text = PrivacyDashboard().organisationId;
     baseUrl != null
         ? baseUrlController.text = baseUrl
         : baseUrlController.text = PrivacyDashboard().baseUrl;
@@ -78,7 +78,7 @@ class PrivacyDashboardCredentialController extends BaseController {
   resetButtonAction(BuildContext context) async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     _prefs.setString('privacyDashboardApiKey', PrivacyDashboard().apiKey);
-    _prefs.setString('privacyDashboardorgId', "64f09f778e5f3800014a879a");
+    _prefs.setString('privacyDashboardorgId', PrivacyDashboard().organisationId);
     _prefs.setString('privacyDashboardbaseUrl', PrivacyDashboard().baseUrl);
     _logout(context);
 

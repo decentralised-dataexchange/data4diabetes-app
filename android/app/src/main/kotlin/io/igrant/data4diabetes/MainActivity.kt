@@ -37,14 +37,14 @@ class MainActivity : FlutterFragmentActivity() {
     private val CHANNEL = "io.igrant.data4diabetes.channel"
     var methodChannel: MethodChannel? = null
 
-    private val pushNotificationPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-        }
+//    private val pushNotificationPermissionLauncher =
+//        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+//        }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-        pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+     //   pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
 
         methodChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
         methodChannel!!.setMethodCallHandler { call, result ->
@@ -69,12 +69,14 @@ class MainActivity : FlutterFragmentActivity() {
                     val baseUrl: String? = call.argument("baseUrl")
                     val userId: String? = call.argument("userId")
                     val languageCode: String? = call.argument("languageCode")
+                    val organisationId: String? = call.argument("organisationId")
                     PrivacyDashboard.showPrivacyDashboard()
                         .withApiKey(apiKey ?: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY4ZGNmYmE1N2RjMDExYmQ0N2I5NTdjNSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2OGRjZmIyMzI1MjJhMDM5NDc0MTU5YTQiLCJEYXRhVmVyaWZpZXJVc2VySWQiOiIiLCJFbnYiOiIiLCJleHAiOjE3NjIwNTgxOTd9.OxBuLi6-gy-ANW28bIHg7CIc5YqTZcPd6HhOR47d3EQ")
                         .withUserId(userId ?: "68df5f887dc011bd47b95a07")
                         .withBaseUrl(baseUrl ?: "https://staging-api.igrant.io/v2")
-                        .withOrganisationId("68dcfba57dc011bd47b957c5")
+                        .withOrganisationId(organisationId ?: "68f02498a925e3c4c2a92b15")
                         .withLocale(languageCode ?: "sv")
+                        .withViewMode(ViewMode.BottomSheet)
                         .start(this)
                 }
                 "DataAgreementPolicy" -> {
@@ -171,7 +173,7 @@ class MainActivity : FlutterFragmentActivity() {
                 "ShowDataAgreementPolicy" -> {
                     val dataAgreementResponse: String? = call.argument("dataAgreementResponse")
                     PrivacyDashboard.showDataAgreementPolicy()
-                        .withDataAgreement(dataAgreementResponse ?: "").withLocale("sv").start(this)
+                        .withDataAgreement(dataAgreementResponse ?: "").withLocale("sv") .withViewMode(ViewMode.BottomSheet).start(this)
                 }
                 "CreateIndividual" -> {
                     val apiKey: String? = call.argument("apiKey")

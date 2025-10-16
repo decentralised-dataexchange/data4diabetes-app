@@ -112,6 +112,7 @@ class _MyAppState extends State<MyApp> {
     if (_prefs.getString('privacyDashboardApiKey') == null) {
       _prefs.setString('privacyDashboardApiKey', PrivacyDashboard().apiKey);
       _prefs.setString('privacyDashboardbaseUrl', PrivacyDashboard().baseUrl);
+      _prefs.setString('privacyDashboardorgId', PrivacyDashboard().organisationId);
     }
   }
 }
