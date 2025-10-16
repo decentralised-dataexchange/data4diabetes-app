@@ -146,11 +146,12 @@ dependencies {
     implementation 'com.google.android.material:material:1.12.0'
     implementation "com.github.L3-iGrant:data_wallet:2025.10.1"
 
+
     implementation platform('com.google.firebase:firebase-bom:32.3.1')
     implementation 'com.google.firebase:firebase-dynamic-links-ktx'
 //    implementation 'com.github.L3-iGrant:mobileSDK-android:2.5.2'
-   // implementation 'com.github.decentralised-dataexchange:bb-consent-android-privacy-dashboard:2024.4.1'
     implementation "com.github.L3-iGrant:privacy-dashboard-android:2025.10.1"
+
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
     implementation 'com.cocosw:bottomsheet:1.5.0'
     implementation 'com.github.markomilos:paginate:1.0.0'
@@ -169,7 +170,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.3.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.3.1'
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3'
+    implementation 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.2'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'com.airbnb.android:lottie:3.5.0'
@@ -179,5 +180,64 @@ dependencies {
     implementation 'com.github.mediapark-pk:Base58-android:0.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
     implementation 'com.tbuonomo:dotsindicator:4.2'
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    implementation 'com.github.amoskorir:avatarimagegenerator:1.5.0'
+    implementation 'com.github.decentralised-dataexchange:PassCodeText:2024.10.1'
+    implementation 'androidx.preference:preference-ktx:1.2.0'
+    implementation 'com.nimbusds:nimbus-jose-jwt:9.21'
+    implementation 'io.github.erdtman:java-json-canonicalization:1.1'
+    implementation 'com.google.android.play:app-update:2.1.0'
+    implementation 'com.google.android.play:app-update-ktx:2.1.0'
+
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.http-client:google-http-client-gson:1.26.0'
+    implementation 'com.google.api-client:google-api-client-android:1.26.0'
+    implementation 'com.google.apis:google-api-services-drive:v3-rev136-1.25.0'
+    implementation 'com.google.android.gms:play-services-auth:20.4.1'
+
+    implementation ('androidx.work:work-runtime-ktx:2.8.0'){
+        //Needed due to a transitive dependency clash with the google api client dep
+        exclude group: 'com.google.guava', module:'listenablefuture'
+    }
+
+    implementation 'com.auth0:java-jwt:3.18.2'
+
+    implementation 'com.jayway.jsonpath:json-path:2.8.0'
+
+    implementation 'com.guolindev.permissionx:permissionx:1.6.1'
+    implementation 'com.github.decentralised-dataexchange:PassCodeText:2024.10.1'
+
+    implementation("com.github.decentralised-dataexchange:presentation-exchange-sdk-android:2024.11.1")
+    implementation("org.slf4j:slf4j-api") {
+        version {
+            strictly("2.0.9")
+        }
+    }
+    implementation 'com.github.amoskorir:avatarimagegenerator:1.5.0'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect'
+
+    implementation ('com.google.crypto.tink:tink-android:1.5.0'){
+        exclude group: 'com.google.protobuf', module: 'protobuf-java'
+    }
+    implementation("co.nstant.in:cbor:0.9")
+    implementation 'com.caverock:androidsvg:1.4'
+    implementation ("com.google.android.play:integrity:1.4.0")
+    implementation 'com.github.decentralised-dataexchange:eudi-wallet-oid4vc-android:2025.10.1'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation ("com.networknt:json-schema-validator:1.0.80")
+
+
+    implementation("androidx.credentials.registry:registry-digitalcredentials-mdoc:1.0.0-alpha01")
+    implementation("androidx.credentials.registry:registry-digitalcredentials-preview:1.0.0-alpha01")
+    implementation("androidx.credentials.registry:registry-provider:1.0.0-alpha01")
+    implementation("androidx.credentials.registry:registry-provider-play-services:1.0.0-alpha01")
+    implementation("com.google.android.gms:play-services-identity-credentials:16.0.0-alpha06")
+    implementation("androidx.credentials:credentials:1.5.0")
+    implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.4")
+    implementation ("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.4")
+    implementation("com.fasterxml.woodstox:woodstox-core:7.1.0")
+    implementation ("javax.xml.stream:stax-api:1.0-2")
+    implementation ("com.hbb20:ccp:2.5.1")
+    implementation("androidx.browser:browser:1.9.0")
+//    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 }
