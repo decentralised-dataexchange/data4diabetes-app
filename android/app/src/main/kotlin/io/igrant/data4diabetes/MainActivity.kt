@@ -69,11 +69,12 @@ class MainActivity : FlutterFragmentActivity() {
                     val baseUrl: String? = call.argument("baseUrl")
                     val userId: String? = call.argument("userId")
                     val languageCode: String? = call.argument("languageCode")
+                    val organisationId: String? = call.argument("organisationId")
                     PrivacyDashboard.showPrivacyDashboard()
                         .withApiKey(apiKey ?: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY4ZGNmYmE1N2RjMDExYmQ0N2I5NTdjNSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2OGRjZmIyMzI1MjJhMDM5NDc0MTU5YTQiLCJEYXRhVmVyaWZpZXJVc2VySWQiOiIiLCJFbnYiOiIiLCJleHAiOjE3NjIwNTgxOTd9.OxBuLi6-gy-ANW28bIHg7CIc5YqTZcPd6HhOR47d3EQ")
                         .withUserId(userId ?: "68df5f887dc011bd47b95a07")
                         .withBaseUrl(baseUrl ?: "https://staging-api.igrant.io/v2")
-                        .withOrganisationId("68f02498a925e3c4c2a92b15")
+                        .withOrganisationId(organisationId ?: "68f02498a925e3c4c2a92b15")
                         .withLocale(languageCode ?: "sv")
                         .start(this)
                 }

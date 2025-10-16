@@ -5,5 +5,6 @@ class PrivacyDashboard{
   var registrationDataAgreementId = '68f05b62a925e3c4c2a92d05';
   var donateYourDataDataAgreementId = '68f05c06a925e3c4c2a92d22';
   var backupAndRestoreDataAgreementId = '68f05bb3a925e3c4c2a92d10';
+  var organisationId = '68f02498a925e3c4c2a92b15';
 
 }
