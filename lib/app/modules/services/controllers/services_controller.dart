@@ -18,7 +18,7 @@ class ServicesController extends BaseController {
       limit: 10,
       offset: 0,
       organisationRole: "data_using_service",
-      signStatus: "signed"
+      signStatus: "sign"
     );
 
     try {
