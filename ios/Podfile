@@ -1,7 +1,7 @@
 # Uncomment this line to define a global platform for your project
   install! 'cocoapods', :disable_input_output_paths => true
 
- platform :ios, '13.0'
+ platform :ios, '15.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -28,7 +28,7 @@ end
 require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
 
 flutter_ios_podfile_setup
-source 'https://github.com/CocoaPods/Specs.git'
+source 'https://cdn.cocoapods.org/'
 source 'https://github.com/hyperledger/indy-sdk.git'
 source 'https://github.com/L3-iGrant/covid19-global-sdk-iOS-specs.git'
 source 'https://github.com/portto/secp256k1.swift'
@@ -38,10 +38,7 @@ target 'Runner' do
   use_modular_headers!
 
 # pod 'PrivacyDashboardiOS',:path => '/Users/mumthasirmohammed/bb-consent-ios-privacy-dashboard/PrivacyDashboardiOS'
- pod 'Alamofire', '~> 5.4.1'
- pod 'Firebase/CoreOnly', '~> 10.28.0'
- pod 'PrivacyDashboardiOS', '2024.6.2'
- pod 'ama-ios-sdk', '2024.6.2'
+# pod 'Alamofire', '~> 5.4.1'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end

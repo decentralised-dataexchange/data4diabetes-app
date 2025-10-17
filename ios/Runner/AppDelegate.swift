@@ -3,18 +3,27 @@ import Flutter
 import PrivacyDashboardiOS
 import ama_ios_sdk
 import SwiftMessages
+import Firebase
 
-@UIApplicationMain
-@objc class AppDelegate: FlutterAppDelegate,UIGestureRecognizerDelegate {
+@main
+@objc class AppDelegate: FlutterAppDelegate, MessagingDelegate {
+    
+    override func application(_ application: UIApplication,
+                       didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
+      }
+    
     override func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        FirebaseApp.configure()
+        
+        Messaging.messaging().delegate = self
+            UNUserNotificationCenter.current().delegate = self
+        
         GeneratedPluginRegistrant.register(with: self)
         let flutterViewController : FlutterViewController = window?.rootViewController as! FlutterViewController
-//        let navigationController = UINavigationController(rootViewController: flutterViewController)
-//        window.rootViewController = navigationController
-//        navigationController.delegate = self
 
         let flutterChannel = FlutterMethodChannel(name: "io.igrant.data4diabetes.channel",
                                                    binaryMessenger: flutterViewController.binaryMessenger)
@@ -22,7 +31,7 @@ import SwiftMessages
             (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
             switch call.method{
             case "InitWallet":
-                AriesMobileAgent.shared.configureWallet(delegate: self) { success in
+                AriesMobileAgent.shared.configureWallet(delegate: self, viewMode: ViewMode.BottomSheet) { success in
                     debugPrint("Wallet configured --- \(success ?? false)")
                 }
             case "DeleteWallet":
@@ -37,12 +46,17 @@ import SwiftMessages
                 let userId = arguments?["userId"] as? String
                 let languageCode = arguments?["languageCode"] as? String
 
-                PrivacyDashboard.showPrivacyDashboard(withApiKey: apiKey ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTY29wZXMiOlsic2VydmljZSJdLCJPcmdhbmlzYXRpb25JZCI6IjY0ZjA5Zjc3OGU1ZjM4MDAwMTRhODc5YSIsIk9yZ2FuaXNhdGlvbkFkbWluSWQiOiI2NTBhZTFmYmJlMWViNDAwMDE3MTFkODciLCJleHAiOjE3MzAyNjczNDV9.hNCwZjcObSCVA_O5B-yq0EVhJlxtO2uR75ThIriq2Jk",
-                                           withUserId: userId ?? "6540952ffec9f34efed236c9",
-                                           withOrgId: orgId ?? "64f09f778e5f3800014a879a",
-                                           withBaseUrl: baseUrl ?? "https://demo-consent-bb-api.igrant.io/v2",
-                                           withLocale: languageCode ?? "en",
-                                           turnOnAskme: false, turnOnUserRequest: false, turnOnAttributeDetail: false)
+                PrivacyDashboard.showPrivacyDashboard(withApiKey: apiKey ?? "",
+                                       withUserId: userId ?? "",
+                                       withOrgId: orgId ?? "68f02498a925e3c4c2a92b15",
+                                       withBaseUrl: baseUrl ?? "https://demo-api.igrant.io/v2",
+                                       withLocale: languageCode ?? "en",
+                                       turnOnAskme: false,
+                                       turnOnUserRequest: false,
+                                       turnOnAttributeDetail: false,
+                                       onConsentChange: { success, resultVal, consentRecordID in
+                      debugPrint("Consent change here:\(success) - \(resultVal) \(consentRecordID)")
+                    }, viewMode: .bottomSheet)
                 break
             case "Wallet":
                 AriesMobileAgent.shared.showDataWalletHomeViewController(showBackButton: true)
@@ -159,6 +173,33 @@ import SwiftMessages
                         result(FlutterError(code: "DataSharing error", message: "Error occurred. Data: \(data ?? "")", details: nil))
                       }
                     }
+            case "GetIndividual":
+                var data: String? = nil
+                let arguments = call.arguments as? [String: Any]
+                let apiKey = arguments?["apiKey"] as? String
+                let accessToken = arguments?["accessToken"] as? String
+                let baseUrl = arguments?["baseUrl"] as? String
+                let userId = arguments?["userId"] as? String
+                let languageCode = arguments?["languageCode"] as? String
+                let individualId = arguments?["individualId"] as? String
+                
+                PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), withLocale: languageCode ?? "en" , accessToken: accessToken ?? "")
+                
+                PrivacyDashboard.readAnIndividual(individualId: individualId ?? "") { success, resultVal in
+                  if success {
+                    if let jsonData = try? JSONSerialization.data(withJSONObject: resultVal, options: .prettyPrinted),
+                      let theJSONText = String(data: jsonData, encoding: String.Encoding.ascii) {
+                      debugPrint("JSON string = \n\(theJSONText)")
+                      data = theJSONText
+                    }
+
+                    if data != nil {
+                      result(data)
+                    } else {
+                      result(FlutterError(code: "DataSharing error", message: "Error occurred. Data: \(data ?? "")", details: nil))
+                    }
+                  }
+                }
             case "CreateIndividual":
                     var data: String? = nil
                     let arguments = call.arguments as? [String: Any]
@@ -167,9 +208,17 @@ import SwiftMessages
                     let accessToken = arguments?["accessToken"] as? String
                     let baseUrl = arguments?["baseUrl"] as? String
                     let languageCode = arguments?["languageCode"] as? String
+                    let name = arguments?["name"] as? String
+                    let phone = arguments?["phone"] as? String
+                    let fcmToken = arguments?["fcmToken"] as? String
+                    let deviceType = "ios"
 
                     PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), withLocale: languageCode ?? "en" , accessToken: accessToken ?? "")
-                    PrivacyDashboard.createAnIndividual(name: "", email: "", phone: "") { success, resultVal in
+                    PrivacyDashboard.createAnIndividual(name: name ?? "",
+                                                        email: "",
+                                                        phone: phone ?? "",
+                                                        pushNotificationToken: fcmToken ?? "",
+                                                        deviceType: deviceType ?? "") { success, resultVal in
                       if success {
                         if let jsonData = try? JSONSerialization.data(withJSONObject: resultVal, options: .prettyPrinted),
                           let theJSONText = String(data: jsonData, encoding: String.Encoding.ascii) {
@@ -184,12 +233,103 @@ import SwiftMessages
                         }
                       }
                     }
+                
+            case "UpdateIndividual":
+                var data: String? = nil
+                let arguments = call.arguments as? [String: Any]
+                let apiKey = arguments?["apiKey"] as? String
+                let userId = arguments?["userId"] as? String
+                let accessToken = arguments?["accessToken"] as? String
+                let baseUrl = arguments?["baseUrl"] as? String
+                let languageCode = arguments?["languageCode"] as? String
+                let individualId = arguments?["individualId"] as? String
+                let name = arguments?["name"] as? String
+                let phone = arguments?["phone"] as? String
+                let fcmToken = arguments?["fcmToken"] as? String
+                let deviceType = "ios"
+                
+                PrivacyDashboard.configure(withApiKey: apiKey ?? "", withUserId: userId ?? "", withOrgId: "", withBaseUrl: String(baseUrl ?? ""), withLocale: languageCode ?? "en" , accessToken: accessToken ?? "")
+                PrivacyDashboard.updateAnIndividual(individualId: individualId ?? "", externalId: "", externalIdType: "", identityProviderId: "", name: name ?? "", iamId: "", email: "", phone: phone ?? "", pushNotificationToken: fcmToken ?? "", deviceType: deviceType ?? "") { success, resultVal in
+                    if success {
+                        if let jsonData = try? JSONSerialization.data(withJSONObject: resultVal, options: .prettyPrinted),
+                           let theJSONText = String(data: jsonData, encoding: String.Encoding.ascii) {
+                            debugPrint("JSON string = \n\(theJSONText)")
+                            data = theJSONText
+                        }
+                        
+                        if data != nil {
+                            result(data)
+                        } else {
+                            result(FlutterError(code: "DataSharing error", message: "Error occurred. Data: \(data ?? "")", details: nil))
+                        }
+                    }
+                }
+            case "handleNotification":
+                var data: String? = nil
+                let arguments = call.arguments as? [String: Any]
+                
+                AriesMobileAgent.shared.handlePushNotification(data: arguments ?? [:] ){ type, continueFlow in
+                    DispatchQueue.main.async {
+                        if type == .PinEntryDuringIssuance {
+                            let success = MessageView.viewFromNib(layout: .messageView)
+                            success.configureTheme(.success)
+                            success.backgroundColor = #colorLiteral(red: 0.2666666667, green: 0.5803921569, blue: 0.2666666667, alpha: 1)
+                            success.configureContent(title: "", body: "Please enter PIN to proceed")
+                            success.configureDropShadow()
+                            success.button?.isHidden = true
+                            // When user taps on the snackbar, continue the flow
+                            success.tapHandler = { _ in
+                                SwiftMessages.hide()
+                                continueFlow()
+                            }
+                            SwiftMessages.show(view: success)
+                        } else if type == .Verification {
+                            let success = MessageView.viewFromNib(layout: .messageView)
+                            success.configureTheme(.success)
+                            success.backgroundColor = #colorLiteral(red: 0.2666666667, green: 0.5803921569, blue: 0.2666666667, alpha: 1)
+                            success.configureContent(title: "", body: "Verification request received")
+                            success.configureDropShadow()
+                            success.button?.isHidden = true
+                            // When user taps on the snackbar, continue the flow
+                            success.tapHandler = { _ in
+                                SwiftMessages.hide()
+                                continueFlow()
+                            }
+                            SwiftMessages.show(view: success)
+                        }
+                    }
+                }
+            case "addSelfAttestedCredential":
+                var data: String? = nil
+                let arguments = call.arguments as? [String: Any]
+                let title = arguments?["title"] as? String
+                let description = arguments?["description"] as? String
+                let attributesMap = arguments?["attributesMap"] as? [String: String]
+                let connectionName = arguments?["connectionName"] as? String
+                let location = arguments?["location"] as? String
+                let vct = arguments?["vct"] as? String
+                let issuedDate = arguments?["issuedDate"] as? String
+                
+                var attributesArray: [[String: String]] = []
+                      if let attributesDict = attributesMap {
+                        for (key, value) in attributesDict {
+                          attributesArray.append([key: value])
+                        }
+                      }
+                Task {
+                    do {
+                        let id = try await SelfAttestedOpenIDCredential().add(title: title, description: description, attributes: attributesArray, connectionName: connectionName, connectionLocation: location, vct: vct, logo: "https://storage.googleapis.com/igrant-api-images/data4diabetes_final.jpeg")
+                    } catch {
+                        debugPrint(error)
+                    }
+                }
+                    
             case "ShowDataAgreementPolicy":
                     let arguments = call.arguments as? [String: Any]
                     do {
                       let agreement = arguments?["dataAgreementResponse"] as! String
                       let dict = try JSONSerialization.jsonObject(with: agreement.data(using: .utf8)!, options: []) as! [String:Any]
-                      PrivacyDashboard.showDataAgreementPolicy(dataAgreementDic: dict)
+                      PrivacyDashboard.showDataAgreementPolicy(dataAgreementDic: dict, viewMode: .bottomSheet)
                     } catch {
                       debugPrint(error)
                     }
@@ -198,10 +338,6 @@ import SwiftMessages
         })
 
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-    }
-
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        return true
     }
 }
 
@@ -242,5 +378,10 @@ extension AppDelegate: AriesMobileAgentDelegate{
             }
             SwiftMessages.show(view: success)
         }
+    }
+    func getFlutterRootView() -> UIView? {
+        return UIApplication.shared.windows
+            .first(where: { $0.rootViewController is FlutterViewController })?
+            .rootViewController?.view
     }
 }

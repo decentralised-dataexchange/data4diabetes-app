@@ -25,8 +25,25 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  requestPermission();
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   // 🔥 Initialize Push Helper
   await PushHelper.init();
   runApp(const MyApp());
+}
+
+void requestPermission() async {
+  NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+
+  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    print('User granted permission');
+  } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+    print('User granted provisional permission');
+  } else {
+    print('User declined permission');
+  }
 }
