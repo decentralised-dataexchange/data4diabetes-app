@@ -57,24 +57,46 @@ class SettingsController extends BaseController {
   }
 
   void deleteAccount() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    var mobileNumber= _prefs.getString('userMobileNumber');
-    print("user mobile number with code is :$mobileNumber");
-    DeleteAccountRequest request =
-    DeleteAccountRequest(mobile_number: mobileNumber);
-    int response = await _impl.deleteUserAccount(request);
-    debugPrint('this is the response:$response');
-    if (response == successWithoutContent) {
-      GetSnackToast(
-          message: appLocalization.settingsDeleteAccountSuccess,
-          color: Colors.green);
+    try {
+      showLoading(); // 🔥 Show loader
+
       SharedPreferences _prefs = await SharedPreferences.getInstance();
-      _prefs.clear();
-      Get.offAll(const LauncherView());
-    } else {
-      GetSnackToast(message: appLocalization.settingsDeleteAccountFail);
+      var mobileNumber = _prefs.getString('userMobileNumber');
+      print("user mobile number with code is : $mobileNumber");
+
+      var deleteWalletResponse = await platform.invokeMethod('DeleteWallet');
+
+      if (deleteWalletResponse == "WalletDeleted") {
+        DeleteAccountRequest request =
+        DeleteAccountRequest(mobile_number: mobileNumber);
+
+        int response = await _impl.deleteUserAccount(request);
+        debugPrint('this is the response: $response');
+
+        if (response == successWithoutContent) {
+          GetSnackToast(
+            message: appLocalization.settingsDeleteAccountSuccess,
+            color: Colors.green,
+          );
+
+          await _prefs.clear();
+
+          hideLoading(); // ⬅️ Stop loader before navigation
+          Get.offAll(const LauncherView());
+        } else {
+          GetSnackToast(message: appLocalization.settingsDeleteAccountFail);
+        }
+      } else {
+        GetSnackToast(message: "Wallet deletion failed");
+      }
+    } catch (e) {
+      GetSnackToast(message: "Something went wrong");
+    } finally {
+      // ⬅️ ALWAYS hide loader even if exception occurred
+      hideLoading();
     }
   }
+
 
   void dexcomLoginWidget(BuildContext context) async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
@@ -112,7 +134,7 @@ class SettingsController extends BaseController {
 
   void defaultDexcomEnvironment() {
     _dexcomController.dexComBaseUrl.value =
-        BuildConfig.instance.config.dexComBaseUrl!;
+    BuildConfig.instance.config.dexComBaseUrl!;
   }
 
   void limitedDexcomEnvironment() {

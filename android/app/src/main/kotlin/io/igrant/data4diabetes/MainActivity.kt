@@ -2,10 +2,7 @@ package io.igrant.data4diabetes
 
 import android.content.Intent
 import android.util.Log
-import android.widget.Toast
 import com.github.privacydashboard.PrivacyDashboard
-import io.flutter.embedding.android.FlutterActivity
-import io.igrant.data_wallet.utils.SelfAttestedCredential
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import com.github.privacydashboard.utils.ViewMode
@@ -29,8 +26,7 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import android.Manifest
-import androidx.activity.result.contract.ActivityResultContracts
+import io.igrant.data_wallet.utils.restoreCallback.RestoreCallback
 
 class MainActivity : FlutterFragmentActivity() {
 
@@ -44,7 +40,7 @@ class MainActivity : FlutterFragmentActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-     //   pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        //   pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
 
         methodChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
         methodChannel!!.setMethodCallHandler { call, result ->
@@ -260,14 +256,44 @@ class MainActivity : FlutterFragmentActivity() {
                     }
                 }
                 "InitWallet"->{
-                    initializeWallet()
+                    initializeWallet(result)
                 }
                 "DeleteWallet"->{
-                    DataWallet.deleteWallet(this) { result ->
-                        when (result) {
+                    DataWallet.deleteWallet(this) { deleteResult  ->
+                        when (deleteResult ) {
                             is DeleteWalletResult.Success -> {
                                 DataWallet.releaseSdk()
+                                runOnUiThread {
+                                    result.success("WalletDeleted")
+                                }
+                            }
+                            is DeleteWalletResult.Error -> {
 
+                            }
+                        }
+                    }
+                }
+                "Backup"->{
+                    DataWallet.initiateBackUp(this@MainActivity)
+                }
+                "Restore"->{
+                    DataWallet.deleteWallet(this) { deleteResult  ->
+                        when (deleteResult ) {
+                            is DeleteWalletResult.Success -> {
+                                DataWallet.releaseSdk()
+                                DataWallet.initiateRestore(this@MainActivity, object : RestoreCallback {
+                                    override fun onRestoreSuccess() {
+                                        runOnUiThread {
+                                            result.success("restored")
+                                        }
+                                    }
+
+                                    override fun onRestoreFailed(error: String) {
+                                        runOnUiThread {
+                                            result.error("restored failed", error, null)
+                                        }
+                                    }
+                                })
                             }
                             is DeleteWalletResult.Error -> {
 
@@ -315,7 +341,7 @@ class MainActivity : FlutterFragmentActivity() {
 
     }
 
-    private fun initializeWallet() {
+    private fun initializeWallet(result: MethodChannel.Result) {
         DataWallet.initializeSdk(
             this,
             object : InitializeWalletCallback {
@@ -346,7 +372,11 @@ class MainActivity : FlutterFragmentActivity() {
 
                                     }
 
-                                    override fun walletReadyToUse() {}
+                                    override fun walletReadyToUse() {
+                                        runOnUiThread {
+                                            result.success("walletReadyToUse")
+                                        }
+                                    }
 
                                     override fun pushNotificationResponse(status: Boolean) {
 //                                        if (status){

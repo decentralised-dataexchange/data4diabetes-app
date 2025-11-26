@@ -333,6 +333,22 @@ import Firebase
                     } catch {
                       debugPrint(error)
                     }
+            case "Backup":
+                  AriesMobileAgent.shared.initiateBackup()
+            case "Restore":
+                 AriesMobileAgent.shared.deleteWallet(completion: { success in
+                    if success ?? false {
+                        AriesMobileAgent.shared.initiateRestore() { success in
+                            result("restored")
+                        }
+                    }
+                 })
+            case "Restore":
+                 AriesMobileAgent.shared.deleteWallet(completion: { success in
+                    if success ?? false {
+                        result("WalletDeleted")
+                    }
+                 })
             default: break
             }
         })
