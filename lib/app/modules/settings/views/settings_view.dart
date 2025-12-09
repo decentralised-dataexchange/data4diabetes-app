@@ -49,18 +49,18 @@ class SettingsView extends BaseView<SettingsController> {
   @override
   Widget body(BuildContext context) {
     return Obx(() => Scaffold(
-          backgroundColor: Palette.backgroundColor,
-          body: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                _settingsSection1(),
-                _settingsSection2(context),
-              ],
-            ),
-          ),
-          bottomNavigationBar: _igrantLogo(),
-        ));
+      backgroundColor: Palette.backgroundColor,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            _settingsSection1(),
+            _settingsSection2(context),
+          ],
+        ),
+      ),
+      bottomNavigationBar: _igrantLogo(),
+    ));
   }
 
   Widget _settingsSection1() {
@@ -83,7 +83,9 @@ class SettingsView extends BaseView<SettingsController> {
             const Divider(),
             _notifications(),
             const Divider(),
-            _services()
+            _services(),
+            const Divider(),
+            _backUpWidget()
           ],
         ),
       ),
@@ -267,12 +269,12 @@ class SettingsView extends BaseView<SettingsController> {
         var languageCode = _languageController.languageCode.value;
         var organisationId = _prefs.getString('privacyDashboardorgId');
         _settingsController.platform.invokeMethod('Preferences', {
-            "ApiKey": apiKey,
-            "baseUrl": baseUrl,
-            "userId":userId,
+          "ApiKey": apiKey,
+          "baseUrl": baseUrl,
+          "userId":userId,
           "languageCode":languageCode,
           "organisationId":organisationId
-          });
+        });
       },
     );
   }
@@ -346,11 +348,31 @@ class SettingsView extends BaseView<SettingsController> {
         size: 15.0,
       ),
       onTap: () {
-       // _settingsController.platform.invokeMethod('Notifications');
+        // _settingsController.platform.invokeMethod('Notifications');
         Get.to(() => ServicesView());
       },
     );
   }
+  Widget _backUpWidget(){
+    return ListTile(
+      dense: true,
+      visualDensity: const VisualDensity(horizontal: 0, vertical: -3),
+      title: Text(
+        "BackUp",
+        style: const TextStyle(
+          fontSize: 14,
+        ),
+      ),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        size: 15.0,
+      ),
+      onTap: () {
+        _settingsController.platform.invokeMethod('Backup');
+      },
+    );
+  }
+
 
   Widget _logoutWidget() {
     return ListTile(
@@ -390,6 +412,7 @@ class SettingsView extends BaseView<SettingsController> {
                 CupertinoDialogAction(
                   child: Text(appLocalization.settingsDeleteAccountYes),
                   onPressed: () {
+                    Get.back();
                     _settingsController.deleteAccount();
                   },
                 ),

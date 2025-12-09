@@ -5,6 +5,7 @@ import 'package:Data4Diabetes/app/data/local/preference/preference_manager_impl.
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpRequest.dart';
 import 'package:Data4Diabetes/app/data/model/verifyOTP/VerifyOtpResponse.dart';
 import 'package:Data4Diabetes/app/modules/Register/controllers/register_controller.dart';
+import 'package:Data4Diabetes/app/modules/Restore/views/restore_view.dart';
 import 'package:Data4Diabetes/app/modules/login/controllers/login_controller.dart';
 import 'package:Data4Diabetes/app/network/exceptions/api_exception.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,8 @@ class OtpController extends BaseController {
 
         // initialize wallet
         platform.invokeMethod('InitWallet');
-        Get.offAll(MainView());
+        //  Get.offAll(MainView());
+        Get.to(RestoreView());
       }
     } catch (e) {
       GetSnackToast(message: 'Invalid otp');

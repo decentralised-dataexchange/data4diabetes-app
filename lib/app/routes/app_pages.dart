@@ -4,6 +4,8 @@ import 'package:Data4Diabetes/app/modules/Otp/bindings/otp_binding.dart';
 import 'package:Data4Diabetes/app/modules/Otp/views/otp_view.dart';
 import 'package:Data4Diabetes/app/modules/Register/bindings/register_binding.dart';
 import 'package:Data4Diabetes/app/modules/Register/views/register_view.dart';
+import 'package:Data4Diabetes/app/modules/Restore/bindings/restore_binding.dart';
+import 'package:Data4Diabetes/app/modules/Restore/views/restore_view.dart';
 import 'package:Data4Diabetes/app/modules/dataSharing/binding/dataAgreement_binding.dart';
 import 'package:Data4Diabetes/app/modules/dataSharing/views/dataAgreement_view.dart';
 import 'package:Data4Diabetes/app/modules/insights/bindings/insights_binding.dart';
@@ -134,6 +136,11 @@ class AppPages {
       name: _Paths.SERVICES,
       page: () => ServicesView(),
       binding: ServicesBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESTORE,
+      page: () => RestoreView(),
+      binding: RestoreBinding(),
     ),
   ];
 }

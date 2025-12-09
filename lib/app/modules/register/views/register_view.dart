@@ -352,14 +352,13 @@ class RegisterView extends BaseView<RegisterController> {
           MediaQuery.of(context).size.width * buttonSizedWidth,
           MediaQuery.of(context).size.height * buttonSizedHeight),
       child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(AppColors.colorAccent),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              // Change your radius here
-              borderRadius: BorderRadius.circular(buttonRadius),
-            ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.colorAccent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(buttonRadius),
           ),
+          minimumSize: const Size(double.infinity, 52),
+          padding: EdgeInsets.zero,
         ),
         onPressed: () {
           FocusScope.of(context).unfocus();
@@ -394,14 +393,13 @@ class RegisterView extends BaseView<RegisterController> {
           MediaQuery.of(context).size.width * buttonSizedWidth,
           MediaQuery.of(context).size.height * buttonSizedHeight),
       child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(AppColors.colorAccent),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              // Change your radius here
-              borderRadius: BorderRadius.circular(buttonRadius),
-            ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.colorAccent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(buttonRadius),
           ),
+          minimumSize: const Size(double.infinity, 52),
+          padding: EdgeInsets.zero,
         ),
         onPressed: () {
           _registerController.onAgreeButtonTap();
@@ -435,14 +433,13 @@ class RegisterView extends BaseView<RegisterController> {
           MediaQuery.of(context).size.width * buttonSizedWidth,
           MediaQuery.of(context).size.height * buttonSizedHeight),
       child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(AppColors.colorAccent),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                // Change your radius here
-                borderRadius: BorderRadius.circular(buttonRadius),
-              ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.colorAccent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(buttonRadius),
             ),
+            minimumSize: const Size(double.infinity, 52),
+            padding: EdgeInsets.zero,
           ),
           onPressed: () {
             _registerController.registerUser();
