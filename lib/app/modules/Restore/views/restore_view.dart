@@ -12,9 +12,9 @@ import '/app/core/widget/custom_app_bar.dart';
 class RestoreView extends BaseView<RestoreController> {
   static const double headingFontSize = 22;
   static const double headingSizedBoxHeight = 40;
-  static const double buttonSizedBoxHeight = 16;
-  static const double buttonPadding = 14;
-  static const double buttonBorderRadius = 10;
+  static const double buttonSizedBoxHeight = 12.0;
+  static const double buttonPadding = 15.0;
+  static const double buttonBorderRadius = 18.0;
   static const double buttonTextFontSize = 16;
 
   @override
@@ -28,33 +28,33 @@ class RestoreView extends BaseView<RestoreController> {
 
   @override
   Widget body(BuildContext context) {
-      return Scaffold(
-        backgroundColor: Palette.backgroundColor,
-        body:  Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _headingWidget(),
-                SizedBox(height: headingSizedBoxHeight),
+    return Scaffold(
+      backgroundColor: Palette.backgroundColor,
+      body:  Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _headingWidget(),
+              SizedBox(height: headingSizedBoxHeight),
 
-                _restoreButtonWidget(),
+              _restoreButtonWidget(context),
 
-                SizedBox(height: buttonSizedBoxHeight),
+              SizedBox(height: buttonSizedBoxHeight),
 
-                _skipButtonWidget(),
-              ],
-            ),
+              _skipButtonWidget(),
+            ],
           ),
         ),
-      );
+      ),
+    );
   }
 
   Widget _headingWidget() {
     return Text(
-      "Do you want to restore the backup?",
+      "Would you like to restore your data?",
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: headingFontSize,
@@ -64,7 +64,8 @@ class RestoreView extends BaseView<RestoreController> {
     );
   }
 
-  Widget _restoreButtonWidget() {
+  Widget _restoreButtonWidget(BuildContext context) {
+
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
@@ -87,23 +88,24 @@ class RestoreView extends BaseView<RestoreController> {
   }
 
   Widget _skipButtonWidget() {
-    return SizedBox(
-      width: double.infinity,
-      child: OutlinedButton(
-        onPressed: () {
-          Get.offAll(MainView());
-        },
-        style: OutlinedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: buttonPadding),
-          side: BorderSide(color: Colors.grey),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(buttonBorderRadius),
-          ),
-        ),
-        child: Text(
-          "Skip",
-          style: TextStyle(fontSize: buttonTextFontSize, color: Colors.black87),
-        ),
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 4.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          TextButton(
+            // splashColor: Colors.transparent,
+            // highlightColor: Colors.transparent,
+            onPressed: () {
+              Get.offAll(MainView());
+            },
+            child: Text(
+              "Skip",
+              style: boldTitlePrimaryColorStyle,
+            ),
+          )
+        ],
       ),
     );
   }

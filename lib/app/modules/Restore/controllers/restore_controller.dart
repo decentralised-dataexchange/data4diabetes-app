@@ -12,38 +12,28 @@ class RestoreController extends BaseController {
   Future<void> restore() async {
 
     try {
-        final restoreResponse = await platform.invokeMethod('Restore');
+      showLoading();
+      final restoreResponse = await platform.invokeMethod('Restore');
 
-        if (restoreResponse == "restored") {
-          await waitForWalletData();
-          final response = await platform.invokeMethod('InitWallet');
-          if (response == "walletReadyToUse") {
-            Get.offAll(MainView());
-          } else {
-            GetSnackToast(message: "Wallet initialization failed");
-          }
+      if (restoreResponse == "restored") {
+        final response = await platform.invokeMethod('InitWallet');
+        if (response == "walletReadyToUse") {
+          hideLoading();
+          Get.offAll(MainView());
         } else {
-          GetSnackToast(message: "Restore failed");
+          hideLoading();
+          GetSnackToast(message: "Wallet initialization failed");
         }
+      } else {
+        hideLoading();
+        GetSnackToast(message: "Restore failed");
+      }
     } on PlatformException catch (e) {
+      hideLoading();
       GetSnackToast(message: "Restore failed: ${e.message}");
     } catch (e) {
+      hideLoading();
       GetSnackToast(message: "Unknown error occurred");
     }
   }
-  Future<void> waitForWalletData({int timeoutMs = _pollWaitingTime}) async {
-    int waited = 0;
-    while (true) {
-      final data = await platform.invokeMethod('QueryCredentials');
-      if (data != null && data.isNotEmpty) break;
-
-      if (waited >= timeoutMs) {
-        throw Exception("Timeout waiting for wallet data");
-      }
-
-      await Future.delayed(Duration(milliseconds: _pollIntervalMs));
-      waited += _pollIntervalMs;
-    }
-  }
 }
-
