@@ -269,6 +269,11 @@ class RegisterController extends BaseController {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
       _prefs.setString('privacyDashboarduserId', id ?? "");
 
+      getDataAgreement(
+          sharingDataAgreementID:
+          PrivacyDashboard().donateYourDataDataAgreementId,
+          isFlag: true);
+
       int index = selectedPage.value + 1;
       pageController.animateToPage(index,
           duration: const Duration(milliseconds: 500),
