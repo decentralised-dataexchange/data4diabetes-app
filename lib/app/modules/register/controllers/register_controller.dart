@@ -256,7 +256,7 @@ class RegisterController extends BaseController {
         "apiKey": PrivacyDashboard().apiKey,
         "baseUrl": PrivacyDashboard().baseUrl,
         "name": firstNameController.text,
-        "phone": mobileNumberController.text,
+        "phone": isdCode! + mobileNumberController.text,
         "languageCode": languageCode,
         "fcmToken": PushHelper.fcmToken,
         "deviceType": Platform.isIOS? "ios" : "android"
