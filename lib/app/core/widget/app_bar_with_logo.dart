@@ -45,93 +45,116 @@ class AppBarWithLogo extends StatelessWidget  implements PreferredSizeWidget {
     );
   }
   Widget _appBarListTile() {
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-      visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-      leading: Container(
-        height: circleContainerHeight,
-        width: circleContainerWidth,
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-        ),
-        child: Image.asset(
-          'images/blood_drop.png',
-          fit: BoxFit.cover,
-        ),
-      ),
-      title: const Text(
-        'Data4Diabetes',
-        style: TextStyle(
-            color: Color.fromARGB(255, 30, 189, 174),
-            fontSize: 20,
-            fontWeight: FontWeight.bold),
-      ),
-      subtitle: Text(title),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min, // Important: keeps the Row compact
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 0.0),
+      child: Row(
         children: [
-          IconButton(
-            icon: const Icon(
-              Icons.refresh_outlined, // <-- your new icon
-              color: Colors.blueGrey,
-              size: 25,
+          // 1. LEADING ICON
+          Container(
+            height: circleContainerHeight,
+            width: circleContainerWidth,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
             ),
-            onPressed: () {
-              // Generate random glucose value
-              final double glucoseValue = getRandomGlucoseValue();
-
-              print("Generated Glucose Value Lijo: $glucoseValue");
-
-              _homeController.updateGlucose(glucoseValue);
-
-              // Build a Map<String, String> for attributes
-              final Map<String, String> attributesMap = {
-                "date": DateTime.now().toIso8601String(),
-                "fasting": glucoseValue.toString(),
-                "post_fasting": (glucoseValue+1).toString(),
-              };
-
-              // MethodChannel to call Kotlin
-              const platform = MethodChannel('io.igrant.data4diabetes.channel');
-
-              // Invoke the Kotlin method
-              platform.invokeMethod('addSelfAttestedCredential', {
-                "title": "Blood Sugar",
-                "description": "Self Attested Glucose Value",
-                "attributesMap": attributesMap,
-                "connectionName": "Data4Diabetes",
-                "location": "Sweden",
-                "vct": "blood_sugar",
-              });
-            },
+            child: Image.asset(
+              'images/blood_drop.png',
+              fit: BoxFit.contain,
+            ),
           ),
-          IconButton(
-            icon: const Icon(
-              Icons.settings_outlined,
-              color: Colors.blueGrey,
-              size: 25,
+          const SizedBox(width: 12),
+
+          // 2. TEXT SECTION (This takes up all available middle space)
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Data4Diabetes',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 30, 189, 174),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  maxLines: 1,
+                ),
+                Text(
+                  title ?? "",
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.black54,
+                  ),
+                  maxLines: 1,
+                  softWrap: false,
+                  // Using scaleDown ensures that if the Swedish word is
+                  // still too long, it shrinks the font instead of breaking the UI
+                  overflow: TextOverflow.visible,
+                ),
+              ],
             ),
-            onPressed: () {
-              Get.to(SettingsView())?.then((value) async {
-                if (isInsight == true) {
-                  SharedPreferences _prefs = await SharedPreferences.getInstance();
-                  var token = _prefs.getString('access_token');
-                  if (token != null) {
-                    _insightsController.estimatedGlucoseValues();
-                    _insightsController.gMICalculator(
-                        _insightsController.selectedValue.value = 'TODAY');
-                    _insightsController.tIRCalculator(
-                        _insightsController.selectedValue.value = 'TODAY');
-                    _insightsController.addChartDataValues(
-                        _insightsController.selectedValue.value = 'TODAY');
-                  }
-                }
-              });
-            },
+          ),
+
+          // 3. TRAILING BUTTONS
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                icon: const Icon(
+                  Icons.refresh_outlined,
+                  color: Colors.blueGrey,
+                  size: 25,
+                ),
+                onPressed: () {
+                  final double glucoseValue = getRandomGlucoseValue();
+                  _homeController.updateGlucose(glucoseValue);
+
+                  final Map<String, String> attributesMap = {
+                    "date": DateTime.now().toIso8601String(),
+                    "fasting": glucoseValue.toString(),
+                    "post_fasting": (glucoseValue + 1).toString(),
+                  };
+
+                  const platform = MethodChannel('io.igrant.data4diabetes.channel');
+                  platform.invokeMethod('addSelfAttestedCredential', {
+                    "title": "Blood Sugar",
+                    "description": "Self Attested Glucose Value",
+                    "attributesMap": attributesMap,
+                    "connectionName": "Data4Diabetes",
+                    "location": "Sweden",
+                    "vct": "blood_sugar",
+                  });
+                },
+              ),
+              const SizedBox(width: 8), // Spacing between the two buttons
+              IconButton(
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                icon: const Icon(
+                  Icons.settings_outlined,
+                  color: Colors.blueGrey,
+                  size: 25,
+                ),
+                onPressed: () {
+                  Get.to(SettingsView())?.then((value) async {
+                    if (isInsight == true) {
+                      SharedPreferences _prefs = await SharedPreferences.getInstance();
+                      var token = _prefs.getString('access_token');
+                      if (token != null) {
+                        _insightsController.estimatedGlucoseValues();
+                        _insightsController.gMICalculator('TODAY');
+                        _insightsController.tIRCalculator('TODAY');
+                        _insightsController.addChartDataValues('TODAY');
+                      }
+                    }
+                  });
+                },
+              ),
+            ],
           ),
         ],
       ),
-
     );
   }
 }
