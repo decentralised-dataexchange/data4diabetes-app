@@ -391,7 +391,8 @@ class MainActivity : FlutterFragmentActivity() {
                     }
                 }
             }, LedgerNetworkType.getSelectedNetwork(this),
-            viewMode = io.igrant.data_wallet.utils.ViewMode.BottomSheet
+            viewMode = io.igrant.data_wallet.utils.ViewMode.BottomSheet,
+            isAriesEnabled = false
         )
     }
 

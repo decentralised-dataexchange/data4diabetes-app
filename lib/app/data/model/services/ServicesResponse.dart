@@ -20,6 +20,7 @@ class ServicesResponse {
       data['dataDisclosureAgreementRecords'] =
           records!.map((v) => v.toJson()).toList();
     }
+
     return data;
   }
 }

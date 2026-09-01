@@ -26,6 +26,8 @@
   "settingsDexcomLoginYes":"Ja",
   "settingsDexcomLoginNo":"Nej",
   "settingsLogout":"Logga ut",
+   "settingsBackUp":"Back Up",
+    "restore": "Återställ",
   "settingsSettings":"Inställningar",
   "settingsDeleteAccount":"Ta bort konto",
   "settingsPrivacyPolicy":"Integritetspolicy",

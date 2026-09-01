@@ -26,6 +26,8 @@
   "settingsDexcomLoginYes":"Yes",
   "settingsDexcomLoginNo":"No",
   "settingsLogout":"Logout",
+  "settingsBackUp":"Back Up",
+  "restore": "Restore",
   "settingsSettings":"Settings",
   "settingsDeleteAccount":"Remove Account",
   "settingsPrivacyPolicy":"Privacy Policy",

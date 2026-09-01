@@ -12,6 +12,9 @@ class ServicesView extends BaseView<ServicesController> {
   final ServicesController _servicesController = Get.find();
   // Card and avatar sizing
   final double avatarDiameter = 60;
+  final double cardBorderRadiusValue = 10.0;
+  final double elevatedButtonBorderRadius = 20.0;
+  final double elevatedButtonWidth = 120.0;
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
@@ -80,7 +83,7 @@ class ServicesView extends BaseView<ServicesController> {
               color: Colors.white,
               elevation: 2,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(cardBorderRadiusValue),
               ),
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: Padding(
@@ -162,13 +165,13 @@ class ServicesView extends BaseView<ServicesController> {
                             Align(
                               alignment: Alignment.bottomLeft,
                               child: SizedBox(
-                                width: 120,
+                                width: elevatedButtonWidth,
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () { print("Button pressed!");},
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.black,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(elevatedButtonBorderRadius),
                                     ),
                                   ),
                                   child: const Text(
