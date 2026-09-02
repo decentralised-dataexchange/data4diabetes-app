@@ -20,6 +20,7 @@ class ServicesRequest {
     data['limit'] = this.limit;
     data['organisationRole'] = this.organisationRole;
     data['signStatus'] = this.signStatus;
+
     return data;
   }
 }

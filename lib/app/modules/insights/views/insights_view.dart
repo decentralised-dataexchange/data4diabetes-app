@@ -258,27 +258,27 @@ class InsightsView extends BaseView<InsightsController> {
               //Hide the axis line of y-axis
               axisLine: const AxisLine(width: 0)),
           series: [
-            StackedColumnSeries(
+            StackedColumnSeries <ChartData, String>(
                 dataSource: _insightsController.chartData.value,
                 color: const Color(0xFF851a10),
                 xValueMapper: (ChartData ch, _) => ch.x,
                 yValueMapper: (ChartData ch, _) => ch.veryLow.value),
-            StackedColumnSeries(
+            StackedColumnSeries <ChartData, String>(
                 dataSource: _insightsController.chartData.value,
                 color: const Color(0xFFce3813),
                 xValueMapper: (ChartData ch, _) => ch.x,
                 yValueMapper: (ChartData ch, _) => ch.low.value),
-            StackedColumnSeries(
+            StackedColumnSeries <ChartData, String>(
                 dataSource: _insightsController.chartData.value,
                 color: const Color(0xFF30bc5c),
                 xValueMapper: (ChartData ch, _) => ch.x,
                 yValueMapper: (ChartData ch, _) => ch.targetRange.value),
-            StackedColumnSeries(
+            StackedColumnSeries <ChartData, String>(
                 dataSource: _insightsController.chartData.value,
                 color: const Color(0xFFfdc333),
                 xValueMapper: (ChartData ch, _) => ch.x,
                 yValueMapper: (ChartData ch, _) => ch.high.value),
-            StackedColumnSeries(
+            StackedColumnSeries <ChartData, String>(
                 dataSource: _insightsController.chartData.value,
                 color: const Color(0xFFfb9531),
                 xValueMapper: (ChartData ch, _) => ch.x,

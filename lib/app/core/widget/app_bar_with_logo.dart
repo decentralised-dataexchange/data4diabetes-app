@@ -161,5 +161,6 @@ class AppBarWithLogo extends StatelessWidget  implements PreferredSizeWidget {
 double getRandomGlucoseValue() {
   final random = Random();
   double value = 4.0 + random.nextDouble() * (7.0 - 4.0);
+
   return double.parse(value.toStringAsFixed(1));
 }
