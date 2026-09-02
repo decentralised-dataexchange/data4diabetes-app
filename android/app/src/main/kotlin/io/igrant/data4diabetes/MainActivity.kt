@@ -7,14 +7,11 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import com.github.privacydashboard.utils.ViewMode
 import io.flutter.embedding.android.FlutterFragmentActivity
-import io.igrant.data_wallet.indy.LedgerNetworkType
 import io.igrant.data_wallet.utils.DataWallet
-import io.igrant.data_wallet.utils.DataWalletConfigurations
 import io.igrant.data_wallet.utils.DeleteWalletResult
 import io.igrant.data_wallet.utils.InitializeWalletCallback
 import io.igrant.data_wallet.utils.InitializeWalletState
 import io.igrant.data_wallet.utils.MessageTypes
-import io.igrant.data_wallet.utils.NotificationListener
 import io.igrant.data_wallet.utils.dataAgreement.DataAgreementUtils
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -26,6 +23,7 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import io.igrant.data_wallet.utils.pushnotification.NotificationListener
 import io.igrant.data_wallet.utils.restoreCallback.RestoreCallback
 
 class MainActivity : FlutterFragmentActivity() {
@@ -88,13 +86,13 @@ class MainActivity : FlutterFragmentActivity() {
                     )
 
                 }
-                "QueryCredentials" -> {
-                    val credDefId: String? = call.argument("CredDefId")
-                    val schemaId: String? = call.argument("SchemaId")
-
-                    val data = DataWallet.queryCredentials(credDefId, schemaId)
-                    result.success(data)
-                }
+//                "QueryCredentials" -> {
+//                    val credDefId: String? = call.argument("CredDefId")
+//                    val schemaId: String? = call.argument("SchemaId")
+//
+//                    val data = DataWallet.queryCredentials(credDefId, schemaId)
+//                    result.success(data)
+//                }
                 "DataSharing" -> {
                     val apiKey: String? = call.argument("apiKey")
                     val userId: String? = call.argument("userId")
@@ -358,7 +356,7 @@ class MainActivity : FlutterFragmentActivity() {
                         }
                         InitializeWalletState.WALLET_OPENED -> {
                             //  DataWalletConfigurations.registerForSubscription(this@MainActivity)
-                            DataWalletConfigurations.registerForSubscription(this@MainActivity,
+                            DataWallet.setNotificationListener(
                                 object : NotificationListener {
                                     override fun receivedNotification(
                                         notificationType: String,
@@ -390,9 +388,8 @@ class MainActivity : FlutterFragmentActivity() {
                         }
                     }
                 }
-            }, LedgerNetworkType.getSelectedNetwork(this),
+            },
             viewMode = io.igrant.data_wallet.utils.ViewMode.BottomSheet,
-            isAriesEnabled = false
         )
     }
 
